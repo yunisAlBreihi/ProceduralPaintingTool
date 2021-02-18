@@ -9,8 +9,8 @@
 
 #include "Shape.h"
 #include "GUIWindow.h"
-//#include "Camera.h"
-//#include "Timer.h"
+#include "Camera.h"
+#include "Timer.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -91,8 +91,8 @@ int main()
 
 	GUIWindow m_transformWindow = GUIWindow(m_square.getTransform());
 
-	//Camera m_camera = Camera(globals::ZERO, m_window, m_shaders);
-	//Timer m_timer;
+	Camera m_camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), m_window, m_shaders);
+	Timer m_timer;
 
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
 		glfwPollEvents();
@@ -101,12 +101,12 @@ int main()
 
 		//before update
 		m_transformWindow.update();
-		//m_timer.update();
+		m_timer.update();
 
 		//During update
-		//m_camera.update(m_timer.time);
+		m_camera.update(m_timer.deltaTime);
 		m_transformWindow.updateSliders(m_square.getTransform());
-		//m_square.update();
+		m_square.update();
 
 		//render
 		m_square.render(m_window);
@@ -115,13 +115,13 @@ int main()
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
 	}
-	// Cleanup
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+	//// Cleanup
+	//ImGui_ImplOpenGL3_Shutdown();
+	//ImGui_ImplGlfw_Shutdown();
+	//ImGui::DestroyContext();
 
-	glfwDestroyWindow(m_window);
-	glfwTerminate();
+	//glfwDestroyWindow(m_window);
+	//glfwTerminate();
 
 	return 0;
 }

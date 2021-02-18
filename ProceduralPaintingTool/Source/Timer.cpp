@@ -9,6 +9,6 @@ Timer::Timer()
 void Timer::update()
 {
 	time = glfwGetTime();
-	float deltaTime = time - m_lastTime;
+	deltaTime = time - m_lastTime;
 	m_lastTime = time;
 }

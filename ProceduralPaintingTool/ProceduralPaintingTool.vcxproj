@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GUIWindow.cpp" />
     <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />
@@ -160,8 +161,10 @@
     <ClCompile Include="Source\imgui_build.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\globals.h" />
     <ClInclude Include="Source\GUIWindow.h" />
     <ClInclude Include="Source\Shape.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="Source\imgui\imstb_truetype.h" />
     <ClInclude Include="Source\Shader.h" />
     <ClInclude Include="Source\stb_image.h" />
+    <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

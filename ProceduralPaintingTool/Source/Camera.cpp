@@ -9,8 +9,28 @@ Camera::Camera(const glm::vec3& position, GLFWwindow* window, std::vector<Shader
 
 void Camera::update(const float& deltaTime)
 {
-	m_right = globals::RIGHT;
-	m_forward = globals::FORWARD;
+
+
+	glm::vec3 t_cam_rot = glm::vec3(0.0f);
+	if (glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		t_cam_rot.y -= glm::radians(90.0f);
+	}
+	if (glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		t_cam_rot.y += glm::radians(90.0f);
+	}
+	if (glfwGetKey(m_window, GLFW_KEY_UP) == GLFW_PRESS) {
+		t_cam_rot.x -= glm::radians(90.0f);
+	}
+	if (glfwGetKey(m_window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		t_cam_rot.x += glm::radians(90.0f);
+	}
+	m_rotation += t_cam_rot * glm::radians(90.0f) * deltaTime;
+	glm::quat t_cam_quat = glm::angleAxis(m_rotation.y, globals::UP) *
+						   glm::angleAxis(m_rotation.x, globals::RIGHT) * 
+						   glm::angleAxis(m_rotation.z, globals::FORWARD);
+
+	m_right = t_cam_quat * globals::RIGHT;
+	m_forward = t_cam_quat * globals::FORWARD;
 
 	//Move cam
 	glm::vec3 t_camera_move = glm::vec3(0.0f);
@@ -29,7 +49,7 @@ void Camera::update(const float& deltaTime)
 	if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 		t_camera_move.y += 1.0f;
 	}
-	if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+	if (glfwGetKey(m_window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
 		t_camera_move.y -= 1.0f;
 	}
 	m_position += t_camera_move * m_moveSpeed * deltaTime;
@@ -43,5 +63,6 @@ void Camera::update(const float& deltaTime)
 
 	for (auto& t_shader : m_shaders) {
 		t_shader.setMatrix4(globals::VIEWPROJECTION, t_view_matrix);
+		t_shader.use();
 	}
 }
