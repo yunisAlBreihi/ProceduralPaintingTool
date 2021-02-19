@@ -148,8 +148,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GUIWindow.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />
     <ClCompile Include="Source\imgui\imgui_demo.cpp" />
@@ -162,11 +164,14 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\globals.h" />
     <ClInclude Include="Source\GUIWindow.h" />
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\imgui\imconfig.h" />
     <ClInclude Include="Source\imgui\imgui.h" />
@@ -180,6 +185,7 @@
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\wavefront.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

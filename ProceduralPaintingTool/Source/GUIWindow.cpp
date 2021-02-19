@@ -3,6 +3,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+static char m_buffer[512];
+
 void GUIWindow::update()
 {
 	ImGui_ImplOpenGL3_NewFrame();
@@ -19,6 +21,12 @@ void GUIWindow::update()
 	ImGui::SliderFloat3("Rotation", glm::value_ptr(m_transform.rotation), -180.0f, 180.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
 	ImGui::SliderFloat3("Scale", glm::value_ptr(m_transform.scale), -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
 
+	if(ImGui::InputText("Import Mesh", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
+		Mesh t_mesh(m_buffer,Transform(), m_objectManager.getShaders()[0]);
+		m_transform = t_mesh.getTransform();
+		m_objectManager.addMesh(t_mesh);
+		printf("hej");
+	}
 	if (ImGui::Button("Button")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 		counter++;
 	}

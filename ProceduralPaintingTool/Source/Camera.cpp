@@ -3,8 +3,9 @@
 #include <glm/glm.hpp>
 #include "globals.h"
 
-Camera::Camera(const glm::vec3& position, GLFWwindow* window, std::vector<Shader>& shaders) : m_position(position), m_window(window), m_shaders(shaders)
+Camera::Camera(const glm::vec3& position, GLFWwindow* window, ObjectManager& objectManager) : m_position(position), m_window(window), m_objectManager(objectManager)
 {
+
 }
 
 void Camera::update(const float& deltaTime)
@@ -61,7 +62,7 @@ void Camera::update(const float& deltaTime)
 	glm::mat4 t_view = glm::lookAt(m_position, m_position + m_forward, globals::UP);
 	glm::mat4 t_view_matrix = t_projection * t_view;
 
-	for (auto& t_shader : m_shaders) {
+	for (auto& t_shader : m_objectManager.getShaders()) {
 		t_shader.setMatrix4(globals::VIEWPROJECTION, t_view_matrix);
 		t_shader.use();
 	}

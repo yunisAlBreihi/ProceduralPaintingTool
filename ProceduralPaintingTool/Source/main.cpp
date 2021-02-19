@@ -7,10 +7,11 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "Shape.h"
+#include "Mesh.h"
 #include "GUIWindow.h"
 #include "Camera.h"
 #include "Timer.h"
+#include "ObjectManager.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -21,7 +22,8 @@ void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int
 {
 	if (action == GLFW_PRESS) {
 		if (key == GLFW_KEY_ESCAPE) {
-			glfwDestroyWindow(window);
+			//glfwDestroyWindow(window);
+			glfwSetWindowShouldClose(window, true);
 		}
 	}
 }
@@ -79,19 +81,24 @@ int main()
 		0, 2, 3,			//0.1
 	};
 
+	ObjectManager* m_objectManager = new ObjectManager();
+
 	std::vector<Shader> m_shaders;
 
 	Shader m_shaderDefault("Shaders/default.vs", "Shaders/default.fs");
-	m_shaders.push_back(m_shaderDefault);
+	m_objectManager->addShader(m_shaderDefault);
 
-	Shape m_square(m_squareVertices, m_squareIndices, Transform(), m_shaderDefault);
+	Mesh m_monkey("Assets/Monkey.obj", Transform(), m_shaderDefault);
+	m_objectManager->addMesh(m_monkey);
 
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-	GUIWindow m_transformWindow = GUIWindow(m_square.getTransform());
+	Transform& currentTransform = m_monkey.getTransform();
 
-	Camera m_camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), m_window, m_shaders);
+	GUIWindow m_transformWindow = GUIWindow(currentTransform, *m_objectManager);
+
+	Camera m_camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), m_window, *m_objectManager);
 	Timer m_timer;
 
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
@@ -105,23 +112,23 @@ int main()
 
 		//During update
 		m_camera.update(m_timer.deltaTime);
-		m_transformWindow.updateSliders(m_square.getTransform());
-		m_square.update();
+		m_transformWindow.updateSliders(m_monkey.getTransform());
+		m_objectManager->update();
 
 		//render
-		m_square.render(m_window);
+		m_objectManager->render();
 		m_transformWindow.render(m_window);
 
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
 	}
-	//// Cleanup
-	//ImGui_ImplOpenGL3_Shutdown();
-	//ImGui_ImplGlfw_Shutdown();
-	//ImGui::DestroyContext();
+	// Cleanup
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
-	//glfwDestroyWindow(m_window);
-	//glfwTerminate();
+	glfwDestroyWindow(m_window);
+	glfwTerminate();
 
 	return 0;
 }

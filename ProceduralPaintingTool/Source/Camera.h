@@ -2,13 +2,14 @@
 #include "globals.h"
 #include <vector>
 #include "Shader.h"
+#include "ObjectManager.h"
 
 struct GLFWwindow;
 
 class Camera
 {
 private:
-	std::vector<Shader>& m_shaders;
+	ObjectManager& m_objectManager;
 	GLFWwindow* m_window;
 
 	glm::vec3 m_position = glm::vec3(0.0f);
@@ -21,7 +22,7 @@ private:
 	float m_moveSpeed = 3.0f;
 
 public:
-	Camera(const glm::vec3& position, GLFWwindow* window, std::vector<Shader>& shaders);
+	Camera(const glm::vec3& position, GLFWwindow* window, ObjectManager& objectManager);
 
 	void update(const float& deltaTime);
 };
