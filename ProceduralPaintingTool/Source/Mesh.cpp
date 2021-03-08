@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include "wavefront.h"
 
-Mesh::Mesh(const char* path, Transform transform, Shader shader) : m_transform(), m_shader(shader)
+Mesh::Mesh(const char* path, Transform transform, Shader* shader) : m_transform(), m_shader(shader)
 {
 	mesh_load(path);
 }
@@ -15,7 +15,7 @@ void Mesh::update()
 
 void Mesh::render()
 {
-	m_shader.use();
+	m_shader->use();
 	glBindVertexArray(m_vao);
 	glDrawArrays(GL_TRIANGLES, 0, m_draw_count);
 }
@@ -46,7 +46,7 @@ void Mesh::setScale(const glm::vec3& scale)
 void Mesh::updateTransform()
 {
 	glm::mat4 t_model_matrix = m_position_matrix * m_rotation_matrix * m_scale_matrix;
-	m_shader.setMatrix4("u_Model", t_model_matrix);
+	m_shader->setMatrix4("u_Model", t_model_matrix);
 }
 
 void Mesh::mesh_load(const char* path)
@@ -82,9 +82,9 @@ void Mesh::mesh_load(const char* path)
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), 0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3) + sizeof(glm::vec2)));
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3) + sizeof(glm::vec2)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
 
 	m_draw_count = num_verts;
 }

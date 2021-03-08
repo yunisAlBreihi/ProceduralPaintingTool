@@ -10,8 +10,6 @@ Camera::Camera(const glm::vec3& position, GLFWwindow* window, ObjectManager& obj
 
 void Camera::update(const float& deltaTime)
 {
-
-
 	glm::vec3 t_cam_rot = glm::vec3(0.0f);
 	if (glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		t_cam_rot.y -= glm::radians(90.0f);
@@ -63,7 +61,7 @@ void Camera::update(const float& deltaTime)
 	glm::mat4 t_view_matrix = t_projection * t_view;
 
 	for (auto& t_shader : m_objectManager.getShaders()) {
-		t_shader.setMatrix4(globals::VIEWPROJECTION, t_view_matrix);
-		t_shader.use();
+		t_shader->setMatrix4(globals::VIEWPROJECTION, t_view_matrix);
+		t_shader->use();
 	}
 }

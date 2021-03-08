@@ -1,11 +1,11 @@
 #include "ObjectManager.h"
 
-void ObjectManager::addShader(Shader shader)
+void ObjectManager::addShader(Shader* shader)
 {
 	m_shaders.push_back(shader);
 }
 
-void ObjectManager::addMesh(Mesh mesh)
+void ObjectManager::addMesh(Mesh* mesh)
 {
 	m_meshes.push_back(mesh);
 }
@@ -13,13 +13,13 @@ void ObjectManager::addMesh(Mesh mesh)
 void ObjectManager::update()
 {
 	for (auto& mesh : m_meshes) {
-		mesh.update();
+		mesh->update();
 	}
 }
 
 void ObjectManager::render()
 {
 	for (auto& mesh : m_meshes) {
-		mesh.render();
+		mesh->render();
 	}
 }

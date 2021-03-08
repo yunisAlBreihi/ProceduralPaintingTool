@@ -32,5 +32,7 @@ public:
 	Camera(const glm::vec3& position, GLFWwindow* window, ObjectManager& objectManager);
 
 	void update(const float& deltaTime);
+
+	const glm::vec3& getPosition() { return m_position; }
 };
 

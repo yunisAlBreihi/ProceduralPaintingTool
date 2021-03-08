@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "Timer.h"
 #include "ObjectManager.h"
+#include "DirectionalLight.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -85,21 +86,23 @@ int main()
 
 	std::vector<Shader> m_shaders;
 
-	Shader m_shaderDefault("Shaders/default.vs", "Shaders/default.fs");
-	m_objectManager->addShader(m_shaderDefault);
+	Shader* m_shader = new Shader("Shaders/default.vs", "Shaders/default.fs");
+	m_objectManager->addShader(m_shader);
 
-	Mesh m_monkey("Assets/Monkey.obj", Transform(), m_shaderDefault);
+	Mesh* m_monkey = new Mesh("Assets/Sphere.obj", Transform(), m_shader);
 	m_objectManager->addMesh(m_monkey);
 
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-	Transform& currentTransform = m_monkey.getTransform();
+	Transform& currentTransform = m_monkey->getTransform();
 
 	GUIWindow m_transformWindow = GUIWindow(currentTransform, *m_objectManager);
 
 	Camera m_camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), m_window, *m_objectManager);
 	Timer m_timer;
+
+	DirectionalLight m_light;
 
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
 		glfwPollEvents();
@@ -112,7 +115,8 @@ int main()
 
 		//During update
 		m_camera.update(m_timer.deltaTime);
-		m_transformWindow.updateSliders(m_monkey.getTransform());
+		m_light.update(m_shader, normalize(glm::vec3(-1.0f)), m_camera.getPosition());
+		m_transformWindow.updateSliders(m_monkey->getTransform());
 		m_objectManager->update();
 
 		//render

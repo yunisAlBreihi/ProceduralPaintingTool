@@ -10,13 +10,22 @@ struct Vertex
 	glm::vec3 normal;
 };
 
+struct Render_Data {
+	glm::mat4 view_projection = glm::identity<glm::mat4>();
+	glm::mat4 model = glm::identity<glm::mat4>();
+
+	//Lights
+	glm::vec3 directional_light;
+	glm::vec3 eye_position;
+};
+
 class Mesh 
 {
 private:
 	GLuint m_vao = -1;
 	GLuint m_vbo = -1;
 	int m_draw_count = 0;
-	Shader m_shader;
+	Shader* m_shader;
 
 	glm::mat4 m_position_matrix;
 	glm::mat4 m_rotation_matrix;
@@ -29,7 +38,7 @@ private:
 	void updateTransform();
 
 public:
-	Mesh(const char* path, Transform transform, Shader shader);
+	Mesh(const char* path, Transform transform, Shader* shader);
 	void update();
 	void render();
 
