@@ -16,6 +16,5 @@ public:
 	GUIWindow(Transform& transform, ObjectManager& objectManager) : m_transform(transform), m_objectManager(objectManager) {};
 	void update();
 	void render(GLFWwindow* window);
-
 	void updateSliders(Transform& transform);
 };
