@@ -25,13 +25,21 @@ private:
 	float m_farClip = 100.0f;
 
 	float m_moveSpeed = 3.0f;
+	float m_rotateSpeed = 0.003f;
 
-	float ortho_height = 5.0f;
+	float m_ortho_height = 5.0f;
+
+	bool m_perspective = true;
 
 public:
 	Camera(const glm::vec3& position, GLFWwindow* window, ObjectManager& objectManager);
 
 	void update(const float& deltaTime);
+	void update_view();
+
+	glm::quat quat();
+	glm::vec3 forward();
+	glm::vec3 right();
 
 	const glm::vec3& getPosition() { return m_position; }
 };

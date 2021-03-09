@@ -23,10 +23,31 @@ void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int
 {
 	if (action == GLFW_PRESS) {
 		if (key == GLFW_KEY_ESCAPE) {
-			//glfwDestroyWindow(window);
 			glfwSetWindowShouldClose(window, true);
 		}
 	}
+}
+
+void handle_mouse_event(GLFWwindow* window, int button, int action, int modifiers)
+{
+	if (button == GLFW_MOUSE_BUTTON_RIGHT)
+	{
+		if (action == GLFW_PRESS)
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			globals::g_cam_control = true;
+		}
+		else
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			globals::g_cam_control = false;
+		}
+	}
+}
+
+void handle_mouse_pos(GLFWwindow* window, double mouse_x, double mouse_y)
+{
+	globals::g_mouse_position = glm::vec2(mouse_x, mouse_y);
 }
 
 void processInput(GLFWwindow* window)
@@ -52,6 +73,8 @@ int main()
 	glfwMakeContextCurrent(m_window);
 
 	glfwSetKeyCallback(m_window, handle_key_event);
+	glfwSetMouseButtonCallback(m_window, handle_mouse_event);
+	glfwSetCursorPosCallback(m_window, handle_mouse_pos);
 	glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
 	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == GLFW_FALSE) {
@@ -59,7 +82,7 @@ int main()
 		return -1;
 	}
 
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
@@ -89,7 +112,7 @@ int main()
 	Shader* m_shader = new Shader("Shaders/default.vs", "Shaders/default.fs");
 	m_objectManager->addShader(m_shader);
 
-	Mesh* m_monkey = new Mesh("Assets/Sphere.obj", Transform(), m_shader);
+	Mesh* m_monkey = new Mesh("Assets/Monkey.obj", Transform(), m_shader);
 	m_objectManager->addMesh(m_monkey);
 
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
@@ -104,17 +127,23 @@ int main()
 
 	DirectionalLight m_light;
 
+	//Mouse movement
+	glm::vec2 m_last_mouse_position = globals::g_mouse_position;
+
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
 		glfwPollEvents();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//before update
+		//Early update
+		globals::g_mouse_delta = globals::g_mouse_position - m_last_mouse_position;
+		m_last_mouse_position = globals::g_mouse_position;
 		m_transformWindow.update();
 		m_timer.update();
 
-		//During update
+		//Update
 		m_camera.update(m_timer.deltaTime);
+		m_camera.update_view();
 		m_light.update(m_shader, normalize(glm::vec3(-1.0f)), m_camera.getPosition());
 		m_transformWindow.updateSliders(m_monkey->getTransform());
 		m_objectManager->update();

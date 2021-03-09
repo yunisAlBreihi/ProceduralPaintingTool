@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Source\DirectionalLight.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Source\globals.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GUIWindow.cpp" />
