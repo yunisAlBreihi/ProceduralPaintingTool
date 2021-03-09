@@ -12,7 +12,6 @@ void GUIWindow::update()
 	ImGui::NewFrame();
 
 	//Create ImGUI window
-	static int counter = 0;
 
 	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
@@ -22,15 +21,18 @@ void GUIWindow::update()
 	ImGui::SliderFloat3("Scale", glm::value_ptr(m_transform.scale), -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
 
 	if(ImGui::InputText("Import Mesh", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
-		Mesh* t_mesh = new Mesh(m_buffer,Transform(), m_objectManager.getShaders()[0]);
-		m_transform = t_mesh->getTransform();
-		m_objectManager.addMesh(t_mesh);
+		//Mesh* t_mesh = new Mesh(m_buffer,Transform(), m_objectManager.getShaders()[0]);
+		//m_transform = t_mesh->getTransform();
+		//m_objectManager.addMesh(t_mesh);
 	}
 	if (ImGui::Button("Button")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
-		counter++;
+		m_counter++;
+		//Mesh* t_mesh = new Mesh("Assets/Monkey.obj", Transform(), m_objectManager.getShaders()[0]);
+		//t_mesh->setPosition(glm::vec3(m_counter * 1.0f, 0.0f, 0.0f));
+		//m_objectManager.addMesh(t_mesh);
 	}
 	ImGui::SameLine();
-	ImGui::Text("counter = %d", counter);
+	ImGui::Text("counter = %d", m_counter);
 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::End();
@@ -54,7 +56,7 @@ void GUIWindow::render(GLFWwindow* window)
 	}
 }
 
-void GUIWindow::updateSliders(Transform& transform)
+void GUIWindow::updateSliders(Transform transform)
 {
 	m_transform = transform;
 }

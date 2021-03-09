@@ -147,14 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\DirectionalLight.cpp" />
+    <ClCompile Include="Source\Rendering.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\globals.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GUIWindow.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
-    <ClCompile Include="Source\Shape.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />
     <ClCompile Include="Source\imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\imgui\imgui_draw.cpp" />
@@ -169,13 +168,12 @@
     <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\DirectionalLight.h" />
+    <ClInclude Include="Source\Rendering.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\globals.h" />
     <ClInclude Include="Source\GUIWindow.h" />
     <ClInclude Include="Source\Mesh.h" />
-    <ClInclude Include="Source\Shape.h" />
     <ClInclude Include="Source\imgui\imconfig.h" />
     <ClInclude Include="Source\imgui\imgui.h" />
     <ClInclude Include="Source\imgui\imgui_impl_glfw.h" />

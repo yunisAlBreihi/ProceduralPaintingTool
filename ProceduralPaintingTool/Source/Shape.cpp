@@ -65,5 +65,5 @@ void Shape::setScale(const glm::vec3& scale)
 void Shape::updateTransform()
 {
 	glm::mat4 t_model_matrix = m_position_matrix * m_rotation_matrix * m_scale_matrix;
-	m_shader.setMatrix4("u_Model", t_model_matrix);
+	m_shader.set_attribute("u_Model", t_model_matrix);
 }

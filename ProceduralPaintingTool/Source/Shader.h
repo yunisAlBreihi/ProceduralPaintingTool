@@ -44,7 +44,6 @@ public:
 		const char* t_fShaderCode = t_fragmentCode.c_str();
 
 		//create log variables
-		int t_success;
 		char t_infoLog[1024];
 
 		//vertex shader
@@ -80,10 +79,10 @@ public:
 
 	const GLuint& getProgram() const { return m_program; };
 
-	void setInt(const char* name, const int value) const { glUniform1i(glGetUniformLocation(m_program, name), value); }
-	void setFloat(const char* name, const float value) const { glUniform1f(glGetUniformLocation(m_program, name), value); }
-	void setFloat3(const char* name, const float x, const float y, const float z) const { glUniform3f(glGetUniformLocation(m_program, name), x, y, z); }
-	void setFloat4(const char* name, const float r, const float g, const float b, const float a) const { glUniform4f(glGetUniformLocation(m_program, name), r, g, b, a); }
-	void setVec3(const char* name, const glm::vec3& value) const { glUniform3fv(glGetUniformLocation(m_program, name), 1, glm::value_ptr(value)); }
-	void setMatrix4(const char* name, glm::mat4 matrix) { glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, false, glm::value_ptr(matrix)); }
+	void set_attribute(const char* name, const int value) const { glUniform1i(glGetUniformLocation(m_program, name), value); }
+	void set_attribute(const char* name, const float value) const { glUniform1f(glGetUniformLocation(m_program, name), value); }
+	void set_attribute(const char* name, const float x, const float y, const float z) const { glUniform3f(glGetUniformLocation(m_program, name), x, y, z); }
+	void set_attribute(const char* name, const float x, const float y, const float z, const float w) const { glUniform4f(glGetUniformLocation(m_program, name), x, y, z, w); }
+	void set_attribute(const char* name, const glm::vec3& value) const { glUniform3fv(glGetUniformLocation(m_program, name), 1, glm::value_ptr(value)); }
+	void set_attribute(const char* name, glm::mat4 matrix) { glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, false, glm::value_ptr(matrix)); }
 };

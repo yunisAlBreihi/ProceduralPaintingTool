@@ -48,9 +48,6 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Shape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GUIWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,10 +66,10 @@
     <ClCompile Include="Source\ObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DirectionalLight.cpp">
+    <ClCompile Include="Source\globals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\globals.cpp">
+    <ClCompile Include="Source\Rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,9 +104,6 @@
     <ClInclude Include="Source\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Shape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GUIWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -134,7 +128,7 @@
     <ClInclude Include="Source\ObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DirectionalLight.h">
+    <ClInclude Include="Source\Rendering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

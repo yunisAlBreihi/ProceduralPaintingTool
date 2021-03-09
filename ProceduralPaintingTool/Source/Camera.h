@@ -1,15 +1,13 @@
 #pragma once
-#include "globals.h"
 #include <vector>
+#include "globals.h"
 #include "Shader.h"
-#include "ObjectManager.h"
 
 struct GLFWwindow;
 
 class Camera
 {
 private:
-	ObjectManager& m_objectManager;
 	GLFWwindow* m_window;
 
 	glm::vec3 m_position = glm::vec3(0.0f);
@@ -32,11 +30,11 @@ private:
 	bool m_perspective = true;
 
 public:
-	Camera(const glm::vec3& position, GLFWwindow* window, ObjectManager& objectManager);
+	Camera(const glm::vec3& position, GLFWwindow* window);
 
 	void update(const float& deltaTime);
-	void update_view();
 
+	glm::mat4 matrix();
 	glm::quat quat();
 	glm::vec3 forward();
 	glm::vec3 right();

@@ -7,12 +7,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "Mesh.h"
 #include "GUIWindow.h"
-#include "Camera.h"
-#include "Timer.h"
 #include "ObjectManager.h"
-#include "DirectionalLight.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -92,40 +88,11 @@ int main()
 
 	ImGui::StyleColorsDark();
 
-	const std::vector m_squareVertices = {
-		//Position
-		 -0.5f,  -0.5f,  0.0f,					// Bot Left
-		  0.5f,  -0.5f,  0.0f,					// Bot Right
-		  0.5f,   0.5f,  0.0f,					// Top Right
-		 -0.5f,   0.5f,  0.0f,					// Top Left
-	};
-
-	const std::vector m_squareIndices = {
-		0, 1, 2,			//0.0
-		0, 2, 3,			//0.1
-	};
-
-	ObjectManager* m_objectManager = new ObjectManager();
-
-	std::vector<Shader> m_shaders;
-
-	Shader* m_shader = new Shader("Shaders/default.vs", "Shaders/default.fs");
-	m_objectManager->addShader(m_shader);
-
-	Mesh* m_monkey = new Mesh("Assets/Monkey.obj", Transform(), m_shader);
-	m_objectManager->addMesh(m_monkey);
-
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-	Transform& currentTransform = m_monkey->getTransform();
-
-	GUIWindow m_transformWindow = GUIWindow(currentTransform, *m_objectManager);
-
-	Camera m_camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), m_window, *m_objectManager);
-	Timer m_timer;
-
-	DirectionalLight m_light;
+	ObjectManager* m_objectManager = new ObjectManager(m_window);
+	GUIWindow m_transformWindow = GUIWindow(Transform(), *m_objectManager);
 
 	//Mouse movement
 	glm::vec2 m_last_mouse_position = globals::g_mouse_position;
@@ -139,17 +106,12 @@ int main()
 		globals::g_mouse_delta = globals::g_mouse_position - m_last_mouse_position;
 		m_last_mouse_position = globals::g_mouse_position;
 		m_transformWindow.update();
-		m_timer.update();
 
 		//Update
-		m_camera.update(m_timer.deltaTime);
-		m_camera.update_view();
-		m_light.update(m_shader, normalize(glm::vec3(-1.0f)), m_camera.getPosition());
-		m_transformWindow.updateSliders(m_monkey->getTransform());
 		m_objectManager->update();
 
 		//render
-		m_objectManager->render();
+		//m_objectManager->render();
 		m_transformWindow.render(m_window);
 
 		glfwSwapBuffers(m_window);
