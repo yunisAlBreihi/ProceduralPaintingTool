@@ -60,7 +60,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* m_window = glfwCreateWindow(800, 800, "Editor Window", NULL, NULL);
+	GLFWwindow* m_window = glfwCreateWindow(1000, 1000, "Editor Window", NULL, NULL);
 	if (m_window == NULL) {
 		printf("Failed to create GLFW window!\n");
 		glfwTerminate();
