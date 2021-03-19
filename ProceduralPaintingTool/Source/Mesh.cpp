@@ -13,7 +13,7 @@ Mesh::Mesh(const char* path, Transform transform) : m_transform()
 void Mesh::setPosition(const glm::vec3& position)
 {
 	m_transform.position = position;
-	m_position_matrix = translate(glm::identity<glm::mat4>(), position);
+	m_position_matrix = translate(glm::identity<glm::mat4>(), m_transform.position);
 }
 
 void Mesh::setRotation(const float& angle, const glm::vec3& axis)
@@ -29,41 +29,8 @@ void Mesh::setRotation(const float& angle, const glm::vec3& axis)
 void Mesh::setScale(const glm::vec3& scale)
 {
 	m_transform.scale = scale;
-	m_scale_matrix = glm::scale(glm::mat4(1.0f), scale);
+	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
-
-//void Mesh::update()
-//{
-//	updateTransform();
-//}
-
-//glm::mat4 Mesh::setPosition(const glm::vec3& position)
-//{
-//	m_transform.position = position;
-//	m_position_matrix = glm::translate(glm::identity<glm::mat4>(), m_transform.position);
-//	return updateTransform();
-//}
-//
-//glm::mat4 Mesh::setRotation(const glm::vec3& rotation)
-//{
-//	m_transform.rotation = rotation;
-//	m_rotation_matrix = glm::rotate(glm::identity<glm::mat4>(), glm::radians(m_transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-//	m_rotation_matrix = glm::rotate(m_rotation_matrix, glm::radians(m_transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-//	m_rotation_matrix = glm::rotate(m_rotation_matrix, glm::radians(m_transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-//	return updateTransform();
-//}
-//
-//glm::mat4 Mesh::setScale(const glm::vec3& scale)
-//{
-//	m_transform.scale = scale;
-//	m_scale_matrix = glm::scale(glm::identity<glm::mat4>(), m_transform.scale);
-//	return updateTransform();
-//}
-//
-//glm::mat4 Mesh::updateTransform()
-//{
-//	return m_position_matrix * m_rotation_matrix * m_scale_matrix;
-//}
 
 void Mesh::mesh_load(const char* path)
 {

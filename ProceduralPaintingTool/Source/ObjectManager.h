@@ -5,17 +5,19 @@
 #include "Camera.h"
 #include "Timer.h"
 #include "Rendering.h"
+#include "Brush.h"
 
 class ObjectManager
 {
 private:
 	std::vector<Shader*> m_shaders;
-	std::vector<Mesh*> m_meshes;
 
 	GLFWwindow* m_window;
 	Camera* m_camera;
 	Timer* m_timer;
 
+public:
+	std::vector<Mesh*> m_meshes;
 
 public:
 	ObjectManager(GLFWwindow* window);
@@ -25,4 +27,6 @@ public:
 
 	void update();
 	void render();
+
+	void createBiome(Brush brush);
 };

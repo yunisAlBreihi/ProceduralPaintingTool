@@ -3,10 +3,7 @@
 #include <glm/glm.hpp>
 #include "globals.h"
 
-Camera::Camera(const glm::vec3& position, GLFWwindow* window) : m_position(position), m_window(window)
-{
-
-}
+Camera::Camera(const glm::vec3& position, GLFWwindow* window) : m_position(position), m_window(window) {}
 
 void Camera::update(const float& deltaTime)
 {

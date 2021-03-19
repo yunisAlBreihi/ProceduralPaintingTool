@@ -22,8 +22,8 @@ private:
 	float m_nearClip = 0.1f;
 	float m_farClip = 100.0f;
 
-	float m_moveSpeed = 3.0f;
-	float m_rotateSpeed = 0.003f;
+	float m_moveSpeed = 10.0f;
+	float m_rotateSpeed = 0.006f;
 
 	float m_ortho_height = 5.0f;
 

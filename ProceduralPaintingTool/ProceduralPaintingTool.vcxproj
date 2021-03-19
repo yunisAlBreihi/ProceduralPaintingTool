@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Biome.cpp" />
     <ClCompile Include="Source\Rendering.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Source\globals.cpp" />
@@ -168,6 +169,8 @@
     <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Biome.h" />
+    <ClInclude Include="Source\Brush.h" />
     <ClInclude Include="Source\Rendering.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Camera.h" />

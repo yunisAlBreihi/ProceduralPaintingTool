@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "Transform.h"
 #include "ObjectManager.h"
+#include "Brush.h"
 
 class GUIWindow
 {
@@ -11,6 +12,8 @@ private:
 	ObjectManager& m_objectManager;
 	int m_counter = 0;
 	Transform m_transform;
+
+	Brush m_brush;
 
 public:
 	GUIWindow(Transform transform, ObjectManager& objectManager) : m_transform(transform), m_objectManager(objectManager) {};
