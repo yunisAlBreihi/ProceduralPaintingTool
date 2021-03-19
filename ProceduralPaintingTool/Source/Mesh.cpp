@@ -40,7 +40,7 @@ void Mesh::mesh_load(const char* path)
 		return;
 	}
 
-	Vertex* verts = new Vertex[obj->num_triangles * 3];
+	m_verts = new Vertex[obj->num_triangles * 3];
 	int num_verts = 0;
 
 	for (int tri_idx = 0; tri_idx < obj->num_triangles; ++tri_idx) {
@@ -52,15 +52,17 @@ void Mesh::mesh_load(const char* path)
 			new_vertex.normal = obj->normals[vertex.idx_normal];
 			new_vertex.texcoord = obj->texcoords[vertex.idx_texcoord];
 
-			verts[num_verts++] = new_vertex;
+			m_verts[num_verts++] = new_vertex;
 		}
 	}
+	m_vert_count = num_verts;
+
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
 
 	glGenBuffers(1, &m_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * num_verts, verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * num_verts, m_verts, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), 0);

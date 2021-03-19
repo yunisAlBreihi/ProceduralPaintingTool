@@ -22,6 +22,9 @@ public:
 	glm::mat4 m_rotation_matrix = glm::identity<glm::mat4>();
 	glm::mat4 m_scale_matrix = glm::identity<glm::mat4>();
 
+	Vertex* m_verts;
+	int m_vert_count = 0;
+
 	Transform m_transform;
 private:
 	void mesh_load(const char* path);

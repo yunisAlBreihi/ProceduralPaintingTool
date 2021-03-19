@@ -18,6 +18,7 @@ private:
 
 public:
 	std::vector<Mesh*> m_meshes;
+	Mesh* m_terrain;
 
 public:
 	ObjectManager(GLFWwindow* window);

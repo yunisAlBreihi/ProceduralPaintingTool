@@ -4,6 +4,8 @@ Biome::Biome(ObjectManager& objectManager, Brush brush) : m_objectManager(object
 {
 	std::vector<Mesh*> t_createdMeshes;
 
+	float t_terainRadius = 1.0f;
+
 	for (size_t x = 0; x < 10; ++x) {
 		for (size_t z = 0; z < 10; ++z) {
 			//float t_randomSize;
@@ -17,7 +19,7 @@ Biome::Biome(ObjectManager& objectManager, Brush brush) : m_objectManager(object
 
 			//const float t_offsetX = (rand() % 200 - 100) * 0.01f;
 			//const float t_offsetZ = (rand() % 200 - 100) * 0.01f;
-			const glm::vec3 t_treePos = glm::vec3(x * 3 + t_offsetX, 0.0f, z * 3 + t_offsetZ);
+			glm::vec3 t_treePos = glm::vec3(x * 3 + t_offsetX, 0.0f, z * 3 + t_offsetZ);
 
 			bool t_invalidTree = false;
 			for (const auto& t_createdMesh : t_createdMeshes)
@@ -34,6 +36,19 @@ Biome::Biome(ObjectManager& objectManager, Brush brush) : m_objectManager(object
 			if (t_invalidTree == true) {
 				continue;
 			}
+
+			////Check if tree is near a terrain vertex
+			//for (size_t i = 0; i < m_objectManager.m_terrain->m_vert_count; i++)
+			//{
+			//	if (t_treePos.x > m_objectManager.m_terrain->m_verts[i].position.x - t_terainRadius &&
+			//		t_treePos.x < m_objectManager.m_terrain->m_verts[i].position.x + t_terainRadius &&
+			//		t_treePos.z > m_objectManager.m_terrain->m_verts[i].position.z - t_terainRadius &&
+			//		t_treePos.z < m_objectManager.m_terrain->m_verts[i].position.z + t_terainRadius)
+			//	{
+			//		t_treePos.y = m_objectManager.m_terrain->m_verts[i].position.y;
+			//		break;
+			//	}
+			//}
 
 			Mesh* t_mesh = new Mesh("Assets/Tree.obj", Transform());
 			t_mesh->setPosition(t_treePos);

@@ -6,8 +6,7 @@ ObjectManager::ObjectManager(GLFWwindow* window) : m_window(window)
 	Shader* t_shader = new Shader("Shaders/default.vs", "Shaders/default.fs");
 	m_shaders.push_back(t_shader);
 
-	//Mesh* t_mesh = new Mesh("Assets/Terrain.obj", Transform());
-	//m_meshes.push_back(t_mesh);
+	m_terrain = new Mesh("Assets/Terrain.obj", Transform());
 
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), m_window);
 	m_timer = new Timer();
@@ -37,6 +36,10 @@ void ObjectManager::update()
 	for (auto& t_mesh : m_meshes) {
 		t_renderData.m_model = t_mesh->getMatrix();
 		mesh_draw(*t_mesh, t_renderData);
+	}
+	if (m_terrain != nullptr)
+	{
+		mesh_draw(*m_terrain, t_renderData);
 	}
 }
 
