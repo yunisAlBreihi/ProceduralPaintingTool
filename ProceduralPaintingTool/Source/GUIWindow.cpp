@@ -2,6 +2,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "Biome.h"
 
 static char m_buffer[512];
 
@@ -21,7 +22,7 @@ void GUIWindow::update()
 		//ImGui::SliderFloat("Size Range X", m_brush.m_sizeRange.x, -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
 		ImGui::SliderFloat2("Position Range X", glm::value_ptr(m_brush.m_positionOffsetX), -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
 		ImGui::SliderFloat2("Position Range Y", glm::value_ptr(m_brush.m_positionOffsetY), -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
-		//ImGui::SliderFloat3("Scale", glm::value_ptr(m_transform.scale), -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
+		ImGui::SliderFloat("Tree Radius", &m_brush.m_treeRadius, 0.1f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
 
 		if (ImGui::InputText("Import Mesh", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
 			//Mesh* t_mesh = new Mesh(m_buffer,Transform(), m_objectManager.getShaders()[0]);
@@ -40,11 +41,8 @@ void GUIWindow::update()
 		//Mesh* t_mesh = new Mesh("Assets/Monkey.obj", Transform(), m_objectManager.getShaders()[0]);
 		//t_mesh->setPosition(glm::vec3(m_counter * 1.0f, 0.0f, 0.0f));
 		//m_objectManager.addMesh(t_mesh);
-
-		m_objectManager.createBiome(m_brush);
+		Biome(m_objectManager, m_brush);
 	}
-
-
 	
 	ImGui::End();
 }

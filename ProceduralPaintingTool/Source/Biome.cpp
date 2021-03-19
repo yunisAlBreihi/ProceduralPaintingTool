@@ -3,7 +3,6 @@
 Biome::Biome(ObjectManager& objectManager, Brush brush) : m_objectManager(objectManager)
 {
 	std::vector<Mesh*> t_createdMeshes;
-	float t_treeRadius = 4.0f;
 
 	for (size_t x = 0; x < 10; ++x) {
 		for (size_t z = 0; z < 10; ++z) {
@@ -23,10 +22,10 @@ Biome::Biome(ObjectManager& objectManager, Brush brush) : m_objectManager(object
 			bool t_invalidTree = false;
 			for (const auto& t_createdMesh : t_createdMeshes)
 			{
-				if (t_treePos.x > t_createdMesh->getTransform().position.x - t_treeRadius &&
-					t_treePos.x < t_createdMesh->getTransform().position.x + t_treeRadius &&
-					t_treePos.z > t_createdMesh->getTransform().position.z - t_treeRadius &&
-					t_treePos.z < t_createdMesh->getTransform().position.z + t_treeRadius)
+				if (t_treePos.x > t_createdMesh->getTransform().position.x - brush.m_treeRadius &&
+					t_treePos.x < t_createdMesh->getTransform().position.x + brush.m_treeRadius &&
+					t_treePos.z > t_createdMesh->getTransform().position.z - brush.m_treeRadius &&
+					t_treePos.z < t_createdMesh->getTransform().position.z + brush.m_treeRadius)
 				{
 					t_invalidTree = true;
 					break;

@@ -45,8 +45,3 @@ void ObjectManager::render()
 	for (auto& mesh : m_meshes) {
 	}
 }
-
-void ObjectManager::createBiome(Brush brush)
-{
-	Biome t_biome(*this, brush);
-}
