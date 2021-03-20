@@ -39,6 +39,7 @@ void ObjectManager::update()
 	}
 	if (m_terrain != nullptr)
 	{
+		t_renderData.m_model = m_terrain->getMatrix();
 		mesh_draw(*m_terrain, t_renderData);
 	}
 }
