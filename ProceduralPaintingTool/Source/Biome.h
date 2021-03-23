@@ -7,5 +7,5 @@ private:
 	ObjectManager& m_objectManager;
 
 public:
-	Biome(ObjectManager& objectManager, Brush brush);
+	Biome(ObjectManager& objectManager, const std::vector<Brush*>& brushes);
 };

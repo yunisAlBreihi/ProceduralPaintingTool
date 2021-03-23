@@ -13,10 +13,11 @@ private:
 	int m_counter = 0;
 	Transform m_transform;
 
-	Brush m_brush;
+	std::vector<Brush*> m_brushes;
+	Brush* m_currentBrush;
 
 public:
-	GUIWindow(Transform transform, ObjectManager& objectManager) : m_transform(transform), m_objectManager(objectManager) {};
+	GUIWindow(Transform transform, ObjectManager& objectManager);
 	void update();
 	void render(GLFWwindow* window);
 	void updateSliders(Transform transform);

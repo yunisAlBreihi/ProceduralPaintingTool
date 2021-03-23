@@ -31,6 +31,7 @@ private:
 	//glm::mat4 updateTransform();
 
 public:
+	Mesh() {}
 	Mesh(const char* path, Transform transform);
 	//void update();
 

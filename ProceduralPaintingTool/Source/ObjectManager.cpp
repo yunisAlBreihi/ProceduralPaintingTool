@@ -17,9 +17,9 @@ void ObjectManager::addShader(Shader* shader)
 	m_shaders.push_back(shader);
 }
 
-void ObjectManager::addMesh(Mesh* mesh)
+void ObjectManager::addObject(BiomeObject* object)
 {
-	m_meshes.push_back(mesh);
+	m_objects.push_back(object);
 }
 
 void ObjectManager::update()
@@ -33,9 +33,9 @@ void ObjectManager::update()
 	t_renderData.m_shader = m_shaders[0];
 	t_renderData.m_directional_light = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
 
-	for (auto& t_mesh : m_meshes) {
-		t_renderData.m_model = t_mesh->getMatrix();
-		mesh_draw(*t_mesh, t_renderData);
+	for (auto& t_object : m_objects) {
+		t_renderData.m_model = t_object->m_mesh->getMatrix();
+		mesh_draw(*t_object->m_mesh, t_renderData);
 	}
 	if (m_terrain != nullptr)
 	{
@@ -46,6 +46,11 @@ void ObjectManager::update()
 
 void ObjectManager::render()
 {
-	for (auto& mesh : m_meshes) {
+	for (auto& mesh : m_objects) {
 	}
+}
+
+void ObjectManager::clearMeshes()
+{
+	m_objects.clear();
 }

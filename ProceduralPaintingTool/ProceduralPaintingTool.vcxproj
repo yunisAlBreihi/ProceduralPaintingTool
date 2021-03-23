@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Biome.h" />
+    <ClInclude Include="Source\BiomeObject.h" />
     <ClInclude Include="Source\Brush.h" />
     <ClInclude Include="Source\Rendering.h" />
     <ClInclude Include="Source\ObjectManager.h" />

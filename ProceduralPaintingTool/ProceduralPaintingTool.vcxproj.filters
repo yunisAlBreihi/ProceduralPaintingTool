@@ -140,5 +140,8 @@
     <ClInclude Include="Source\Biome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BiomeObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
-#include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
 #include "Timer.h"
 #include "Rendering.h"
 #include "Brush.h"
+#include "BiomeObject.h"
 
 class ObjectManager
 {
@@ -17,17 +17,17 @@ private:
 	Timer* m_timer;
 
 public:
-	std::vector<Mesh*> m_meshes;
+	std::vector<BiomeObject*> m_objects;
 	Mesh* m_terrain;
 
 public:
 	ObjectManager(GLFWwindow* window);
 
 	void addShader(Shader* shader);
-	void addMesh(Mesh* mesh);
+	void addObject(BiomeObject* object);
 
 	void update();
 	void render();
 
-	void createBiome(Brush brush);
+	void clearMeshes();
 };
