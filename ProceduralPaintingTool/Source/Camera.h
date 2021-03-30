@@ -31,7 +31,6 @@ private:
 
 public:
 	Camera(const glm::vec3& position, GLFWwindow* window);
-
 	void update(const float& deltaTime);
 
 	glm::mat4 matrix();
@@ -41,4 +40,3 @@ public:
 
 	const glm::vec3& getPosition() { return m_position; }
 };
-

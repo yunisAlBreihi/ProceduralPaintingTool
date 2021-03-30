@@ -169,6 +169,7 @@
     <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\RayTrace.h" />
     <ClInclude Include="Source\Biome.h" />
     <ClInclude Include="Source\BiomeObject.h" />
     <ClInclude Include="Source\Brush.h" />

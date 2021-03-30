@@ -32,6 +32,20 @@ void Mesh::setScale(const glm::vec3& scale)
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
+const glm::vec3 Mesh::getVertexAtPosition(glm::vec3& targetPosition, float& thresholdRadius)
+{
+	for (size_t i = 0; i < m_vert_count; i++)
+	{
+		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
+			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
+			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
+			targetPosition.z < m_verts[i].position.z + thresholdRadius)
+		{
+			return m_verts[i].position;
+		}
+	}
+}
+
 void Mesh::mesh_load(const char* path)
 {
 	Wavefront_File* obj = wavefront_load(path);

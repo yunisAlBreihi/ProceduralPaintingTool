@@ -34,12 +34,6 @@ void GUIWindow::update()
 		ImGui::SliderInt("Frequency", &m_currentBrush->m_frequency, 0, 20);
 		ImGui::SliderInt("Priority", &m_currentBrush->m_priority, 0, 20);
 
-		//if (ImGui::InputText("Import Mesh", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
-		//	//Mesh* t_mesh = new Mesh(m_buffer,Transform(), m_objectManager.getShaders()[0]);
-		//	//m_transform = t_mesh->getTransform();
-		//	//m_objectManager.addMesh(t_mesh);
-		//}
-
 		//listbox
 		const char* t_items[] = { "Tree", "Bush", "Grass" };
 		static int listbox_item_current = 0;

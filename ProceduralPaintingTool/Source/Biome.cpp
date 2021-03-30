@@ -42,17 +42,7 @@ Biome::Biome(ObjectManager& objectManager, const std::vector<Brush*>& brushes) :
 					}
 
 					//Check if tree is near a terrain vertex
-					for (size_t i = 0; i < m_objectManager.m_terrain->m_vert_count; i++)
-					{
-						if (t_treePos.x > m_objectManager.m_terrain->m_verts[i].position.x - t_terainRadius &&
-							t_treePos.x < m_objectManager.m_terrain->m_verts[i].position.x + t_terainRadius &&
-							t_treePos.z > m_objectManager.m_terrain->m_verts[i].position.z - t_terainRadius &&
-							t_treePos.z < m_objectManager.m_terrain->m_verts[i].position.z + t_terainRadius)
-						{
-							t_treePos.y = m_objectManager.m_terrain->m_verts[i].position.y;
-							break;
-						}
-					}
+					t_treePos.y = m_objectManager.m_terrain->getVertexAtPosition(t_treePos, t_terainRadius).y;
 
 					Mesh* t_mesh = new Mesh(object_path, Transform());
 					t_mesh->setPosition(t_treePos);

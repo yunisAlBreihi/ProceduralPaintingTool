@@ -41,4 +41,6 @@ public:
 
 	Transform& getTransform() { return m_transform; }
 	const glm::mat4& getMatrix() { return m_position_matrix * m_rotation_matrix * m_scale_matrix; }
+
+	const glm::vec3 getVertexAtPosition(glm::vec3& targetPosition, float& thresholdRadius);
 };
