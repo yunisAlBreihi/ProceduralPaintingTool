@@ -13,6 +13,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
+	globals::g_window_size = glm::vec2(width, height);
 }
 
 void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int modifiers)
@@ -26,6 +27,16 @@ void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int
 
 void handle_mouse_event(GLFWwindow* window, int button, int action, int modifiers)
 {
+	if (button == GLFW_MOUSE_BUTTON_LEFT)
+	{
+		if (action == GLFW_PRESS) {
+			globals::g_LMB_hold = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			globals::g_LMB_hold = false;
+		}
+	}
+
 	if (button == GLFW_MOUSE_BUTTON_RIGHT)
 	{
 		if (action == GLFW_PRESS)
@@ -44,6 +55,10 @@ void handle_mouse_event(GLFWwindow* window, int button, int action, int modifier
 void handle_mouse_pos(GLFWwindow* window, double mouse_x, double mouse_y)
 {
 	globals::g_mouse_position = glm::vec2(mouse_x, mouse_y);
+	float y = (2.0f * globals::g_mouse_position.y) / globals::g_window_size.y - 1;
+
+	//printf("MousePosY: %0.1f\n", globals::g_mouse_position.y);
+	//printf("normalized MouseY: %0.1f\n", y);
 }
 
 void processInput(GLFWwindow* window)
@@ -60,7 +75,8 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* m_window = glfwCreateWindow(1000, 1000, "Editor Window", NULL, NULL);
+	globals::g_window_size = glm::vec2(1000);
+	GLFWwindow* m_window = glfwCreateWindow(globals::g_window_size.x, globals::g_window_size.y, "Editor Window", NULL, NULL);
 	if (m_window == NULL) {
 		printf("Failed to create GLFW window!\n");
 		glfwTerminate();

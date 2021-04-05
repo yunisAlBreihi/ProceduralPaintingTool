@@ -22,7 +22,7 @@ public:
 	glm::mat4 m_rotation_matrix = glm::identity<glm::mat4>();
 	glm::mat4 m_scale_matrix = glm::identity<glm::mat4>();
 
-	Vertex* m_verts;
+	Vertex* m_verts = nullptr;
 	int m_vert_count = 0;
 
 	Transform m_transform;
@@ -42,5 +42,6 @@ public:
 	Transform& getTransform() { return m_transform; }
 	const glm::mat4& getMatrix() { return m_position_matrix * m_rotation_matrix * m_scale_matrix; }
 
-	const glm::vec3 getVertexAtPosition(glm::vec3& targetPosition, float& thresholdRadius);
+	const glm::vec3 getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
+	const glm::vec3 getFlatVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
 };

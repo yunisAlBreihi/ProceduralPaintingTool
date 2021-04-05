@@ -32,18 +32,36 @@ void Mesh::setScale(const glm::vec3& scale)
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
-const glm::vec3 Mesh::getVertexAtPosition(glm::vec3& targetPosition, float& thresholdRadius)
+const glm::vec3 Mesh::getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius)
+{
+	for (size_t i = 0; i < m_vert_count; i++)
+	{
+		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
+			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
+			targetPosition.y > m_verts[i].position.y - thresholdRadius &&
+			targetPosition.y < m_verts[i].position.y + thresholdRadius &&
+			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
+			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
+			return m_verts[i].position;
+		}
+	}
+	return glm::vec3(0.0f);
+}
+
+const glm::vec3 Mesh::getFlatVertexAtPosition(glm::vec3& targetPosition,float thresholdRadius)
 {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
 		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
 			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
 			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
-			targetPosition.z < m_verts[i].position.z + thresholdRadius)
-		{
+			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
+			printf("hit!\n");
 			return m_verts[i].position;
 		}
 	}
+	printf("Could not find a vertex, returning zero vector\n");
+	return glm::vec3(0.0f);
 }
 
 void Mesh::mesh_load(const char* path)
