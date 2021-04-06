@@ -67,7 +67,8 @@ void ObjectManager::update()
 
 	m_mousePicker->update();
 	if (globals::g_LMB_hold == true) {
-		raycastFromCamera(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 3.0f);
+		Vertex t_vertex = raycastFromCameraVertex(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 3.0f);
+		m_terrain->setVertexColor(t_vertex.index, glm::vec4(0.0f, 0.4f, 0.0f, 1.0f));
 	}
 }
 

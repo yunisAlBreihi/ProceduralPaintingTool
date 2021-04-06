@@ -26,13 +26,19 @@ void Mesh::setRotation(const float& angle, const glm::vec3& axis)
 	m_rotation_matrix = glm::rotate(glm::mat4(1.0f), angle, axis);
 }
 
+void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color)
+{
+	m_verts[vertexIndex].color = color;
+	update_bufferData();
+}
+
 void Mesh::setScale(const glm::vec3& scale)
 {
 	m_transform.scale = scale;
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
-const glm::vec3 Mesh::getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius)
+const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius)
 {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
@@ -42,13 +48,13 @@ const glm::vec3 Mesh::getVertexAtPosition(glm::vec3& targetPosition, float thres
 			targetPosition.y < m_verts[i].position.y + thresholdRadius &&
 			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
 			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
-			return m_verts[i].position;
+			return m_verts[i];
 		}
 	}
-	return glm::vec3(0.0f);
+	return Vertex{};
 }
 
-const glm::vec3 Mesh::getFlatVertexAtPosition(glm::vec3& targetPosition,float thresholdRadius)
+const Vertex& Mesh::getVertexAtFlatPosition(glm::vec3& targetPosition,float thresholdRadius)
 {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
@@ -56,12 +62,10 @@ const glm::vec3 Mesh::getFlatVertexAtPosition(glm::vec3& targetPosition,float th
 			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
 			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
 			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
-			printf("hit!\n");
-			return m_verts[i].position;
+			return m_verts[i];
 		}
 	}
-	printf("Could not find a vertex, returning zero vector\n");
-	return glm::vec3(0.0f);
+	return Vertex{};
 }
 
 void Mesh::mesh_load(const char* path)
@@ -83,6 +87,8 @@ void Mesh::mesh_load(const char* path)
 			new_vertex.position = obj->positions[vertex.idx_position];
 			new_vertex.normal = obj->normals[vertex.idx_normal];
 			new_vertex.texcoord = obj->texcoords[vertex.idx_texcoord];
+			new_vertex.color = glm::vec4(tri_idx * 0.0001f, 0.0f, 0.0f, 1.0f);
+			new_vertex.index = vert_idx;
 
 			m_verts[num_verts++] = new_vertex;
 		}
@@ -93,8 +99,8 @@ void Mesh::mesh_load(const char* path)
 	glBindVertexArray(m_vao);
 
 	glGenBuffers(1, &m_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * num_verts, m_verts, GL_STATIC_DRAW);
+
+	update_bufferData();
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), 0);
@@ -102,6 +108,14 @@ void Mesh::mesh_load(const char* path)
 	glVertexAttribPointer(1, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3) + sizeof(glm::vec2)));
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(glm::vec3) + sizeof(glm::vec2) + sizeof(glm::vec3)));
 
 	m_draw_count = num_verts;
+}
+
+void Mesh::update_bufferData()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vert_count, m_verts, GL_STATIC_DRAW);
 }

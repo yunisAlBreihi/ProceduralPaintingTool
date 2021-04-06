@@ -9,6 +9,9 @@ struct Vertex
 	glm::vec3 position;
 	glm::vec2 texcoord;
 	glm::vec3 normal;
+	glm::vec4 color;
+
+	int index;
 };
 
 class Mesh
@@ -28,8 +31,8 @@ public:
 	Transform m_transform;
 private:
 	void mesh_load(const char* path);
-	//glm::mat4 updateTransform();
-
+	void update_bufferData();
+	
 public:
 	Mesh() {}
 	Mesh(const char* path, Transform transform);
@@ -37,11 +40,12 @@ public:
 
 	void setPosition(const glm::vec3& position);
 	void setRotation(const float& angle, const glm::vec3& axis);
+	void setVertexColor(int vertexIndex, const glm::vec4& color);
 	void setScale(const glm::vec3& scale);
 
 	Transform& getTransform() { return m_transform; }
 	const glm::mat4& getMatrix() { return m_position_matrix * m_rotation_matrix * m_scale_matrix; }
 
-	const glm::vec3 getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
-	const glm::vec3 getFlatVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
+	const Vertex& getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
+	const Vertex& getVertexAtFlatPosition(glm::vec3& targetPosition, float thresholdRadius);
 };

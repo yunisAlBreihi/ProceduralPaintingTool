@@ -1,6 +1,7 @@
 #version 330 core
 in vec3 f_World;
 in vec3 f_Normal;
+in vec4 f_Color;
 
 uniform vec3 u_DirectionalLight;
 uniform vec3 u_EyePosition;
@@ -39,5 +40,5 @@ void main()
 
 	vec3 ambient = AMBIENT * AMBIENT_STRENGTH;
 
-	o_Color = vec4(ambient + light_clr, 1.0);
+	o_Color = vec4(ambient + light_clr + f_Color.xyz, 1.0 + f_Color.w);
 }

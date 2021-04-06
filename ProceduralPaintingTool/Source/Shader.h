@@ -84,5 +84,6 @@ public:
 	void set_attribute(const char* name, const float x, const float y, const float z) const { glUniform3f(glGetUniformLocation(m_program, name), x, y, z); }
 	void set_attribute(const char* name, const float x, const float y, const float z, const float w) const { glUniform4f(glGetUniformLocation(m_program, name), x, y, z, w); }
 	void set_attribute(const char* name, const glm::vec3& value) const { glUniform3fv(glGetUniformLocation(m_program, name), 1, glm::value_ptr(value)); }
+	void set_attribute(const char* name, const glm::vec4& value) const { glUniform4fv(glGetUniformLocation(m_program, name), 1, glm::value_ptr(value)); }
 	void set_attribute(const char* name, glm::mat4 matrix) { glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, false, glm::value_ptr(matrix)); }
 };
