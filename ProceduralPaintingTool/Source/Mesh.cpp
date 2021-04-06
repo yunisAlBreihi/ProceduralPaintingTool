@@ -88,8 +88,7 @@ void Mesh::mesh_load(const char* path)
 			new_vertex.normal = obj->normals[vertex.idx_normal];
 			new_vertex.texcoord = obj->texcoords[vertex.idx_texcoord];
 			new_vertex.color = glm::vec4(tri_idx * 0.0001f, 0.0f, 0.0f, 1.0f);
-			new_vertex.index = vert_idx;
-
+			new_vertex.index = num_verts;
 			m_verts[num_verts++] = new_vertex;
 		}
 	}
