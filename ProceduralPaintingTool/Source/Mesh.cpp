@@ -54,10 +54,23 @@ const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float thresho
 	return Vertex{};
 }
 
+const std::vector<Vertex>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float thresholdRadius)
+{
+	std::vector<Vertex> t_vertices;
+	for (size_t i = 0; i < m_vert_count; i++) {
+		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
+			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
+			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
+			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
+			t_vertices.push_back(m_verts[i]);
+		}
+	}
+	return t_vertices;
+}
+
 const Vertex& Mesh::getVertexAtFlatPosition(glm::vec3& targetPosition,float thresholdRadius)
 {
-	for (size_t i = 0; i < m_vert_count; i++)
-	{
+	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
 			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
 			targetPosition.z > m_verts[i].position.z - thresholdRadius &&

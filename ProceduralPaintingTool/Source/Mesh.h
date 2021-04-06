@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Transform.h"
 #include "Rendering.h"
+#include <vector>
 
 struct Vertex
 {
@@ -36,7 +37,6 @@ private:
 public:
 	Mesh() {}
 	Mesh(const char* path, Transform transform);
-	//void update();
 
 	void setPosition(const glm::vec3& position);
 	void setRotation(const float& angle, const glm::vec3& axis);
@@ -47,5 +47,6 @@ public:
 	const glm::mat4& getMatrix() { return m_position_matrix * m_rotation_matrix * m_scale_matrix; }
 
 	const Vertex& getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
+	const std::vector<Vertex>& getVertexAtPositionRadius(glm::vec3& targetPosition, float thresholdRadius);
 	const Vertex& getVertexAtFlatPosition(glm::vec3& targetPosition, float thresholdRadius);
 };
