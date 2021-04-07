@@ -27,7 +27,10 @@ const std::vector<Vertex>& raycastFromCameraVertexRadius(Camera& camera, MousePi
 	for (size_t i = 0; i < traceSteps; i++)	{
 		glm::vec3 t_rayPosition = camera.getPosition() + mousePicker.getCurrentRay() * (stepDistance * i);
 		const std::vector<Vertex>& t_vertices = targetMesh.getVertexAtPositionRadius(t_rayPosition, hitRadius);
-		return t_vertices;
+		if (t_vertices.empty() == false)
+		{
+			return t_vertices;
+		}
 	}
 	return std::vector<Vertex>();
 }

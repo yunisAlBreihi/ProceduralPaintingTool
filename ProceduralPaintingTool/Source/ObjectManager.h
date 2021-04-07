@@ -7,19 +7,26 @@
 #include "Brush.h"
 #include "BiomeObject.h"
 #include "MousePicker.h"
+#include "Debug.h"
 
 class ObjectManager
 {
 private:
-	std::vector<Shader*> m_shaders;
 	std::vector<BiomeObject*> m_objects;
 
 	std::vector<Mesh*> m_debugMeshes;
 
-	GLFWwindow* m_window;
-	Camera* m_camera;
-	Timer* m_timer;
-	MousePicker* m_mousePicker;
+	std::vector<DebugLine> m_debugLines;
+
+	GLFWwindow* m_window = nullptr;
+	Camera* m_camera = nullptr;
+	Timer* m_timer = nullptr;
+	MousePicker* m_mousePicker = nullptr;
+
+	bool m_drawDebugLines = true;
+
+	Shader* m_defaultShader = nullptr;
+	Shader* m_debugShader = nullptr;
 
 public:
 	Mesh* m_terrain;
@@ -27,7 +34,6 @@ public:
 public:
 	ObjectManager(GLFWwindow* window);
 
-	void addShader(Shader* shader);
 	void addObject(BiomeObject* object);
 	void addDebugMesh(Mesh* mesh);
 

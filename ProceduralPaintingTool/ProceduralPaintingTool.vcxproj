@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Biome.cpp" />
+    <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\MousePicker.cpp" />
     <ClCompile Include="Source\Rendering.cpp" />
     <ClCompile Include="glad.c" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\MousePicker.h" />
     <ClInclude Include="Source\Raycast.h" />
     <ClInclude Include="Source\Biome.h" />
@@ -193,6 +195,7 @@
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="Source\wavefront.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

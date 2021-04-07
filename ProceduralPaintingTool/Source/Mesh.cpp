@@ -38,43 +38,46 @@ void Mesh::setScale(const glm::vec3& scale)
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
-const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius)
+const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius)
 {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
-		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
-			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
-			targetPosition.y > m_verts[i].position.y - thresholdRadius &&
-			targetPosition.y < m_verts[i].position.y + thresholdRadius &&
-			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
-			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
+		if (targetPosition.x > m_verts[i].position.x - radius &&
+			targetPosition.x < m_verts[i].position.x + radius &&
+			targetPosition.y > m_verts[i].position.y - radius &&
+			targetPosition.y < m_verts[i].position.y + radius &&
+			targetPosition.z > m_verts[i].position.z - radius &&
+			targetPosition.z < m_verts[i].position.z + radius) {
 			return m_verts[i];
 		}
 	}
 	return Vertex{};
 }
 
-const std::vector<Vertex>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float thresholdRadius)
+const std::vector<Vertex>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float radius)
 {
-	std::vector<Vertex> t_vertices;
-	for (size_t i = 0; i < m_vert_count; i++) {
-		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
-			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
-			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
-			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
-			t_vertices.push_back(m_verts[i]);
+	m_areaVertices.clear();
+	for (size_t i = 0; i < m_vert_count; i++)
+	{
+		if (targetPosition.x > m_verts[i].position.x - radius &&
+			targetPosition.x < m_verts[i].position.x + radius &&
+			targetPosition.y > m_verts[i].position.y - radius &&
+			targetPosition.y < m_verts[i].position.y + radius &&
+			targetPosition.z > m_verts[i].position.z - radius &&
+			targetPosition.z < m_verts[i].position.z + radius) {
+			m_areaVertices.push_back(m_verts[i]);
 		}
 	}
-	return t_vertices;
+	return m_areaVertices;
 }
 
-const Vertex& Mesh::getVertexAtFlatPosition(glm::vec3& targetPosition,float thresholdRadius)
+const Vertex& Mesh::getVertexAtFlatPosition(glm::vec3& targetPosition,float radius)
 {
 	for (size_t i = 0; i < m_vert_count; i++) {
-		if (targetPosition.x > m_verts[i].position.x - thresholdRadius &&
-			targetPosition.x < m_verts[i].position.x + thresholdRadius &&
-			targetPosition.z > m_verts[i].position.z - thresholdRadius &&
-			targetPosition.z < m_verts[i].position.z + thresholdRadius) {
+		if (targetPosition.x > m_verts[i].position.x - radius &&
+			targetPosition.x < m_verts[i].position.x + radius &&
+			targetPosition.z > m_verts[i].position.z - radius &&
+			targetPosition.z < m_verts[i].position.z + radius) {
 			return m_verts[i];
 		}
 	}

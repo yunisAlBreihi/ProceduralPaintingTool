@@ -19,3 +19,13 @@ void mesh_draw(const Mesh& mesh, const RenderData& data)
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh.m_draw_count);
 }
+
+void debugLine_draw(const DebugLine& debugLine, const RenderData& data) 
+{
+	glBindVertexArray(debugLine.m_vao);
+
+	//Set material
+	data.m_shader->use();
+
+	glDrawArrays(GL_LINES, 0, debugLine.m_draw_count);
+}

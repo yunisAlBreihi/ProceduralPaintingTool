@@ -5,19 +5,14 @@
 
 ObjectManager::ObjectManager(GLFWwindow* window) : m_window(window)
 {
-	Shader* t_shader = new Shader("Shaders/default.vs", "Shaders/default.fs");
-	m_shaders.push_back(t_shader);
+	m_defaultShader = new Shader("Shaders/default.vs", "Shaders/default.fs");
+	m_debugShader = new Shader("Shaders/Debug.vs", "Shaders/Debug.fs");
 
 	m_terrain = new Mesh("Assets/Terrain.obj", Transform());
 
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), m_window);
 	m_timer = new Timer();
 	m_mousePicker = new MousePicker(m_camera);
-}
-
-void ObjectManager::addShader(Shader* shader)
-{
-	m_shaders.push_back(shader);
 }
 
 void ObjectManager::addObject(BiomeObject* object)
@@ -35,44 +30,45 @@ void ObjectManager::update()
 	m_timer->update();
 	m_camera->update(m_timer->deltaTime);
 
-	//if (glfwGetKey(m_window, GLFW_KEY_Q) == GLFW_PRESS)
-	//{
-	//	Transform t_transform;
-	//	//t_transform.position = m_camera->get3Dpos();
-
-	//	Mesh* t_mesh = new Mesh("Assets/Cube.obj", t_transform);
-	//	addDebugMesh(t_mesh);
-	//}
-
-	RenderData t_renderData;
-	t_renderData.m_eye_position = m_camera->getPosition();
-	t_renderData.m_view_projection = m_camera->matrix();
-	t_renderData.m_shader = m_shaders[0];
-	t_renderData.m_directional_light = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
+	//Draw meshes
+	RenderData t_mesh_RD;
+	t_mesh_RD.m_eye_position = m_camera->getPosition();
+	t_mesh_RD.m_view_projection = m_camera->matrix();
+	t_mesh_RD.m_shader = m_defaultShader;
+	t_mesh_RD.m_directional_light = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
 
 	for (auto& t_object : m_objects) {
-		t_renderData.m_model = t_object->m_mesh->getMatrix();
-		mesh_draw(*t_object->m_mesh, t_renderData);
+		t_mesh_RD.m_model = t_object->m_mesh->getMatrix();
+		mesh_draw(*t_object->m_mesh, t_mesh_RD);
 	}
 	for (auto& t_debugMesh : m_debugMeshes)
 	{
-		t_renderData.m_model = t_debugMesh->getMatrix();
-		mesh_draw(*t_debugMesh, t_renderData);
+		t_mesh_RD.m_model = t_debugMesh->getMatrix();
+		mesh_draw(*t_debugMesh, t_mesh_RD);
 	}
 	if (m_terrain != nullptr)
 	{
-		t_renderData.m_model = m_terrain->getMatrix();
-		mesh_draw(*m_terrain, t_renderData);
+		t_mesh_RD.m_model = m_terrain->getMatrix();
+		mesh_draw(*m_terrain, t_mesh_RD);
+	}
+
+	//Draw debug lines
+	RenderData t_debugLine_RD;
+	t_debugLine_RD.m_shader = m_debugShader;
+
+	for (auto& t_debugLine : m_debugLines) {
+		if (t_debugLine.active()) {
+			debugLine_draw(t_debugLine, t_mesh_RD);
+			t_debugLine.update(m_timer->deltaTime);
+		}
 	}
 
 	m_mousePicker->update();
 	if (globals::g_LMB_hold == true) {
-		//const std::vector<Vertex>& t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 1.0f);
-		//for (const auto& t_vertex : t_vertices) {
-		//	m_terrain->setVertexColor(t_vertex.index, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-		//}
-		Vertex t_vertex = raycastFromCameraVertex(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 1.0f);
-		m_terrain->setVertexColor(t_vertex.index, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+		const std::vector<Vertex>& t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
+		for (const auto& t_vertex : t_vertices) {
+			m_terrain->setVertexColor(t_vertex.index, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+		}
 	}
 }
 

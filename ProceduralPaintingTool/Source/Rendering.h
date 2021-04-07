@@ -1,5 +1,6 @@
 #pragma once
 #include "glm/ext/matrix_transform.hpp"
+#include "Debug.h"
 
 class Mesh;
 class Shader;
@@ -17,3 +18,4 @@ struct RenderData
 };
 
 void mesh_draw(const Mesh& mesh, const RenderData& data);
+void debugLine_draw(const DebugLine& debugLine, const RenderData& data);

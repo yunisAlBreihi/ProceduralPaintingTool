@@ -4,16 +4,8 @@
 #include "Transform.h"
 #include "Rendering.h"
 #include <vector>
+#include "Vertex.h"
 
-struct Vertex
-{
-	glm::vec3 position;
-	glm::vec2 texcoord;
-	glm::vec3 normal;
-	glm::vec4 color;
-
-	int index;
-};
 
 class Mesh
 {
@@ -26,6 +18,7 @@ public:
 	glm::mat4 m_rotation_matrix = glm::identity<glm::mat4>();
 	glm::mat4 m_scale_matrix = glm::identity<glm::mat4>();
 
+	std::vector<Vertex> m_areaVertices;
 	Vertex* m_verts = nullptr;
 	int m_vert_count = 0;
 
