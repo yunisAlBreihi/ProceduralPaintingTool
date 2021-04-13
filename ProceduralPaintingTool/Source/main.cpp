@@ -7,7 +7,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "GUIWindow.h"
+#include "GUIBrushProperties.h"
 #include "ObjectManager.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -108,7 +108,7 @@ int main()
 	ImGui_ImplOpenGL3_Init("#version 330");
 
 	ObjectManager* m_objectManager = new ObjectManager(m_window);
-	GUIWindow m_transformWindow = GUIWindow(Transform(), *m_objectManager);
+	GUIBrushProperties m_GUIBrushProperties = GUIBrushProperties(*m_objectManager);
 
 	//Mouse movement
 	glm::vec2 m_last_mouse_position = globals::g_mouse_position;
@@ -121,14 +121,14 @@ int main()
 		//Early update
 		globals::g_mouse_delta = globals::g_mouse_position - m_last_mouse_position;
 		m_last_mouse_position = globals::g_mouse_position;
-		m_transformWindow.update();
+		m_GUIBrushProperties.update();
+		m_GUIBrushProperties.render(m_window);
 
 		//Update
 		m_objectManager->update();
 
 		//render
 		//m_objectManager->render();
-		m_transformWindow.render(m_window);
 
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();

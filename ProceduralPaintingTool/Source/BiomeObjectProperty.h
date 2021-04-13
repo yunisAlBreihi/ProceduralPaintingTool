@@ -1,6 +1,9 @@
 #pragma once
+#include <glm/glm.hpp>
+#include <string>
 
-struct Brush
+
+struct BiomeObjectProperty
 {
 public:
 	glm::vec2 m_sizeOffset{ 0.9f, 1.1f };
@@ -9,4 +12,5 @@ public:
 	float m_radius{ 2.0f };
 	int m_frequency{ 1 };
 	int m_priority{ 0 };
+	std::string m_name = "";
 };

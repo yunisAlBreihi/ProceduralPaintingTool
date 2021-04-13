@@ -2,6 +2,7 @@
 #include "Biome.h"
 #include "GLFW/glfw3.h"
 #include "Raycast.h"
+#include <algorithm>
 
 ObjectManager::ObjectManager(GLFWwindow* window) : m_window(window)
 {
@@ -15,7 +16,7 @@ ObjectManager::ObjectManager(GLFWwindow* window) : m_window(window)
 	m_mousePicker = new MousePicker(m_camera);
 }
 
-void ObjectManager::addObject(BiomeObject* object)
+void ObjectManager::addObject(BiomeBrush* object)
 {
 	m_objects.push_back(object);
 }
@@ -65,7 +66,7 @@ void ObjectManager::update()
 
 	m_mousePicker->update();
 	if (globals::g_LMB_hold == true) {
-		const std::vector<Vertex>& t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
+		std::vector<Vertex> t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
 		for (const auto& t_vertex : t_vertices) {
 			m_terrain->setVertexColor(t_vertex.index, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 		}

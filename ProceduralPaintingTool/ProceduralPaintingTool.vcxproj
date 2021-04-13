@@ -155,7 +155,7 @@
     <ClCompile Include="Source\globals.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\GUIWindow.cpp" />
+    <ClCompile Include="Source\GUIBrushProperties.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\imgui\imgui.cpp" />
     <ClCompile Include="Source\imgui\imgui_demo.cpp" />
@@ -171,17 +171,18 @@
     <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BiomeProperty.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\MousePicker.h" />
     <ClInclude Include="Source\Raycast.h" />
     <ClInclude Include="Source\Biome.h" />
-    <ClInclude Include="Source\BiomeObject.h" />
-    <ClInclude Include="Source\Brush.h" />
+    <ClInclude Include="Source\BiomeBrush.h" />
+    <ClInclude Include="Source\BiomeObjectProperty.h" />
     <ClInclude Include="Source\Rendering.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\globals.h" />
-    <ClInclude Include="Source\GUIWindow.h" />
+    <ClInclude Include="Source\GUIBrushProperties.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\imgui\imconfig.h" />
     <ClInclude Include="Source\imgui\imgui.h" />

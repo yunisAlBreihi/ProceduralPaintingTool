@@ -4,15 +4,15 @@
 #include "Camera.h"
 #include "Timer.h"
 #include "Rendering.h"
-#include "Brush.h"
-#include "BiomeObject.h"
+#include "BiomeProperty.h"
+#include "BiomeBrush.h"
 #include "MousePicker.h"
 #include "Debug.h"
 
 class ObjectManager
 {
 private:
-	std::vector<BiomeObject*> m_objects;
+	std::vector<BiomeBrush*> m_objects;
 
 	std::vector<Mesh*> m_debugMeshes;
 
@@ -34,7 +34,7 @@ public:
 public:
 	ObjectManager(GLFWwindow* window);
 
-	void addObject(BiomeObject* object);
+	void addObject(BiomeBrush* object);
 	void addDebugMesh(Mesh* mesh);
 
 	void update();
