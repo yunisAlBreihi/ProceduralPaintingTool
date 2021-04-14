@@ -4,19 +4,20 @@
 #include "Camera.h"
 #include "Timer.h"
 #include "Rendering.h"
-#include "BiomeProperty.h"
+#include "BrushProperty.h"
 #include "BiomeBrush.h"
 #include "MousePicker.h"
 #include "Debug.h"
+#include "BrushManager.h"
 
 class ObjectManager
 {
 private:
 	std::vector<BiomeBrush*> m_objects;
-
 	std::vector<Mesh*> m_debugMeshes;
-
 	std::vector<DebugLine> m_debugLines;
+
+	BrushManager& m_brushManager;
 
 	GLFWwindow* m_window = nullptr;
 	Camera* m_camera = nullptr;
@@ -32,11 +33,10 @@ public:
 	Mesh* m_terrain;
 
 public:
-	ObjectManager(GLFWwindow* window);
+	ObjectManager(GLFWwindow* window, BrushManager& brushManager);
 
 	void addObject(BiomeBrush* object);
 	void addDebugMesh(Mesh* mesh);
-
 	void update();
 
 	void clearMeshes();

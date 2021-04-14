@@ -32,6 +32,13 @@ void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color)
 	update_bufferData();
 }
 
+void Mesh::setVertexColor(int vertexIndex, const float* color)
+{
+	glm::vec4 t_color {color[0], color[1], color[2], color[4]};
+	m_verts[vertexIndex].color = t_color;
+	update_bufferData();
+}
+
 void Mesh::setScale(const glm::vec3& scale)
 {
 	m_transform.scale = scale;

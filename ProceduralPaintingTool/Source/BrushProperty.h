@@ -3,12 +3,13 @@
 #include <string>
 #include "BiomeObjectProperty.h"
 
-struct BiomeProperty {
+struct BrushProperty {
 public:
 	std::vector<BiomeObjectProperty*> m_objectProperties;
 	int m_current_object = -1;
+	float m_vertexColor[4] = { 1.0f,0.0f,1.0f,1.0f };
 
-	std::vector<const char*> getObjectNames_C()	{
+	std::vector<const char*> getObjectNames_C() {
 		std::vector<const char*> t_objectTypes;
 
 		for (const auto& t_objectType : m_objectProperties) {

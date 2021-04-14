@@ -3,17 +3,17 @@
 #include <GLFW/glfw3.h>
 #include "Transform.h"
 #include "ObjectManager.h"
-#include "BiomeProperty.h"
+#include "BrushProperty.h"
+#include "BrushManager.h"
 
 class GUIBrushProperties
 {
 private:
 
 	ObjectManager& m_objectManager;
+	BrushManager& m_brushManager;
 	Transform m_transform;
 
-	std::vector<BiomeProperty*> m_biomeProperties;
-	BiomeProperty* m_currentBiomeProperty;
 	BiomeObjectProperty* m_currentObjectProperty;
 
 	int m_brushCount = 0;
@@ -23,7 +23,7 @@ private:
 	char m_buffer[m_bufferSize] = "Assets/";
 
 public:
-	GUIBrushProperties(ObjectManager& objectManager);
+	GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager);
 	void update();
 	void render(GLFWwindow* window);
 };

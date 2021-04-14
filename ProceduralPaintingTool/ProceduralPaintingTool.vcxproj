@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Biome.cpp" />
+    <ClCompile Include="Source\BrushManager.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\MousePicker.cpp" />
     <ClCompile Include="Source\Rendering.cpp" />
@@ -171,7 +172,8 @@
     <ClCompile Include="Source\wavefront.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\BiomeProperty.h" />
+    <ClInclude Include="Source\BrushManager.h" />
+    <ClInclude Include="Source\BrushProperty.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\MousePicker.h" />
     <ClInclude Include="Source\Raycast.h" />

@@ -9,6 +9,7 @@
 
 #include "GUIBrushProperties.h"
 #include "ObjectManager.h"
+#include "BrushManager.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -107,8 +108,9 @@ int main()
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
 
-	ObjectManager* m_objectManager = new ObjectManager(m_window);
-	GUIBrushProperties m_GUIBrushProperties = GUIBrushProperties(*m_objectManager);
+	BrushManager* m_brushManager = new BrushManager();
+	ObjectManager* m_objectManager = new ObjectManager(m_window, *m_brushManager);
+	GUIBrushProperties m_GUIBrushProperties = GUIBrushProperties(*m_objectManager, *m_brushManager);
 
 	//Mouse movement
 	glm::vec2 m_last_mouse_position = globals::g_mouse_position;

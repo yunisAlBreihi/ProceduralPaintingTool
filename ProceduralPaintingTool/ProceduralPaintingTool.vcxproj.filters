@@ -84,6 +84,9 @@
     <ClCompile Include="Source\GUIBrushProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BrushManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\stb_image.h">
@@ -164,7 +167,10 @@
     <ClInclude Include="Source\BiomeObjectProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BiomeProperty.h">
+    <ClInclude Include="Source\BrushProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BrushManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,8 +4,7 @@
 #include "Raycast.h"
 #include <algorithm>
 
-ObjectManager::ObjectManager(GLFWwindow* window) : m_window(window)
-{
+ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m_window(window), m_brushManager(brushManager) {
 	m_defaultShader = new Shader("Shaders/default.vs", "Shaders/default.fs");
 	m_debugShader = new Shader("Shaders/Debug.vs", "Shaders/Debug.fs");
 
@@ -68,7 +67,9 @@ void ObjectManager::update()
 	if (globals::g_LMB_hold == true) {
 		std::vector<Vertex> t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
 		for (const auto& t_vertex : t_vertices) {
-			m_terrain->setVertexColor(t_vertex.index, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+			if (m_brushManager.getCurrentBrush() != nullptr) {
+				m_terrain->setVertexColor(t_vertex.index, m_brushManager.getCurrentBrush()->m_vertexColor);
+			}
 		}
 	}
 }

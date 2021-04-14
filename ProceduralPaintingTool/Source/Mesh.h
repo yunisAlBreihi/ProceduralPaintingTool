@@ -34,6 +34,7 @@ public:
 	void setPosition(const glm::vec3& position);
 	void setRotation(const float& angle, const glm::vec3& axis);
 	void setVertexColor(int vertexIndex, const glm::vec4& color);
+	void setVertexColor(int vertexIndex, const float* color);
 	void setScale(const glm::vec3& scale);
 
 	Transform& getTransform() { return m_transform; }
