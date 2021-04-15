@@ -65,10 +65,11 @@ void ObjectManager::update()
 
 	m_mousePicker->update();
 	if (globals::g_LMB_hold == true) {
-		std::vector<Vertex> t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
-		for (const auto& t_vertex : t_vertices) {
+		std::vector<Vertex*>& t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
+		for (auto& t_vertex : t_vertices) {
 			if (m_brushManager.getCurrentBrush() != nullptr) {
-				m_terrain->setVertexColor(t_vertex.index, m_brushManager.getCurrentBrush()->m_vertexColor);
+				m_terrain->setVertexColor(t_vertex->index, m_brushManager.getCurrentBrush()->m_vertexColor);
+				m_brushManager.getCurrentBrush()->addVertex(t_vertex);
 			}
 		}
 	}

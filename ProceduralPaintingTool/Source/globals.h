@@ -1,5 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "Vertex.h"
+#include <vector>
 
 namespace globals
 {
@@ -22,4 +24,6 @@ namespace globals
 	extern glm::vec2 g_window_size;
 
 	void printVec3(const glm::vec3& vec3);
+
+	Vertex* getVertexAtPositionFlat(const std::vector<Vertex*>& vertexList,const glm::vec3& position, float radius);
 };

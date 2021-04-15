@@ -2,12 +2,14 @@
 #include <vector>
 #include <string>
 #include "BiomeObjectProperty.h"
+#include "Vertex.h"
 
 struct BrushProperty {
 public:
 	std::vector<BiomeObjectProperty*> m_objectProperties;
 	int m_current_object = -1;
 	float m_vertexColor[4] = { 1.0f,0.0f,1.0f,1.0f };
+	std::vector<Vertex*> m_usedVertices;
 
 	std::vector<const char*> getObjectNames_C() {
 		std::vector<const char*> t_objectTypes;
@@ -30,4 +32,6 @@ public:
 	const int getObjectPropertiesLength() {
 		return m_objectProperties.size();
 	}
+
+	void addVertex(Vertex* vertex) { m_usedVertices.push_back(vertex); }
 };

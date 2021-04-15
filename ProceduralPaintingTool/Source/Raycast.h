@@ -21,16 +21,15 @@ const Vertex& raycastFromCameraVertex(Camera& camera, MousePicker& mousePicker, 
 	return Vertex{};
 }
 
-const std::vector<Vertex>& raycastFromCameraVertexRadius(Camera& camera, MousePicker& mousePicker, Mesh& targetMesh, int traceSteps, float distance, float hitRadius)
-{
+std::vector<Vertex*>& raycastFromCameraVertexRadius(Camera& camera, MousePicker& mousePicker, Mesh& targetMesh, int traceSteps, float distance, float hitRadius) {
 	const float stepDistance = distance / traceSteps;
 	for (size_t i = 0; i < traceSteps; i++)	{
 		glm::vec3 t_rayPosition = camera.getPosition() + mousePicker.getCurrentRay() * (stepDistance * i);
-		const std::vector<Vertex>& t_vertices = targetMesh.getVertexAtPositionRadius(t_rayPosition, hitRadius);
-		if (t_vertices.empty() == false)
-		{
+		std::vector<Vertex*>& t_vertices = targetMesh.getVertexAtPositionRadius(t_rayPosition, hitRadius);
+		if (t_vertices.empty() == false) {
 			return t_vertices;
 		}
 	}
-	return std::vector<Vertex>();
+	std::vector<Vertex*> t_emptyVector;
+	return t_emptyVector;
 }

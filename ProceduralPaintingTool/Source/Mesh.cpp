@@ -61,8 +61,7 @@ const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius)
 	return Vertex{};
 }
 
-const std::vector<Vertex>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float radius)
-{
+std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float radius) {
 	m_areaVertices.clear();
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
@@ -72,14 +71,13 @@ const std::vector<Vertex>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosi
 			targetPosition.y < m_verts[i].position.y + radius &&
 			targetPosition.z > m_verts[i].position.z - radius &&
 			targetPosition.z < m_verts[i].position.z + radius) {
-			m_areaVertices.push_back(m_verts[i]);
+			m_areaVertices.push_back(&m_verts[i]);
 		}
 	}
 	return m_areaVertices;
 }
 
-const Vertex& Mesh::getVertexAtFlatPosition(glm::vec3& targetPosition,float radius)
-{
+const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition,float radius) {
 	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_verts[i].position.x - radius &&
 			targetPosition.x < m_verts[i].position.x + radius &&
@@ -91,8 +89,7 @@ const Vertex& Mesh::getVertexAtFlatPosition(glm::vec3& targetPosition,float radi
 	return Vertex{};
 }
 
-void Mesh::mesh_load(const char* path)
-{
+void Mesh::mesh_load(const char* path) {
 	Wavefront_File* obj = wavefront_load(path);
 	if (obj == nullptr) {
 		printf("Failed to load mesh: '%s', File doesn't exist\n", path);
@@ -110,7 +107,7 @@ void Mesh::mesh_load(const char* path)
 			new_vertex.position = obj->positions[vertex.idx_position];
 			new_vertex.normal = obj->normals[vertex.idx_normal];
 			new_vertex.texcoord = obj->texcoords[vertex.idx_texcoord];
-			new_vertex.color = glm::vec4(tri_idx * 0.0001f, 0.0f, 0.0f, 1.0f);
+			new_vertex.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 			new_vertex.index = num_verts;
 			m_verts[num_verts++] = new_vertex;
 		}

@@ -3,7 +3,7 @@
 
 Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objectManager(objectManager), m_brushManager(brushManager) {
 	std::vector<BiomeBrush*> t_createdObjects;
-	float t_terainRadius = 1.0f;
+	float t_terrainRadius = 1.0f;
 
 	const auto& t_brushes = brushManager.getBrushes();
 
@@ -44,7 +44,8 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 						}
 
 						//Check if tree is near a terrain vertex
-						t_treePos.y = m_objectManager.m_terrain->getVertexAtFlatPosition(t_treePos, t_terainRadius).position.y;
+						//t_treePos.y = m_objectManager.m_terrain->getVertexAtPositionFlat(t_treePos, t_terrainRadius).position.y;
+						t_treePos.y = globals::getVertexAtPositionFlat(t_brush->m_usedVertices,t_treePos, t_terrainRadius)->position.y;
 
 						Mesh* t_mesh = new Mesh(t_objectType->m_name.c_str(), Transform());
 						t_mesh->setPosition(t_treePos);
