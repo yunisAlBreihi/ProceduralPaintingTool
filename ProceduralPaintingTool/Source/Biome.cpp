@@ -7,6 +7,8 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 
 	const auto& t_brushes = brushManager.getBrushes();
 
+	Mesh& t_terrain = *objectManager.m_terrain;
+
 	for (const auto& t_brush : t_brushes) {
 		for (auto& t_objectType : t_brush->m_objectProperties) {
 			int t_scaledSizeOffsetMin = static_cast<int>(t_objectType->m_sizeOffset.x * 100);
@@ -45,13 +47,16 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 
 						//Check if tree is near a terrain vertex
 						//t_treePos.y = m_objectManager.m_terrain->getVertexAtPositionFlat(t_treePos, t_terrainRadius).position.y;
-						t_treePos.y = globals::getVertexAtPositionFlat(t_brush->m_usedVertices,t_treePos, t_terrainRadius)->position.y;
+						Vertex* t_vertex = globals::getVertexAtPositionFlat(t_brush->m_usedVertices, t_treePos, t_terrainRadius);
+						if (t_vertex != nullptr) {
+							t_treePos.y = t_vertex->position.y;
 
-						Mesh* t_mesh = new Mesh(t_objectType->m_name.c_str(), Transform());
-						t_mesh->setPosition(t_treePos);
-						t_mesh->setScale(glm::vec3(t_randomSize));
-						BiomeBrush* t_object = new BiomeBrush(t_mesh, t_objectType->m_radius, t_objectType->m_priority);
-						t_createdObjects.push_back(t_object);
+							Mesh* t_mesh = new Mesh(t_objectType->m_name.c_str(), Transform());
+							t_mesh->setPosition(t_treePos);
+							t_mesh->setScale(glm::vec3(t_randomSize));
+							BiomeBrush* t_object = new BiomeBrush(t_mesh, t_objectType->m_radius, t_objectType->m_priority);
+							t_createdObjects.push_back(t_object);
+						}
 					}
 				}
 			}

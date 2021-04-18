@@ -62,9 +62,11 @@ void ObjectManager::update()
 			t_debugLine.update(m_timer->deltaTime);
 		}
 	}
-
+	static int t_counter = 0;
 	m_mousePicker->update();
 	if (globals::g_LMB_hold == true) {
+		printf("Hello %d\n", t_counter);
+		t_counter++;
 		std::vector<Vertex*>& t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, 2.0f);
 		for (auto& t_vertex : t_vertices) {
 			if (m_brushManager.getCurrentBrush() != nullptr) {
