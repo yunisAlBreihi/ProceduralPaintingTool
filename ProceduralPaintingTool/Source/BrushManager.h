@@ -8,11 +8,14 @@ private:
 	std::vector<BrushProperty*> m_brushProperties;
 	BrushProperty* m_currentBrushProperty;
 
+	int m_brushIdCount = -1;
+
 public:
 
 	BrushProperty& CreateBrush();
+	BrushProperty& setCurrentBrush(const int index);
 
-	BrushProperty& setCurrentBrush(int index);
+	void removeVertexFromOtherBrushesAtPosition(const glm::vec3& position);
 
 	auto& getBrushes() { return m_brushProperties; }
 	BrushProperty* getCurrentBrush() { return m_currentBrushProperty; }

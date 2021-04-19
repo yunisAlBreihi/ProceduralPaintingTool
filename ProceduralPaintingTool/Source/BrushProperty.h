@@ -7,13 +7,15 @@
 struct BrushProperty {
 public:
 	std::vector<BiomeObjectProperty*> m_objectProperties;
-	int m_current_object = -1;
-	float m_vertexColor[4] = { 1.0f,0.0f,1.0f,1.0f };
 	std::vector<Vertex*> m_usedVertices;
+
+	glm::vec4 m_vertexColor = { 1.0f,0.0f,1.0f,1.0f };
+
+	int m_current_object = -1;
+	int m_id = -1;
 
 	std::vector<const char*> getObjectNames_C() {
 		std::vector<const char*> t_objectTypes;
-
 		for (const auto& t_objectType : m_objectProperties) {
 			t_objectTypes.push_back(t_objectType->m_name.c_str());
 		}
@@ -33,5 +35,25 @@ public:
 		return m_objectProperties.size();
 	}
 
-	void addVertex(Vertex* vertex) { m_usedVertices.push_back(vertex); }
+	void addVertex(Vertex* vertex) {
+		for (const auto& t_vertex : m_usedVertices) {
+			if (t_vertex != nullptr) {
+				if (vertex->position == t_vertex->position || vertex->color == m_vertexColor) {
+					return;
+				}
+			}
+		}
+		m_usedVertices.push_back(vertex);
+	}
+
+	void removeVertexAtPosition(glm::vec3 position) {
+		int t_arraySize = m_usedVertices.size();
+		for (size_t i = 0; i < t_arraySize; i++) {
+			if (m_usedVertices[i] != nullptr) {
+				if (m_usedVertices[i]->position == position) {
+					m_usedVertices[i] = nullptr;
+				}
+			}
+		}
+	}
 };
