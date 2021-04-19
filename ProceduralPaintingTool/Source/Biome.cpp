@@ -8,6 +8,17 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 	const auto& t_brushes = brushManager.getBrushes();
 
 	Mesh& t_terrain = *objectManager.m_terrain;
+	const Vertex& t_lowestTerrainVertex = t_terrain.getLowestVertexPositionFlat();
+	glm::vec2 t_lowestPosition{ t_lowestTerrainVertex.position.x, t_lowestTerrainVertex.position.z };
+
+	const Vertex& t_highestTerrainVertex = t_terrain.getHighestVertexPositionFlat();
+	glm::vec2 t_highestPosition{ t_highestTerrainVertex.position.x, t_highestTerrainVertex.position.z };
+
+	const int t_minCountX = static_cast<int>(t_lowestPosition.x);
+	const int t_minCountZ = static_cast<int>(t_lowestPosition.y);
+
+	const int t_maxCountX = static_cast<int>(t_highestPosition.x);
+	const int t_maxCountZ = static_cast<int>(t_highestPosition.y);
 
 	for (const auto& t_brush : t_brushes) {
 		for (auto& t_objectType : t_brush->m_objectProperties) {
@@ -20,14 +31,14 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 			int t_scaledPosOffsetYMin = static_cast<int>(t_objectType->m_positionOffsetY.x * 100);
 			int t_scaledPosOffsetYMax = static_cast<int>(t_objectType->m_positionOffsetY.y * 100);
 
-			for (size_t x = 0; x < 10; ++x) {
-				for (size_t z = 0; z < 10; ++z) {
-					for (size_t i = 0; i < t_objectType->m_frequency; ++i) {
+			for (int x = t_minCountX; x < t_maxCountX; ++x) {
+				for (int z = t_minCountZ; z < t_maxCountZ; ++z) {
+					for (int i = 0; i < t_objectType->m_frequency; ++i) {
 						const float t_randomSize = ((rand() % t_scaledSizeOffsetMax + t_scaledSizeOffsetMin) * 0.01f);
 						const float t_offsetX = ((rand() % t_scaledPosOffsetXMax + t_scaledPosOffsetXMin) * 0.01f);
 						const float t_offsetZ = ((rand() % t_scaledPosOffsetYMax + t_scaledPosOffsetYMin) * 0.01f);
 
-						glm::vec3 t_treePos = glm::vec3(x * 3 + t_offsetX, 0.0f, z * 3 + t_offsetZ);
+						glm::vec3 t_treePos = glm::vec3(x + t_offsetX, 0.0f, z + t_offsetZ);
 
 						bool t_invalidTree = false;
 						for (auto& t_createdObject : t_createdObjects) {

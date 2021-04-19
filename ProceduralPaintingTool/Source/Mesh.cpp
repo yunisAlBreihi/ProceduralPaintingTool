@@ -34,7 +34,7 @@ void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color)
 
 void Mesh::setVertexColor(int vertexIndex, const float* color)
 {
-	glm::vec4 t_color {color[0], color[1], color[2], color[4]};
+	glm::vec4 t_color{ color[0], color[1], color[2], color[4] };
 	m_verts[vertexIndex].color = t_color;
 	update_bufferData();
 }
@@ -77,7 +77,7 @@ std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition,
 	return m_areaVertices;
 }
 
-const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition,float radius) {
+const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition, float radius) {
 	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_verts[i].position.x - radius &&
 			targetPosition.x < m_verts[i].position.x + radius &&
@@ -87,6 +87,46 @@ const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition,float radi
 		}
 	}
 	return Vertex{};
+}
+
+const Vertex& Mesh::getLowestVertexPositionFlat() {
+	Vertex* t_lowestVertex = nullptr;
+	for (size_t i = 0; i < m_vert_count; i++)
+	{
+		if (t_lowestVertex == nullptr) {
+			t_lowestVertex = &m_verts[i];
+			continue;
+		}
+
+		glm::ivec2 t_targetPositionInt{ static_cast<int>(m_verts[i].position.x), static_cast<int>(m_verts[i].position.z) };
+		glm::ivec2 t_lowestPositionInt{ static_cast<int>(t_lowestVertex->position.x), static_cast<int>(t_lowestVertex->position.z) };
+
+		if (t_targetPositionInt.x <= t_lowestPositionInt.x &&
+			t_targetPositionInt.y <= t_lowestPositionInt.y) {
+			t_lowestVertex = &m_verts[i];
+		}
+	}
+	return *t_lowestVertex;
+}
+
+const Vertex& Mesh::getHighestVertexPositionFlat() {
+	Vertex* t_highestVertex = nullptr;
+	for (size_t i = 0; i < m_vert_count; i++)
+	{
+		if (t_highestVertex == nullptr) {
+			t_highestVertex = &m_verts[i];
+			continue;
+		}
+
+		glm::ivec2 t_targetPositionInt{ static_cast<int>(m_verts[i].position.x), static_cast<int>(m_verts[i].position.z) };
+		glm::ivec2 t_highestPositionInt{ static_cast<int>(t_highestVertex->position.x), static_cast<int>(t_highestVertex->position.z) };
+
+		if (t_targetPositionInt.x >= t_highestPositionInt.x &&
+			t_targetPositionInt.y >= t_highestPositionInt.y) {
+			t_highestVertex = &m_verts[i];
+		}
+	}
+	return *t_highestVertex;
 }
 
 void Mesh::mesh_load(const char* path) {
