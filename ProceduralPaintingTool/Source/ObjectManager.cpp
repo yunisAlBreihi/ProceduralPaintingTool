@@ -15,18 +15,15 @@ ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m
 	m_mousePicker = new MousePicker(m_camera);
 }
 
-void ObjectManager::addObject(BiomeBrush* object)
-{
+void ObjectManager::addObject(BiomeBrush* object) {
 	m_objects.push_back(object);
 }
 
-void ObjectManager::addDebugMesh(Mesh* mesh)
-{
+void ObjectManager::addDebugMesh(Mesh* mesh) {
 	m_debugMeshes.push_back(mesh);
 }
 
-void ObjectManager::update()
-{
+void ObjectManager::update() {
 	m_timer->update();
 	m_camera->update(m_timer->deltaTime);
 
@@ -76,8 +73,7 @@ void ObjectManager::update()
 	}
 }
 
-void ObjectManager::clearMeshes()
-{
+void ObjectManager::clearMeshes() {
 	m_objects.clear();
 	m_debugMeshes.clear();
 }
