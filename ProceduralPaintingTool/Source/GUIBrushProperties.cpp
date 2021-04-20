@@ -76,6 +76,7 @@ void GUIBrushProperties::update() {
 	}
 
 	if (ImGui::Button("Create Biome")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
+		m_objectManager.clearMeshes();
 		Biome(m_objectManager, m_brushManager);
 	}
 
