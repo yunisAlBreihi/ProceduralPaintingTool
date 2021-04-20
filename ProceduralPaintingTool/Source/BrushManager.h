@@ -16,8 +16,8 @@ public:
 	BrushProperty& setCurrentBrush(const int index);
 
 	void removeVertexFromOtherBrushesAtPosition(const glm::vec3& position);
+	void removeVerticesFromOtherBrushes();
 
 	auto& getBrushes() { return m_brushProperties; }
 	BrushProperty* getCurrentBrush() { return m_currentBrushProperty; }
-
 };

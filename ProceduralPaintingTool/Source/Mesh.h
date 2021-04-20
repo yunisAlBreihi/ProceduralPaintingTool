@@ -19,7 +19,7 @@ public:
 	glm::mat4 m_scale_matrix = glm::identity<glm::mat4>();
 
 	std::vector<Vertex*> m_areaVertices;
-	Vertex* m_verts = nullptr;
+	Vertex* m_vertices = nullptr;
 	int m_vert_count = 0;
 
 	Transform m_transform;
@@ -35,6 +35,8 @@ public:
 	void setRotation(const float& angle, const glm::vec3& axis);
 	void setVertexColor(int vertexIndex, const glm::vec4& color);
 	void setVertexColor(int vertexIndex, const float* color);
+	void fillVertexColor(const glm::vec4& color);
+	void fillVertexColor(const float* color);
 	void setScale(const glm::vec3& scale);
 
 	Transform& getTransform() { return m_transform; }

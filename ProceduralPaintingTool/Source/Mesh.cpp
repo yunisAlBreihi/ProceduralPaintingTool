@@ -28,15 +28,29 @@ void Mesh::setRotation(const float& angle, const glm::vec3& axis)
 
 void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color)
 {
-	m_verts[vertexIndex].color = color;
+	m_vertices[vertexIndex].color = color;
 	update_bufferData();
 }
 
-void Mesh::setVertexColor(int vertexIndex, const float* color)
-{
+void Mesh::setVertexColor(int vertexIndex, const float* color) {
 	glm::vec4 t_color{ color[0], color[1], color[2], color[4] };
-	m_verts[vertexIndex].color = t_color;
+	m_vertices[vertexIndex].color = t_color;
 	update_bufferData();
+}
+
+void Mesh::fillVertexColor(const glm::vec4& color) {
+	for (size_t i = 0; i < m_vert_count; i++) {
+		m_vertices[i].color = color;
+		update_bufferData();
+	}
+}
+
+void Mesh::fillVertexColor(const float* color) {
+	glm::vec4 t_color{ color[0], color[1], color[2], color[4] };
+	for (size_t i = 0; i < m_vert_count; i++) {
+		m_vertices[i].color = t_color;
+		update_bufferData();
+	}
 }
 
 void Mesh::setScale(const glm::vec3& scale)
@@ -49,13 +63,13 @@ const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius)
 {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
-		if (targetPosition.x > m_verts[i].position.x - radius &&
-			targetPosition.x < m_verts[i].position.x + radius &&
-			targetPosition.y > m_verts[i].position.y - radius &&
-			targetPosition.y < m_verts[i].position.y + radius &&
-			targetPosition.z > m_verts[i].position.z - radius &&
-			targetPosition.z < m_verts[i].position.z + radius) {
-			return m_verts[i];
+		if (targetPosition.x > m_vertices[i].position.x - radius &&
+			targetPosition.x < m_vertices[i].position.x + radius &&
+			targetPosition.y > m_vertices[i].position.y - radius &&
+			targetPosition.y < m_vertices[i].position.y + radius &&
+			targetPosition.z > m_vertices[i].position.z - radius &&
+			targetPosition.z < m_vertices[i].position.z + radius) {
+			return m_vertices[i];
 		}
 	}
 	return Vertex{};
@@ -65,13 +79,13 @@ std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition,
 	m_areaVertices.clear();
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
-		if (targetPosition.x > m_verts[i].position.x - radius &&
-			targetPosition.x < m_verts[i].position.x + radius &&
-			targetPosition.y > m_verts[i].position.y - radius &&
-			targetPosition.y < m_verts[i].position.y + radius &&
-			targetPosition.z > m_verts[i].position.z - radius &&
-			targetPosition.z < m_verts[i].position.z + radius) {
-			m_areaVertices.push_back(&m_verts[i]);
+		if (targetPosition.x > m_vertices[i].position.x - radius &&
+			targetPosition.x < m_vertices[i].position.x + radius &&
+			targetPosition.y > m_vertices[i].position.y - radius &&
+			targetPosition.y < m_vertices[i].position.y + radius &&
+			targetPosition.z > m_vertices[i].position.z - radius &&
+			targetPosition.z < m_vertices[i].position.z + radius) {
+			m_areaVertices.push_back(&m_vertices[i]);
 		}
 	}
 	return m_areaVertices;
@@ -79,11 +93,11 @@ std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition,
 
 const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition, float radius) {
 	for (size_t i = 0; i < m_vert_count; i++) {
-		if (targetPosition.x > m_verts[i].position.x - radius &&
-			targetPosition.x < m_verts[i].position.x + radius &&
-			targetPosition.z > m_verts[i].position.z - radius &&
-			targetPosition.z < m_verts[i].position.z + radius) {
-			return m_verts[i];
+		if (targetPosition.x > m_vertices[i].position.x - radius &&
+			targetPosition.x < m_vertices[i].position.x + radius &&
+			targetPosition.z > m_vertices[i].position.z - radius &&
+			targetPosition.z < m_vertices[i].position.z + radius) {
+			return m_vertices[i];
 		}
 	}
 	return Vertex{};
@@ -94,16 +108,16 @@ const Vertex& Mesh::getLowestVertexPositionFlat() {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
 		if (t_lowestVertex == nullptr) {
-			t_lowestVertex = &m_verts[i];
+			t_lowestVertex = &m_vertices[i];
 			continue;
 		}
 
-		glm::ivec2 t_targetPositionInt{ static_cast<int>(m_verts[i].position.x), static_cast<int>(m_verts[i].position.z) };
+		glm::ivec2 t_targetPositionInt{ static_cast<int>(m_vertices[i].position.x), static_cast<int>(m_vertices[i].position.z) };
 		glm::ivec2 t_lowestPositionInt{ static_cast<int>(t_lowestVertex->position.x), static_cast<int>(t_lowestVertex->position.z) };
 
 		if (t_targetPositionInt.x <= t_lowestPositionInt.x &&
 			t_targetPositionInt.y <= t_lowestPositionInt.y) {
-			t_lowestVertex = &m_verts[i];
+			t_lowestVertex = &m_vertices[i];
 		}
 	}
 	return *t_lowestVertex;
@@ -114,16 +128,16 @@ const Vertex& Mesh::getHighestVertexPositionFlat() {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
 		if (t_highestVertex == nullptr) {
-			t_highestVertex = &m_verts[i];
+			t_highestVertex = &m_vertices[i];
 			continue;
 		}
 
-		glm::ivec2 t_targetPositionInt{ static_cast<int>(m_verts[i].position.x), static_cast<int>(m_verts[i].position.z) };
+		glm::ivec2 t_targetPositionInt{ static_cast<int>(m_vertices[i].position.x), static_cast<int>(m_vertices[i].position.z) };
 		glm::ivec2 t_highestPositionInt{ static_cast<int>(t_highestVertex->position.x), static_cast<int>(t_highestVertex->position.z) };
 
 		if (t_targetPositionInt.x >= t_highestPositionInt.x &&
 			t_targetPositionInt.y >= t_highestPositionInt.y) {
-			t_highestVertex = &m_verts[i];
+			t_highestVertex = &m_vertices[i];
 		}
 	}
 	return *t_highestVertex;
@@ -136,7 +150,7 @@ void Mesh::mesh_load(const char* path) {
 		return;
 	}
 
-	m_verts = new Vertex[obj->num_triangles * 3];
+	m_vertices = new Vertex[obj->num_triangles * 3];
 	int num_verts = 0;
 
 	for (int tri_idx = 0; tri_idx < obj->num_triangles; ++tri_idx) {
@@ -149,7 +163,7 @@ void Mesh::mesh_load(const char* path) {
 			new_vertex.texcoord = obj->texcoords[vertex.idx_texcoord];
 			new_vertex.color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 			new_vertex.index = num_verts;
-			m_verts[num_verts++] = new_vertex;
+			m_vertices[num_verts++] = new_vertex;
 		}
 	}
 	m_vert_count = num_verts;
@@ -176,5 +190,5 @@ void Mesh::mesh_load(const char* path) {
 void Mesh::update_bufferData()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vert_count, m_verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vert_count, m_vertices, GL_STATIC_DRAW);
 }

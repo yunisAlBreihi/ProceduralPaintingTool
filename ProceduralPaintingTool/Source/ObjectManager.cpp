@@ -81,3 +81,22 @@ void ObjectManager::clearMeshes()
 	m_objects.clear();
 	m_debugMeshes.clear();
 }
+
+void ObjectManager::fillTerrainColor(const glm::vec4& color) {
+	m_terrain->fillVertexColor(color);
+}
+
+void ObjectManager::fillTerrainColor(const float* color) {
+	m_terrain->fillVertexColor(color);
+}
+
+void ObjectManager::fillTerrainColorCurrentBrush() {
+	Vertex* t_terrainVertices = m_terrain->m_vertices;
+	for (size_t i = 0; i < m_terrain->m_vert_count; ++i) {
+		if (m_brushManager.getCurrentBrush() != nullptr) {
+			m_brushManager.getCurrentBrush()->addVertex(&t_terrainVertices[i]);
+		}
+	}
+	m_terrain->fillVertexColor(m_brushManager.getCurrentBrush()->m_vertexColor);
+	m_brushManager.removeVerticesFromOtherBrushes();
+}

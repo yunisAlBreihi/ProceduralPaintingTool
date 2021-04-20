@@ -45,6 +45,10 @@ void GUIBrushProperties::update() {
 		}
 	}
 
+	if (ImGui::Button("Fill terrain with color")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
+		m_objectManager.fillTerrainColorCurrentBrush();
+	}
+
 	if (ImGui::CollapsingHeader("Biome Properties")) {
 		if (t_currentBrush != nullptr) {
 			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)

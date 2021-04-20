@@ -20,3 +20,11 @@ void BrushManager::removeVertexFromOtherBrushesAtPosition(const glm::vec3& posit
 		}
 	}
 }
+
+void BrushManager::removeVerticesFromOtherBrushes() {
+	for (const auto& t_brush : m_brushProperties) {
+		if (t_brush->m_id != m_currentBrushProperty->m_id) {
+			t_brush->removeAllVertices();
+		}
+	}
+}

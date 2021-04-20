@@ -56,4 +56,13 @@ public:
 			}
 		}
 	}
+
+	void removeAllVertices() {
+		int t_arraySize = m_usedVertices.size();
+		for (size_t i = 0; i < t_arraySize; i++) {
+			if (m_usedVertices[i] != nullptr) {
+				m_usedVertices[i] = nullptr;
+			}
+		}
+	}
 };
