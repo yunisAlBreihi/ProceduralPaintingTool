@@ -3,6 +3,35 @@
 #include "GLFW/glfw3.h"
 #include "Raycast.h"
 #include <algorithm>
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
+using value_t = nlohmann::detail::value_t;
+
+struct Json_File
+{
+public:
+	std::pair<const char*, int> m_int = { "int", 1 };
+	std::pair<const char*, float> m_float = { "float", 1.546f };
+	std::pair<const char*, std::string> m_string = { "string", "Pekka" };
+};
+
+struct Json_Object
+{
+public:
+	std::vector<Json_File*> m_jsonFiles;
+
+	Json_Object(const int length) {
+		for (size_t i = 0; i < length; ++i) {
+			Json_File* t_file = new Json_File();
+			t_file->m_int.second *= i;
+			t_file->m_float.second *= i;
+			std::string t_nameIndex = std::to_string(i);
+			t_file->m_string.second += t_nameIndex;
+			m_jsonFiles.push_back(t_file);
+		}
+	}
+};
 
 ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m_window(window), m_brushManager(brushManager) {
 	m_defaultShader = new Shader("Shaders/default.vs", "Shaders/default.fs");
@@ -13,6 +42,47 @@ ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), m_window);
 	m_timer = new Timer();
 	m_mousePicker = new MousePicker(m_camera);
+
+	json t_json1;
+	t_json1["pi"] = 3.141;
+	t_json1["happy"] = true;
+	t_json1["name"] = "Nils";
+	t_json1["nothing"] = nullptr;
+	t_json1["answer"]["everything"] = 42;
+	t_json1["list"] = { 1,0,2 };
+	t_json1["object"] = { {"currency", "USD"}, {"value", 42.99} };
+
+	json t_json2 = {
+		{"pi", 3.141},
+		{"happy", true},
+		{"name", "Niels"},
+		{"nothing", nullptr},
+		{"answer", {{"everything", 42}}},
+		{"list", {1,0,2}},
+		{"object", {{"currency", "USD"}, {"value", 42.99}}}
+	};
+
+	Json_Object* t_jsonObject = new Json_Object(5);
+
+	json t_json3;
+
+	for (const auto t_item : t_jsonObject->m_jsonFiles) {
+		//auto t_listItem = { t_item->m_float.first , t_item->m_float.second };
+		t_json3[t_item->m_float.first] = t_item->m_float.second;
+		t_json3[t_item->m_int.first] = t_item->m_int.second;
+		t_json3[t_item->m_string.first] = t_item->m_string.second;
+	}
+
+	std::ofstream t_o("testfile.json");
+	t_o << t_json3 << std::endl;
+
+	std::ifstream t_i("testfile.json");
+	json t_jsonIn;
+	t_i >> t_jsonIn;
+
+	for (const auto& t_item : t_jsonIn) {
+		std::cout << t_item << std::endl;
+	}
 }
 
 void ObjectManager::addObject(BiomeBrush* object) {
