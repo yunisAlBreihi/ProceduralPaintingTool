@@ -43,34 +43,18 @@ ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m
 	m_timer = new Timer();
 	m_mousePicker = new MousePicker(m_camera);
 
-	json t_json1;
-	t_json1["pi"] = 3.141;
-	t_json1["happy"] = true;
-	t_json1["name"] = "Nils";
-	t_json1["nothing"] = nullptr;
-	t_json1["answer"]["everything"] = 42;
-	t_json1["list"] = { 1,0,2 };
-	t_json1["object"] = { {"currency", "USD"}, {"value", 42.99} };
 
-	json t_json2 = {
-		{"pi", 3.141},
-		{"happy", true},
-		{"name", "Niels"},
-		{"nothing", nullptr},
-		{"answer", {{"everything", 42}}},
-		{"list", {1,0,2}},
-		{"object", {{"currency", "USD"}, {"value", 42.99}}}
-	};
+
+
+
+
 
 	Json_Object* t_jsonObject = new Json_Object(5);
 
 	json t_json3;
-
-	for (const auto t_item : t_jsonObject->m_jsonFiles) {
-		//auto t_listItem = { t_item->m_float.first , t_item->m_float.second };
-		t_json3[t_item->m_float.first] = t_item->m_float.second;
-		t_json3[t_item->m_int.first] = t_item->m_int.second;
-		t_json3[t_item->m_string.first] = t_item->m_string.second;
+	for (size_t i = 0; i < t_jsonObject->m_jsonFiles.size(); i++) {
+		std::string t_itemName = "item" + std::to_string(i);
+		t_json3[t_itemName] = { t_jsonObject->m_jsonFiles[i]->m_float, t_jsonObject->m_jsonFiles[i]->m_int, t_jsonObject->m_jsonFiles[i]->m_string };
 	}
 
 	std::ofstream t_o("testfile.json");
