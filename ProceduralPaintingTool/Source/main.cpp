@@ -115,6 +115,9 @@ int main()
 	//Mouse movement
 	glm::vec2 m_last_mouse_position = globals::g_mouse_position;
 
+	//Start functions here. Don't run code after this point
+	m_brushManager->start();
+
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
 		glfwPollEvents();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -135,6 +138,9 @@ int main()
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
 	}
+	//Quit functions go here
+	m_brushManager->quit();
+
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();

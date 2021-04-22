@@ -11,6 +11,8 @@ private:
 	int m_brushIdCount = -1;
 
 public:
+	void start();
+	void quit();
 
 	BrushProperty& CreateBrush();
 	BrushProperty& setCurrentBrush(const int index);

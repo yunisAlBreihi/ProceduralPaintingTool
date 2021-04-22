@@ -1,4 +1,13 @@
 #include "BrushManager.h"
+#include "IOHandler.h"
+
+void BrushManager::start() {
+	loadJson_brush("brushes.json", m_brushProperties);
+}
+
+void BrushManager::quit() {
+	saveJson_brush("brushes.json", m_brushProperties);
+}
 
 BrushProperty& BrushManager::CreateBrush() {
 	BrushProperty* t_brush = new BrushProperty();

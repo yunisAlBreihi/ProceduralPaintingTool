@@ -3,35 +3,6 @@
 #include "GLFW/glfw3.h"
 #include "Raycast.h"
 #include <algorithm>
-#include "nlohmann/json.hpp"
-
-using json = nlohmann::json;
-using value_t = nlohmann::detail::value_t;
-
-struct Json_File
-{
-public:
-	std::pair<const char*, int> m_int = { "int", 1 };
-	std::pair<const char*, float> m_float = { "float", 1.546f };
-	std::pair<const char*, std::string> m_string = { "string", "Pekka" };
-};
-
-struct Json_Object
-{
-public:
-	std::vector<Json_File*> m_jsonFiles;
-
-	Json_Object(const int length) {
-		for (size_t i = 0; i < length; ++i) {
-			Json_File* t_file = new Json_File();
-			t_file->m_int.second *= i;
-			t_file->m_float.second *= i;
-			std::string t_nameIndex = std::to_string(i);
-			t_file->m_string.second += t_nameIndex;
-			m_jsonFiles.push_back(t_file);
-		}
-	}
-};
 
 ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m_window(window), m_brushManager(brushManager) {
 	m_defaultShader = new Shader("Shaders/default.vs", "Shaders/default.fs");
@@ -42,31 +13,6 @@ ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m
 	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), m_window);
 	m_timer = new Timer();
 	m_mousePicker = new MousePicker(m_camera);
-
-
-
-
-
-
-
-	Json_Object* t_jsonObject = new Json_Object(5);
-
-	json t_json3;
-	for (size_t i = 0; i < t_jsonObject->m_jsonFiles.size(); i++) {
-		std::string t_itemName = "item" + std::to_string(i);
-		t_json3[t_itemName] = { t_jsonObject->m_jsonFiles[i]->m_float, t_jsonObject->m_jsonFiles[i]->m_int, t_jsonObject->m_jsonFiles[i]->m_string };
-	}
-
-	std::ofstream t_o("testfile.json");
-	t_o << t_json3 << std::endl;
-
-	std::ifstream t_i("testfile.json");
-	json t_jsonIn;
-	t_i >> t_jsonIn;
-
-	for (const auto& t_item : t_jsonIn) {
-		std::cout << t_item << std::endl;
-	}
 }
 
 void ObjectManager::addObject(BiomeBrush* object) {
