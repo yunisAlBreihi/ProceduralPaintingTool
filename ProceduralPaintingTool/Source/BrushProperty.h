@@ -6,13 +6,12 @@
 
 struct BrushProperty {
 public:
-	std::vector<BiomeObjectProperty*> m_objectProperties;
-	std::vector<Vertex*> m_usedVertices;
-
 	glm::vec4 m_vertexColor = { 1.0f,0.0f,1.0f,1.0f };
-
 	int m_current_object = -1;
 	int m_id = -1;
+
+	std::vector<BiomeObjectProperty*> m_objectProperties;
+	std::vector<Vertex*> m_usedVertices;
 
 	std::vector<const char*> getObjectNames_C() {
 		std::vector<const char*> t_objectTypes;

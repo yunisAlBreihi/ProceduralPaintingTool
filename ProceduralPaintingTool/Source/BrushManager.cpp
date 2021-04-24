@@ -6,7 +6,7 @@ void BrushManager::start() {
 }
 
 void BrushManager::quit() {
-	saveJson_brush("brushes.json", m_brushProperties);
+	//saveJson_brush("brushes.json", m_brushProperties);
 }
 
 BrushProperty& BrushManager::CreateBrush() {
