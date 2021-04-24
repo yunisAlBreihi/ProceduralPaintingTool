@@ -35,7 +35,7 @@ void GUIBrushProperties::update() {
 	}
 
 	if (ImGui::Button("Create Brush")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
-		m_brushManager.CreateBrush();
+		m_brushManager.createBrush();
 	}
 
 	//ImGui::ColorPicker4("Brush Vertex Color", (float*)&m_currentBrushProperty->m_vertexColor, ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview);

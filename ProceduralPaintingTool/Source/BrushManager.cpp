@@ -2,19 +2,24 @@
 #include "IOHandler.h"
 
 void BrushManager::start() {
-	loadJson_brush("brushes.json", m_brushProperties);
+	loadJson_brush("brushes.json", *this);
 }
 
 void BrushManager::quit() {
-	//saveJson_brush("brushes.json", m_brushProperties);
+	//saveJson_brush("brushes.json", *this);
 }
 
-BrushProperty& BrushManager::CreateBrush() {
+BrushProperty& BrushManager::createBrush() {
 	BrushProperty* t_brush = new BrushProperty();
 	t_brush->m_id = ++m_brushIdCount;
 	m_brushProperties.push_back(t_brush);
 	m_currentBrushProperty = m_brushProperties[m_brushProperties.size() - 1];
 	return *m_currentBrushProperty;
+}
+
+void BrushManager::addBrush(const BrushProperty& brushProperty) {
+	m_brushProperties.push_back(new BrushProperty(brushProperty));
+	m_currentBrushProperty = m_brushProperties[m_brushProperties.size() - 1];
 }
 
 BrushProperty& BrushManager::setCurrentBrush(const int index) {

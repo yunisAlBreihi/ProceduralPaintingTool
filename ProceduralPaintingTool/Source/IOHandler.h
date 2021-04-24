@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "BrushProperty.h"
+#include "BrushManager.h"
 
-void saveJson_brush(const char* filename, const std::vector<BrushProperty*>& brushes);
-void loadJson_brush(const char* filename, const std::vector<BrushProperty*>& brushes);
+void saveJson_brush(const char* filename, BrushManager& brushManager);
+void loadJson_brush(const char* filename, BrushManager& brushManager);
