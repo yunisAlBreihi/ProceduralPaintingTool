@@ -15,7 +15,7 @@ public:
 	void quit();
 
 	BrushProperty& createBrush();
-	void addBrush(const BrushProperty& brushProperty);
+	void addBrush(BrushProperty* brushProperty);
 	BrushProperty& setCurrentBrush(const int index);
 
 	void removeVertexFromOtherBrushesAtPosition(const glm::vec3& position);

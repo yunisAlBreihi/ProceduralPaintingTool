@@ -1,12 +1,13 @@
 #include "BrushManager.h"
 #include "IOHandler.h"
+#include "globals.h"
 
 void BrushManager::start() {
-	loadJson_brush("brushes.json", *this);
+	IOHandler::loadJson_brush(globals::g_saveNameBrushes, *this);
 }
 
 void BrushManager::quit() {
-	//saveJson_brush("brushes.json", *this);
+	IOHandler::saveJson_brush(globals::g_saveNameBrushes, *this);
 }
 
 BrushProperty& BrushManager::createBrush() {
@@ -17,8 +18,8 @@ BrushProperty& BrushManager::createBrush() {
 	return *m_currentBrushProperty;
 }
 
-void BrushManager::addBrush(const BrushProperty& brushProperty) {
-	m_brushProperties.push_back(new BrushProperty(brushProperty));
+void BrushManager::addBrush(BrushProperty* brushProperty) {
+	m_brushProperties.push_back(brushProperty);
 	m_currentBrushProperty = m_brushProperties[m_brushProperties.size() - 1];
 }
 

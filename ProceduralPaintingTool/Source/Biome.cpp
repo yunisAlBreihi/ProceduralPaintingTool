@@ -31,6 +31,7 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 			int t_scaledPosOffsetYMin = static_cast<int>(t_objectType->m_positionOffsetY.x * 100);
 			int t_scaledPosOffsetYMax = static_cast<int>(t_objectType->m_positionOffsetY.y * 100);
 
+			srand(globals::g_seed);
 			for (int x = t_minCountX; x < t_maxCountX; ++x) {
 				for (int z = t_minCountZ; z < t_maxCountZ; ++z) {
 					for (int i = 0; i < t_objectType->m_frequency; ++i) {

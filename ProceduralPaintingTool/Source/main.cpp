@@ -10,6 +10,8 @@
 #include "GUIBrushProperties.h"
 #include "ObjectManager.h"
 #include "BrushManager.h"
+#include "IOHandler.h"
+#include <stdlib.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -107,6 +109,10 @@ int main()
 
 	ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 	ImGui_ImplOpenGL3_Init("#version 330");
+	
+
+	//Get global attributes from save file
+	IOHandler::load_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
 
 	BrushManager* m_brushManager = new BrushManager();
 	ObjectManager* m_objectManager = new ObjectManager(m_window, *m_brushManager);
@@ -140,6 +146,9 @@ int main()
 	}
 	//Quit functions go here
 	m_brushManager->quit();
+
+	//Save global attributes to save file
+	IOHandler::save_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
 
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();

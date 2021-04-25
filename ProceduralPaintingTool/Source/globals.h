@@ -17,11 +17,15 @@ namespace globals
 
 	static const char* VIEWPROJECTION = "u_ViewProjection";
 
+	extern int g_seed;
 	extern bool g_cam_control;
 	extern bool g_LMB_hold;
 	extern glm::vec2 g_mouse_position;
 	extern glm::vec2 g_mouse_delta;
 	extern glm::vec2 g_window_size;
+
+	extern const char* g_saveNameBrushes;
+	extern const char* g_saveNameGlobals;
 
 	void printVec3(const glm::vec3& vec3);
 
