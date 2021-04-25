@@ -36,8 +36,8 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 				for (int z = t_minCountZ; z < t_maxCountZ; ++z) {
 					for (int i = 0; i < t_objectType->m_frequency; ++i) {
 						const float t_randomSize = ((rand() % t_scaledSizeOffsetMax + t_scaledSizeOffsetMin) * 0.01f);
-						const float t_offsetX = ((rand() % t_scaledPosOffsetXMax + t_scaledPosOffsetXMin) * 0.01f);
-						const float t_offsetZ = ((rand() % t_scaledPosOffsetYMax + t_scaledPosOffsetYMin) * 0.01f);
+						const float t_offsetX =	   ((rand() % t_scaledPosOffsetXMax + t_scaledPosOffsetXMin) * 0.01f);
+						const float t_offsetZ =	   ((rand() % t_scaledPosOffsetYMax + t_scaledPosOffsetYMin) * 0.01f);
 
 						glm::vec3 t_treePos = glm::vec3(x + t_offsetX, 0.0f, z + t_offsetZ);
 

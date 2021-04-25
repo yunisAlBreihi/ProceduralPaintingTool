@@ -112,7 +112,7 @@ int main()
 	
 
 	//Get global attributes from save file
-	IOHandler::load_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
+	IOHandler::loadJson_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
 
 	BrushManager* m_brushManager = new BrushManager();
 	ObjectManager* m_objectManager = new ObjectManager(m_window, *m_brushManager);
@@ -148,7 +148,7 @@ int main()
 	m_brushManager->quit();
 
 	//Save global attributes to save file
-	IOHandler::save_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
+	IOHandler::saveJson_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
 
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();

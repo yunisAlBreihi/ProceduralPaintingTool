@@ -85,13 +85,13 @@ namespace IOHandler {
 					switch (t_propertyIndex) {
 					case 0:
 						t_objectProperty = new BiomeObjectProperty();
-						t_objectProperty->m_sizeOffset = glm::vec2(t_property[0], t_property[1]);
+						t_objectProperty->m_sizeOffset = { t_property[0], t_property[1] };
 						break;
 					case 1:
-						t_objectProperty->m_positionOffsetX = glm::vec2(t_property[0], t_property[1]);
+						t_objectProperty->m_positionOffsetX = { t_property[0], t_property[1] };
 						break;
 					case 2:
-						t_objectProperty->m_positionOffsetY = glm::vec2(t_property[0], t_property[1]);
+						t_objectProperty->m_positionOffsetY = { t_property[0], t_property[1] };
 						break;
 					case 3:
 						t_objectProperty->m_radius = t_property[0];
@@ -119,7 +119,14 @@ namespace IOHandler {
 		}
 	}
 
-	void save_attribute(const char* filename, const char* attributeName,int attribute) {
+	void saveJson_vertices(const char* filename, ObjectManager& objectManager, BrushManager& brushManager) {
+
+	}
+
+	void loadJson_vertices(const char* filename, ObjectManager& objectManager, BrushManager& brushManager) {
+	}
+
+	void saveJson_attribute(const char* filename, const char* attributeName, int attribute) {
 		json t_json;
 
 		t_json[attributeName] = attribute;
@@ -128,7 +135,7 @@ namespace IOHandler {
 		t_o << t_json << std::endl;
 	}
 
-	void load_attribute(const char* filename, const char* attributeName, int& attribute) {
+	void loadJson_attribute(const char* filename, const char* attributeName, int& attribute) {
 		json t_json;
 		std::ifstream t_i(filename);
 		if (t_i.fail()) {
