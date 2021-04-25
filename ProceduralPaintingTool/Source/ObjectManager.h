@@ -37,7 +37,9 @@ public:
 
 	void addObject(BiomeBrush* object);
 	void addDebugMesh(Mesh* mesh);
+	void start();
 	void update();
+	void quit();
 
 	void clearMeshes();
 

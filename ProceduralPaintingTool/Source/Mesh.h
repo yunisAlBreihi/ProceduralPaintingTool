@@ -46,6 +46,8 @@ public:
 	std::vector<Vertex*>& getVertexAtPositionRadius(glm::vec3& targetPosition, float thresholdRadius);
 	const Vertex& getVertexAtPositionFlat(glm::vec3& targetPosition, float thresholdRadius);
 
+	Vertex* getVertexAtIndex(int index);
+
 	const Vertex& getLowestVertexPositionFlat();
 	const Vertex& getHighestVertexPositionFlat();
 };

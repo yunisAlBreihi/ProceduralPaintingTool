@@ -119,11 +119,60 @@ namespace IOHandler {
 		}
 	}
 
-	void saveJson_vertices(const char* filename, ObjectManager& objectManager, BrushManager& brushManager) {
+	void saveJson_terrainVerticesColor(const char* filename, ObjectManager& objectManager) {
+		Vertex* t_vertices = objectManager.m_terrain->m_vertices;
+		int t_vertex_count = objectManager.m_terrain->m_vert_count;
+		json t_json;
+		const char* t_namePrefix = "TerrainVertexColor_";
 
+		glm::vec4 t_emptyColor = {0.0f, 0.0f, 0.0f, 1.0f};
+		for (size_t i = 0; i < t_vertex_count; ++i) {
+			if (t_vertices[i].color == t_emptyColor) {
+				continue;
+			}
+			std::string t_vertexName = t_namePrefix + std::to_string(i);
+			t_json[t_vertexName] = { {t_vertices[i].color.x, t_vertices[i].color.y, t_vertices[i].color.z, t_vertices[i].color.a},
+									 {t_vertices[i].index} };
+		}
+		std::ofstream t_o(filename);
+		t_o << t_json << std::endl;
 	}
 
-	void loadJson_vertices(const char* filename, ObjectManager& objectManager, BrushManager& brushManager) {
+	void loadJson_terrainVerticesColor(const char* filename, ObjectManager& objectManager, BrushManager& brushManager) {
+		json t_json;
+		std::ifstream t_i(filename);
+		if (t_i.fail()) {
+			return;
+		}
+
+		t_i >> t_json;
+		if (t_json == "null") {
+			return;
+		}
+		Mesh& t_terrain = *objectManager.m_terrain;
+
+		int t_parameterIndex = 0;
+		bool t_nextUsable = false;
+		glm::vec4 t_vertexColor;
+		for (const auto& t_item : t_json) {
+			for (const auto& t_parameter : t_item) {
+				if (t_parameterIndex % 2 == 0) {
+					if (t_parameter[0] != 0.0f || t_parameter[1] != 0.0f ||
+						t_parameter[2] != 0.0f || t_parameter[3] != 1.0f) {
+						t_vertexColor = { t_parameter[0] ,t_parameter[1], t_parameter[2], t_parameter[3] };
+						t_nextUsable = true;
+					}
+				}
+				else if (t_nextUsable == true) {
+					t_terrain.setVertexColor(t_parameter[0], t_vertexColor);
+					auto t_currentBrush = brushManager.getBrushWithColor(t_vertexColor);
+					auto t_currentVertex = t_terrain.getVertexAtIndex(t_parameter[0]);
+					t_currentBrush->addVertex(t_currentVertex);
+					t_nextUsable = false;
+				}
+				t_parameterIndex++;
+			}
+		}
 	}
 
 	void saveJson_attribute(const char* filename, const char* attributeName, int attribute) {

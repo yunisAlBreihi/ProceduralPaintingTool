@@ -43,3 +43,12 @@ void BrushManager::removeVerticesFromOtherBrushes() {
 		}
 	}
 }
+
+BrushProperty* BrushManager::getBrushWithColor(glm::vec4 color) {
+	for (auto& t_brush : m_brushProperties) {
+		if (t_brush->m_vertexColor == color) {
+			return t_brush;
+		}
+	}
+	return nullptr;
+}

@@ -23,4 +23,5 @@ public:
 
 	auto& getBrushes() { return m_brushProperties; }
 	BrushProperty* getCurrentBrush() { return m_currentBrushProperty; }
+	BrushProperty* getBrushWithColor(glm::vec4 color);
 };

@@ -26,6 +26,7 @@ namespace globals
 
 	extern const char* g_saveNameBrushes;
 	extern const char* g_saveNameGlobals;
+	extern const char* g_saveNameTerrainVertices;
 
 	void printVec3(const glm::vec3& vec3);
 

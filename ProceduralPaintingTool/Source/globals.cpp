@@ -12,6 +12,7 @@ namespace globals
 	//Save file names
 	const char* g_saveNameBrushes = "SaveFiles/brushes.json";
 	const char* g_saveNameGlobals = "SaveFiles/globals.json";
+	const char* g_saveNameTerrainVertices = "SaveFiles/terrainVertices.json";
 
 	void printVec3(const glm::vec3& vector) {
 		printf("X: %0.01f, Y: %0.01f, Z: %0.01f\n", vector.x, vector.y, vector.z);

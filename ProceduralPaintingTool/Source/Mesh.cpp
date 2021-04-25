@@ -103,6 +103,10 @@ const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition, float rad
 	return Vertex{};
 }
 
+Vertex* Mesh::getVertexAtIndex(int index) {
+	return &m_vertices[index];
+}
+
 const Vertex& Mesh::getLowestVertexPositionFlat() {
 	Vertex* t_lowestVertex = nullptr;
 	for (size_t i = 0; i < m_vert_count; i++)

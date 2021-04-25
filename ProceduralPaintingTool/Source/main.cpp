@@ -123,6 +123,7 @@ int main()
 
 	//Start functions here. Don't run code after this point
 	m_brushManager->start();
+	m_objectManager->start();
 
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
 		glfwPollEvents();
@@ -145,6 +146,7 @@ int main()
 		glfwPollEvents();
 	}
 	//Quit functions go here
+	m_objectManager->quit();
 	m_brushManager->quit();
 
 	//Save global attributes to save file

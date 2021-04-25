@@ -3,6 +3,7 @@
 #include "GLFW/glfw3.h"
 #include "Raycast.h"
 #include <algorithm>
+#include "IOHandler.h"
 
 ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m_window(window), m_brushManager(brushManager) {
 	m_defaultShader = new Shader("Shaders/default.vs", "Shaders/default.fs");
@@ -21,6 +22,11 @@ void ObjectManager::addObject(BiomeBrush* object) {
 
 void ObjectManager::addDebugMesh(Mesh* mesh) {
 	m_debugMeshes.push_back(mesh);
+}
+
+void ObjectManager::start() {
+	IOHandler::loadJson_terrainVerticesColor(globals::g_saveNameTerrainVertices, *this, m_brushManager);
+	Biome(*this, m_brushManager);
 }
 
 void ObjectManager::update() {
@@ -71,6 +77,10 @@ void ObjectManager::update() {
 			}
 		}
 	}
+}
+
+void ObjectManager::quit() {
+	IOHandler::saveJson_terrainVerticesColor(globals::g_saveNameTerrainVertices, *this);
 }
 
 void ObjectManager::clearMeshes() {

@@ -37,7 +37,7 @@ public:
 	void addVertex(Vertex* vertex) {
 		for (const auto& t_vertex : m_usedVertices) {
 			if (t_vertex != nullptr) {
-				if (vertex->position == t_vertex->position || vertex->color == m_vertexColor) {
+				if (vertex->position == t_vertex->position || vertex->color != m_vertexColor) {
 					return;
 				}
 			}
