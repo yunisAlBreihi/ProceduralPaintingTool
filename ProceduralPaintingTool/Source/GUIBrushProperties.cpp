@@ -83,7 +83,6 @@ void GUIBrushProperties::update() {
 			if (t_currentBrush->getObjectPropertiesLength() != 0) {
 				ImGui::ListBox("Object type", &t_currentItem, t_currentBrush->getObjectNames_C().data(), t_currentBrush->getObjectPropertiesLength());
 				m_currentObjectProperty = t_currentBrush->m_objectProperties[t_currentItem];
-				printf("current item: %i\n", t_currentItem);
 			}
 			ImGui::SameLine();
 
