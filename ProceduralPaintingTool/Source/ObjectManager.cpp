@@ -71,7 +71,9 @@ void ObjectManager::update() {
 
 		for (auto& t_vertex : t_vertices) {
 			if (m_brushManager.getCurrentBrush() != nullptr) {
-				m_brushManager.getCurrentBrush()->addVertex(t_vertex);
+				if (m_brushManager.getCurrentBrush()->m_id != 0) {
+					m_brushManager.getCurrentBrush()->addVertex(t_vertex);
+				}
 				m_terrain->setVertexColor(t_vertex->index, m_brushManager.getCurrentBrush()->m_vertexColor);
 				m_brushManager.removeVertexFromOtherBrushesAtPosition(t_vertex->position);
 			}

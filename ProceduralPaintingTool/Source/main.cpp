@@ -113,6 +113,9 @@ int main()
 
 	//Get global attributes from save file
 	IOHandler::loadJson_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
+	IOHandler::loadJson_attribute(globals::g_saveNameGlobals, "hasGlobalsSave", globals::g_hasGlobalsSave);
+	IOHandler::loadJson_attribute(globals::g_saveNameGlobals, "hasBrushSave", globals::g_hasBrushSave);
+	IOHandler::loadJson_attribute(globals::g_saveNameGlobals, "hasTerrainVerticesSave", globals::g_hasTerrainVerticesSave);
 
 	BrushManager* m_brushManager = new BrushManager();
 	ObjectManager* m_objectManager = new ObjectManager(m_window, *m_brushManager);
@@ -150,7 +153,11 @@ int main()
 	m_brushManager->quit();
 
 	//Save global attributes to save file
-	IOHandler::saveJson_attribute(globals::g_saveNameGlobals, "seed", globals::g_seed);
+	json* m_saveFile = new json();
+	IOHandler::saveJson_attribute(*m_saveFile, globals::g_saveNameGlobals, "seed", globals::g_seed);
+	IOHandler::saveJson_attribute(*m_saveFile, globals::g_saveNameGlobals, "hasGlobalsSave", globals::g_hasGlobalsSave);
+	IOHandler::saveJson_attribute(*m_saveFile, globals::g_saveNameGlobals, "hasBrushSave", globals::g_hasBrushSave);
+	IOHandler::saveJson_attribute(*m_saveFile, globals::g_saveNameGlobals, "hasTerrainVerticesSave", globals::g_hasTerrainVerticesSave);
 
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();

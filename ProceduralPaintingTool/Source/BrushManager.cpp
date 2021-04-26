@@ -2,6 +2,13 @@
 #include "IOHandler.h"
 #include "globals.h"
 
+BrushManager::BrushManager() {
+	if (globals::g_hasBrushSave == false) {
+		createBrush();
+		m_currentBrushProperty->m_vertexColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+	}
+}
+
 void BrushManager::start() {
 	IOHandler::loadJson_brush(globals::g_saveNameBrushes, *this);
 }

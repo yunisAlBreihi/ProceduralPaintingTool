@@ -9,10 +9,17 @@ namespace globals
 	glm::vec2 g_mouse_delta;
 	glm::vec2 g_window_size;
 
-	//Save file names
+	//Save file variables
+	bool g_hasBrushSave = false;
+	bool g_hasGlobalsSave = false;
+	bool g_hasTerrainVerticesSave = false;
 	const char* g_saveNameBrushes = "SaveFiles/brushes.json";
 	const char* g_saveNameGlobals = "SaveFiles/globals.json";
 	const char* g_saveNameTerrainVertices = "SaveFiles/terrainVertices.json";
+
+	//For brush save files
+	const char* g_brushPrefix = "Brush";
+	const char* g_propertyPrefix = "Property";
 
 	void printVec3(const glm::vec3& vector) {
 		printf("X: %0.01f, Y: %0.01f, Z: %0.01f\n", vector.x, vector.y, vector.z);

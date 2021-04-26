@@ -6,11 +6,13 @@
 class BrushManager {
 private:
 	std::vector<BrushProperty*> m_brushProperties;
-	BrushProperty* m_currentBrushProperty;
+	BrushProperty* m_currentBrushProperty = nullptr;
 
 	int m_brushIdCount = -1;
 
 public:
+	BrushManager();
+
 	void start();
 	void quit();
 

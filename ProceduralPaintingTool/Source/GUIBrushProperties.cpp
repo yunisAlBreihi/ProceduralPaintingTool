@@ -6,7 +6,8 @@
 
 
 GUIBrushProperties::GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager) : 
-	m_objectManager(objectManager), m_brushManager(brushManager) {}
+	m_objectManager(objectManager), m_brushManager(brushManager) {
+}
 
 void GUIBrushProperties::update() {
 
@@ -17,16 +18,28 @@ void GUIBrushProperties::update() {
 	//Create ImGUI window
 	ImGui::Begin("Brush Properties");
 
+
 	static int t_seed = 0;
 	ImGui::InputInt("Seed", &globals::g_seed, ImGuiInputTextFlags_EnterReturnsTrue);
 
 	auto& t_brushes = m_brushManager.getBrushes();
-	BrushProperty* t_currentBrush = m_brushManager.getCurrentBrush();
-	static int t_currentItem = 0;
 
+	BrushProperty* t_currentBrush = m_brushManager.getCurrentBrush();
+	if (t_currentBrush != nullptr && t_currentBrush->m_current_object != -1 && m_currentObjectProperty == nullptr) {
+		m_currentObjectProperty = &t_currentBrush->getCurrentObjectType();
+	}
+
+	static int t_currentItem = 0;
 	for (int i = 0; i < t_brushes.size(); ++i) {
-		std::string brushName = "Brush" + std::to_string(i);
-		if (ImGui::Button(brushName.c_str())) {
+		std::string t_brushName;
+		if (i == 0)	{
+			t_brushName = "Eraser";
+		}
+		else {
+			t_brushName= "Brush" + std::to_string(i);
+		}
+
+		if (ImGui::Button(t_brushName.c_str())) {
 			m_brushManager.setCurrentBrush(i);
 			t_currentItem = 0;
 			if (t_currentBrush->getObjectPropertiesLength() != 0) {
@@ -70,6 +83,7 @@ void GUIBrushProperties::update() {
 			if (t_currentBrush->getObjectPropertiesLength() != 0) {
 				ImGui::ListBox("Object type", &t_currentItem, t_currentBrush->getObjectNames_C().data(), t_currentBrush->getObjectPropertiesLength());
 				m_currentObjectProperty = t_currentBrush->m_objectProperties[t_currentItem];
+				printf("current item: %i\n", t_currentItem);
 			}
 			ImGui::SameLine();
 

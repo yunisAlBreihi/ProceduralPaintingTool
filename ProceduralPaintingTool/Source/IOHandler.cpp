@@ -1,23 +1,16 @@
 #include "IOHandler.h"
-#include <iostream>
-#include <fstream>
-#include "nlohmann/json.hpp"
 
-using json = nlohmann::json;
-using value_t = nlohmann::detail::value_t;
 
 namespace IOHandler {
 	void saveJson_brush(const char* filename, BrushManager& brushManager) {
+		globals::g_hasBrushSave = true;
+
 		json t_json;
-		const char* t_namePrefix = "Brush";
 
 		const std::vector<BrushProperty*>& t_brushes = brushManager.getBrushes();
 		int t_brushSize = t_brushes.size();
 		for (size_t i = 0; i < t_brushSize; i++) {
-			std::string t_brushName = t_namePrefix + std::to_string(i);
-			std::string t_brushColorName = t_brushName + "_color";
-			std::string t_brushCurrentObjectName = t_brushName + "_currentObject";
-			std::string t_brushIdName = t_brushName + "_Id";
+			std::string t_brushName = globals::g_brushPrefix + std::to_string(i);
 
 			int t_objectPropertiesSize = t_brushes[i]->m_objectProperties.size();
 
@@ -26,7 +19,7 @@ namespace IOHandler {
 									{ t_brushes[i]->m_id} };
 
 			for (size_t objectIndex = 0; objectIndex < t_objectPropertiesSize; ++objectIndex) {
-				std::string t_objectPropertyName = t_brushName + "_object" + std::to_string(objectIndex);
+				std::string t_objectPropertyName = t_brushName + globals::g_propertyPrefix + std::to_string(objectIndex);
 				t_json[t_objectPropertyName] = { {t_brushes[i]->m_objectProperties[objectIndex]->m_sizeOffset.x,t_brushes[i]->m_objectProperties[objectIndex]->m_sizeOffset.y },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetX.x, t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetX.y },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetY.x, t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetY.y },
@@ -43,12 +36,12 @@ namespace IOHandler {
 	void loadJson_brush(const char* filename, BrushManager& brushManager) {
 		json t_json;
 		std::ifstream t_i(filename);
-		if (t_i.fail()) {
+		if (t_i.peek() == std::ifstream::traits_type::eof()) {
 			return;
 		}
 
 		t_i >> t_json;
-		if (t_json == "null") {
+		if (t_json.empty() || t_json == "null") {
 			return;
 		}
 
@@ -57,18 +50,19 @@ namespace IOHandler {
 			t_usedNames.push_back(it.key().c_str());
 		}
 
+		int t_brushIndex = -1;
+		int t_propertyIndex = 0;
 		BrushProperty* t_brushProperty = nullptr;
 		BiomeObjectProperty* t_objectProperty = nullptr;
-		std::string t_lastItemName;
 		for (auto it = t_json.begin(); it != t_json.end(); ++it) {
 			//std::cout << it.key().c_str() << std::endl;
 			std::string t_itemName = it.key().c_str();
 
-			int t_propertyIndex = 0;
+			int t_itemIndex = 0;
 
 			for (const auto& t_property : it.value()) {
-				if (t_itemName.size() < t_lastItemName.size() || t_lastItemName == "") {
-					switch (t_propertyIndex) {
+				if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) + globals::g_propertyPrefix) == false) {
+					switch (t_itemIndex) {
 					case 0:
 						t_brushProperty = new BrushProperty();
 						t_brushProperty->m_vertexColor = { t_property[0],t_property[1],t_property[2],t_property[3] };
@@ -81,8 +75,8 @@ namespace IOHandler {
 						break;
 					}
 				}
-				else {
-					switch (t_propertyIndex) {
+				else if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) +globals::g_propertyPrefix) == true) {
+					switch (t_itemIndex) {
 					case 0:
 						t_objectProperty = new BiomeObjectProperty();
 						t_objectProperty->m_sizeOffset = { t_property[0], t_property[1] };
@@ -105,27 +99,28 @@ namespace IOHandler {
 					case 6:
 						t_objectProperty->m_name = t_property[0];
 						t_brushProperty->addObjectType(t_objectProperty);
+						t_propertyIndex++;
 						break;
 					}
 				}
-				t_propertyIndex++;
+				t_itemIndex++;
 			}
-			if (t_itemName.size() < t_lastItemName.size() || t_lastItemName == "") {
+			if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) + globals::g_propertyPrefix) == false) {
 				brushManager.addBrush(t_brushProperty);
+				t_brushIndex++;
 			}
-			else {
-			}
-			t_lastItemName = t_itemName;
 		}
 	}
 
 	void saveJson_terrainVerticesColor(const char* filename, ObjectManager& objectManager) {
+		globals::g_hasTerrainVerticesSave = true;
+
 		Vertex* t_vertices = objectManager.m_terrain->m_vertices;
 		int t_vertex_count = objectManager.m_terrain->m_vert_count;
 		json t_json;
 		const char* t_namePrefix = "TerrainVertexColor_";
 
-		glm::vec4 t_emptyColor = {0.0f, 0.0f, 0.0f, 1.0f};
+		glm::vec4 t_emptyColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 		for (size_t i = 0; i < t_vertex_count; ++i) {
 			if (t_vertices[i].color == t_emptyColor) {
 				continue;
@@ -141,12 +136,12 @@ namespace IOHandler {
 	void loadJson_terrainVerticesColor(const char* filename, ObjectManager& objectManager, BrushManager& brushManager) {
 		json t_json;
 		std::ifstream t_i(filename);
-		if (t_i.fail()) {
+		if (t_i.peek() == std::ifstream::traits_type::eof()) {
 			return;
 		}
 
 		t_i >> t_json;
-		if (t_json == "null") {
+		if (t_json.empty() || t_json == "null") {
 			return;
 		}
 		Mesh& t_terrain = *objectManager.m_terrain;
@@ -173,29 +168,5 @@ namespace IOHandler {
 				t_parameterIndex++;
 			}
 		}
-	}
-
-	void saveJson_attribute(const char* filename, const char* attributeName, int attribute) {
-		json t_json;
-
-		t_json[attributeName] = attribute;
-
-		std::ofstream t_o(filename);
-		t_o << t_json << std::endl;
-	}
-
-	void loadJson_attribute(const char* filename, const char* attributeName, int& attribute) {
-		json t_json;
-		std::ifstream t_i(filename);
-		if (t_i.fail()) {
-			return;
-		}
-
-		t_i >> t_json;
-		if (t_json == "null") {
-			return;
-		}
-
-		attribute = t_json.find(attributeName).value();
 	}
 }
