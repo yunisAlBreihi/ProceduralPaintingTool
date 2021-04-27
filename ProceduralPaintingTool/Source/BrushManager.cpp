@@ -11,6 +11,14 @@ BrushManager::BrushManager() {
 
 void BrushManager::start() {
 	IOHandler::loadJson_brush(globals::g_saveNameBrushes, *this);
+
+	if (m_brushProperties.size() > 0) {
+		for (const auto& t_brush : m_brushProperties) {
+			if (t_brush->m_id > m_brushIdCount) {
+				m_brushIdCount = t_brush->m_id;
+			}
+		}
+	}
 }
 
 void BrushManager::quit() {

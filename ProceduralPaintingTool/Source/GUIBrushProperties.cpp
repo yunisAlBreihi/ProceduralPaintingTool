@@ -58,7 +58,7 @@ void GUIBrushProperties::update() {
 
 	//ImGui::ColorPicker4("Brush Vertex Color", (float*)&m_currentBrushProperty->m_vertexColor, ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview);
 	if (ImGui::CollapsingHeader("Brush Color")) {
-		if (t_currentBrush != nullptr) {
+		if (t_currentBrush != nullptr && t_currentBrush->m_id != 0) {
 			ImGui::ColorPicker4("Brush Vertex Color", (float*)&t_currentBrush->m_vertexColor);
 		}
 	}
@@ -68,7 +68,7 @@ void GUIBrushProperties::update() {
 	}
 
 	if (ImGui::CollapsingHeader("Biome Properties")) {
-		if (t_currentBrush != nullptr) {
+		if (t_currentBrush != nullptr && t_currentBrush->m_id != 0) {
 			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 			if (t_currentBrush->m_current_object != -1) {
 				ImGui::SliderFloat2("Size Range", glm::value_ptr(m_currentObjectProperty->m_sizeOffset), 0.1f, 10.0f);
