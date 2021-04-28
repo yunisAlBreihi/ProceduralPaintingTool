@@ -61,7 +61,7 @@ namespace IOHandler {
 			int t_itemIndex = 0;
 
 			for (const auto& t_property : it.value()) {
-				if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) + globals::g_propertyPrefix) == false) {
+				if (t_itemName._Starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) + globals::g_propertyPrefix) == false) {
 					switch (t_itemIndex) {
 					case 0:
 						t_brushProperty = new BrushProperty();
@@ -77,7 +77,7 @@ namespace IOHandler {
 						t_brushProperty->m_colorIsSet = t_property[0];
 					}
 				}
-				else if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) +globals::g_propertyPrefix) == true) {
+				else if (t_itemName._Starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) +globals::g_propertyPrefix) == true) {
 					switch (t_itemIndex) {
 					case 0:
 						t_objectProperty = new BiomeObjectProperty();
@@ -107,7 +107,7 @@ namespace IOHandler {
 				}
 				t_itemIndex++;
 			}
-			if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) + globals::g_propertyPrefix) == false) {
+			if (t_itemName._Starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) + globals::g_propertyPrefix) == false) {
 				brushManager.addBrush(t_brushProperty);
 				t_brushIndex++;
 			}

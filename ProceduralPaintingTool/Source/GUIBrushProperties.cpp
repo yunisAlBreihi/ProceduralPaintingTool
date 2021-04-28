@@ -3,7 +3,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "Biome.h"
-
+#include "imgui/ImFileDialog.h"
 
 GUIBrushProperties::GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager) :
 	m_objectManager(objectManager), m_brushManager(brushManager) {
@@ -52,12 +52,40 @@ void GUIBrushProperties::update() {
 		ImGui::SameLine();
 	}
 
-	if (ImGui::Button("Test")) {
-		ImGui::
-	}
-
 	if (ImGui::Button("Create Brush")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 		m_brushManager.createBrush();
+	}
+
+	ifd::FileDialog::Instance().CreateTexture = [](uint8_t* data, int w, int h, char fmt) -> void* {
+		GLuint tex;
+
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, (fmt == 0) ? GL_BGRA : GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		return (void*)tex;
+	};
+	ifd::FileDialog::Instance().DeleteTexture = [](void* tex) {
+		GLuint texID = (GLuint)tex;
+		glDeleteTextures(1, &texID);
+	};
+
+	if (ImGui::Button("Open a texture")) {
+		ifd::FileDialog::Instance().Open("TextureOpenDialog", "Open a File", "Mesh File (*.obj){.obj},.*");
+	}
+
+	if (ifd::FileDialog::Instance().IsDone("TextureOpenDialog")) {
+		if (ifd::FileDialog::Instance().HasResult()) {
+			const std::wstring& res = ifd::FileDialog::Instance().GetResult();
+			printf("OPEN[%s]\n", std::string(res.begin(), res.end()).c_str());
+		}
+		ifd::FileDialog::Instance().Close();
 	}
 
 	if (t_currentBrush != nullptr && t_currentBrush->m_id != 0 && t_currentBrush->m_colorIsSet == false) {
@@ -65,8 +93,6 @@ void GUIBrushProperties::update() {
 			ImGui::ColorPicker4("Brush Vertex Color", (float*)&t_currentBrush->m_vertexColor);
 		}
 	}
-
-
 
 	if (t_currentBrush != nullptr && t_currentBrush->m_id != 0) {
 		if (ImGui::Button("Fill terrain with color")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
