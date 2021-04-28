@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "Rendering.h"
 #include "BrushProperty.h"
-#include "BiomeBrush.h"
+#include "BiomeObject.h"
 #include "MousePicker.h"
 #include "Debug.h"
 #include "BrushManager.h"
@@ -13,7 +13,7 @@
 class ObjectManager
 {
 private:
-	std::vector<BiomeBrush*> m_objects;
+	std::vector<BiomeObject*> m_objects;
 	std::vector<Mesh*> m_debugMeshes;
 	std::vector<DebugLine> m_debugLines;
 
@@ -35,7 +35,7 @@ public:
 public:
 	ObjectManager(GLFWwindow* window, BrushManager& brushManager);
 
-	void addObject(BiomeBrush* object);
+	void addObject(BiomeObject* object);
 	void addDebugMesh(Mesh* mesh);
 	void start();
 	void update();

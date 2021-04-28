@@ -9,6 +9,8 @@ public:
 	glm::vec4 m_vertexColor = { 1.0f,0.0f,1.0f,1.0f };
 	int m_current_object = -1;
 	int m_id = -1;
+	bool m_colorIsSet = false;
+	//std::string m_name = "";
 
 	std::vector<BiomeObjectProperty*> m_objectProperties;
 	std::vector<Vertex*> m_usedVertices;

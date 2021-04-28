@@ -16,7 +16,8 @@ namespace IOHandler {
 
 			t_json[t_brushName] = { {t_brushes[i]->m_vertexColor.r, t_brushes[i]->m_vertexColor.g, t_brushes[i]->m_vertexColor.b, t_brushes[i]->m_vertexColor.a },
 									{ t_brushes[i]->m_current_object},
-									{ t_brushes[i]->m_id} };
+									{ t_brushes[i]->m_id},
+									{ t_brushes[i]->m_colorIsSet} };
 
 			for (size_t objectIndex = 0; objectIndex < t_objectPropertiesSize; ++objectIndex) {
 				std::string t_objectPropertyName = t_brushName + globals::g_propertyPrefix + std::to_string(objectIndex);
@@ -55,7 +56,6 @@ namespace IOHandler {
 		BrushProperty* t_brushProperty = nullptr;
 		BiomeObjectProperty* t_objectProperty = nullptr;
 		for (auto it = t_json.begin(); it != t_json.end(); ++it) {
-			//std::cout << it.key().c_str() << std::endl;
 			std::string t_itemName = it.key().c_str();
 
 			int t_itemIndex = 0;
@@ -73,6 +73,8 @@ namespace IOHandler {
 					case 2:
 						t_brushProperty->m_id = t_property[0];
 						break;
+					case 3:
+						t_brushProperty->m_colorIsSet = t_property[0];
 					}
 				}
 				else if (t_itemName.starts_with(globals::g_brushPrefix + std::to_string(t_brushIndex) +globals::g_propertyPrefix) == true) {

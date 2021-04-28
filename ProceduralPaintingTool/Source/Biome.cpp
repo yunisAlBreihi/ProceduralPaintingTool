@@ -1,8 +1,8 @@
 #include "Biome.h"
-#include "BiomeBrush.h"
+#include "BiomeObject.h"
 
 Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objectManager(objectManager), m_brushManager(brushManager) {
-	std::vector<BiomeBrush*> t_createdObjects;
+	std::vector<BiomeObject*> t_createdObjects;
 	float t_terrainRadius = 1.0f;
 
 	const auto& t_brushes = brushManager.getBrushes();
@@ -20,7 +20,12 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 	const int t_maxCountX = static_cast<int>(t_highestPosition.x);
 	const int t_maxCountZ = static_cast<int>(t_highestPosition.y);
 
-	for (const auto& t_brush : t_brushes) {
+	int t_brushCounter = 0;
+	for (auto& t_brush : t_brushes) {
+		if (t_brushCounter == 0) {
+			t_brushCounter++;
+			continue;
+		}
 		for (auto& t_objectType : t_brush->m_objectProperties) {
 			int t_scaledSizeOffsetMin = static_cast<int>(t_objectType->m_sizeOffset.x * 100);
 			int t_scaledSizeOffsetMax = static_cast<int>(t_objectType->m_sizeOffset.y * 100);
@@ -66,13 +71,14 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 							Mesh* t_mesh = new Mesh(t_objectType->m_name.c_str(), Transform());
 							t_mesh->setPosition(t_treePos);
 							t_mesh->setScale(glm::vec3(t_randomSize));
-							BiomeBrush* t_object = new BiomeBrush(t_mesh, t_objectType->m_radius, t_objectType->m_priority);
+							BiomeObject* t_object = new BiomeObject(t_mesh, t_objectType->m_radius, t_objectType->m_priority);
 							t_createdObjects.push_back(t_object);
 						}
 					}
 				}
 			}
 		}
+		t_brush->m_colorIsSet = true;
 	}
 
 	for (auto t_createdMesh : t_createdObjects) {

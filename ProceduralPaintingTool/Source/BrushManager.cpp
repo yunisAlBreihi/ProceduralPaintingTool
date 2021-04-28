@@ -6,6 +6,7 @@ BrushManager::BrushManager() {
 	if (globals::g_hasBrushSave == false) {
 		createBrush();
 		m_currentBrushProperty->m_vertexColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+		m_currentBrushProperty->m_colorIsSet = true;
 	}
 }
 

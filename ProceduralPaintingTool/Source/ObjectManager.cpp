@@ -16,7 +16,7 @@ ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m
 	m_mousePicker = new MousePicker(m_camera);
 }
 
-void ObjectManager::addObject(BiomeBrush* object) {
+void ObjectManager::addObject(BiomeObject* object) {
 	m_objects.push_back(object);
 }
 

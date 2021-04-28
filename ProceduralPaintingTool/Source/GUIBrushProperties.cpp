@@ -5,7 +5,7 @@
 #include "Biome.h"
 
 
-GUIBrushProperties::GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager) : 
+GUIBrushProperties::GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager) :
 	m_objectManager(objectManager), m_brushManager(brushManager) {
 }
 
@@ -32,11 +32,11 @@ void GUIBrushProperties::update() {
 	static int t_currentItem = 0;
 	for (int i = 0; i < t_brushes.size(); ++i) {
 		std::string t_brushName;
-		if (i == 0)	{
+		if (i == 0) {
 			t_brushName = "Eraser";
 		}
 		else {
-			t_brushName= "Brush" + std::to_string(i);
+			t_brushName = "Brush" + std::to_string(i);
 		}
 
 		if (ImGui::Button(t_brushName.c_str())) {
@@ -52,24 +52,28 @@ void GUIBrushProperties::update() {
 		ImGui::SameLine();
 	}
 
+	if (ImGui::Button("Test")) {
+		ImGui::
+	}
+
 	if (ImGui::Button("Create Brush")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 		m_brushManager.createBrush();
 	}
 
-	//ImGui::ColorPicker4("Brush Vertex Color", (float*)&m_currentBrushProperty->m_vertexColor, ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview);
-	if (ImGui::CollapsingHeader("Brush Color")) {
-		if (t_currentBrush != nullptr && t_currentBrush->m_id != 0) {
+	if (t_currentBrush != nullptr && t_currentBrush->m_id != 0 && t_currentBrush->m_colorIsSet == false) {
+		if (ImGui::CollapsingHeader("Brush Color")) {
 			ImGui::ColorPicker4("Brush Vertex Color", (float*)&t_currentBrush->m_vertexColor);
 		}
 	}
 
-	if (ImGui::Button("Fill terrain with color")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
-		m_objectManager.fillTerrainColorCurrentBrush();
-	}
 
-	if (ImGui::CollapsingHeader("Biome Properties")) {
-		if (t_currentBrush != nullptr && t_currentBrush->m_id != 0) {
-			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+
+	if (t_currentBrush != nullptr && t_currentBrush->m_id != 0) {
+		if (ImGui::Button("Fill terrain with color")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
+			m_objectManager.fillTerrainColorCurrentBrush();
+		}
+
+		if (ImGui::CollapsingHeader("Biome Properties")) {
 			if (t_currentBrush->m_current_object != -1) {
 				ImGui::SliderFloat2("Size Range", glm::value_ptr(m_currentObjectProperty->m_sizeOffset), 0.1f, 10.0f);
 				ImGui::SliderFloat2("Position Range X", glm::value_ptr(m_currentObjectProperty->m_positionOffsetX), -10.0f, 10.0f);            // Edit 1 float3 using a slider from 0.0f to 1.0f
@@ -84,9 +88,6 @@ void GUIBrushProperties::update() {
 				ImGui::ListBox("Object type", &t_currentItem, t_currentBrush->getObjectNames_C().data(), t_currentBrush->getObjectPropertiesLength());
 				m_currentObjectProperty = t_currentBrush->m_objectProperties[t_currentItem];
 			}
-			ImGui::SameLine();
-
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 			if (ImGui::InputText("Import Mesh", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
 				t_currentBrush->addObjectType(new BiomeObjectProperty());
