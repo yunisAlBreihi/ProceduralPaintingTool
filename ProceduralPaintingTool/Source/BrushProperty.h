@@ -32,6 +32,26 @@ public:
 		m_current_object = m_objectProperties.size() - 1;
 	}
 
+	void setCurrentObjectType(unsigned int index) {
+		if (index < m_objectProperties.size()) {
+			m_current_object = index;
+		}
+	}
+
+	void deleteCurrentObjectType() {
+		m_objectProperties[m_current_object] = nullptr;
+		m_current_object -= 1;
+
+		//remove the nullptr that was created
+		auto t_iterator_to_remove = m_objectProperties.begin();
+		for (auto it = m_objectProperties.begin(); it != m_objectProperties.end(); ++it) {
+			if (*it == nullptr) {
+				t_iterator_to_remove = it;
+			}
+		}
+		m_objectProperties.erase(t_iterator_to_remove);
+	}
+
 	const int getObjectPropertiesLength() {
 		return m_objectProperties.size();
 	}

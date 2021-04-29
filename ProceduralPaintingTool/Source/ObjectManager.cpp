@@ -92,10 +92,19 @@ void ObjectManager::clearMeshes() {
 
 void ObjectManager::fillTerrainColor(const glm::vec4& color) {
 	m_terrain->fillVertexColor(color);
-}
+	if (color == globals::EMPTY_COLOR_V) {
+		m_brushManager.removeVerticesFromAllBrushes();
+	}
+	else {
+		Vertex* t_terrainVertices = m_terrain->m_vertices;
+		int t_terrainVertexSize = m_terrain->m_vert_count;
 
-void ObjectManager::fillTerrainColor(const float* color) {
-	m_terrain->fillVertexColor(color);
+		for (size_t i = 0; i < t_terrainVertexSize; ++i) {
+			m_brushManager.getCurrentBrush()->addVertex(&t_terrainVertices[i]);
+			m_brushManager.removeVerticesFromOtherBrushes();
+		}
+
+	}
 }
 
 void ObjectManager::fillTerrainColorCurrentBrush() {

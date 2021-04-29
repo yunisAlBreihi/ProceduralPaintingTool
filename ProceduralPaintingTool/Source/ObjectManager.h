@@ -44,6 +44,5 @@ public:
 	void clearMeshes();
 
 	void fillTerrainColor(const glm::vec4& color);
-	void fillTerrainColor(const float* color);
 	void fillTerrainColorCurrentBrush();
 };

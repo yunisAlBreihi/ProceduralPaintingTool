@@ -167,8 +167,10 @@ namespace IOHandler {
 				else if (t_nextUsable == true) {
 					t_terrain.setVertexColor(t_parameter[0], t_vertexColor);
 					auto t_currentBrush = brushManager.getBrushWithColor(t_vertexColor);
-					auto t_currentVertex = t_terrain.getVertexAtIndex(t_parameter[0]);
-					t_currentBrush->addVertex(t_currentVertex);
+					if (t_currentBrush != nullptr) {
+						auto t_currentVertex = t_terrain.getVertexAtIndex(t_parameter[0]);
+						t_currentBrush->addVertex(t_currentVertex);
+					}
 					t_nextUsable = false;
 				}
 				t_parameterIndex++;
