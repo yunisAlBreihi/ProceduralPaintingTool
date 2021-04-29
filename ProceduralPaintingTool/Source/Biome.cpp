@@ -68,7 +68,7 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 						if (t_vertex != nullptr) {
 							t_treePos.y = t_vertex->position.y;
 
-							Mesh* t_mesh = new Mesh(t_objectType->m_name.c_str(), Transform());
+							Mesh* t_mesh = new Mesh(("Assets/"+ t_objectType->m_name).c_str(), Transform());
 							t_mesh->setPosition(t_treePos);
 							t_mesh->setScale(glm::vec3(t_randomSize));
 							BiomeObject* t_object = new BiomeObject(t_mesh, t_objectType->m_radius, t_objectType->m_priority);

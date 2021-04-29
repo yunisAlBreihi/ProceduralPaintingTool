@@ -127,6 +127,7 @@ int main()
 	//Start functions here. Don't run code after this point
 	m_brushManager->start();
 	m_objectManager->start();
+	m_GUIBrushProperties.start();
 
 	while (glfwWindowShouldClose(m_window) == GLFW_FALSE) {
 		glfwPollEvents();

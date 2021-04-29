@@ -24,6 +24,7 @@ private:
 
 public:
 	GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager);
+	void start();
 	void update();
 	void render(GLFWwindow* window);
 };

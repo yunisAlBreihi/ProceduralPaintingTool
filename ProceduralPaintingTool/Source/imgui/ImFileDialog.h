@@ -50,6 +50,8 @@ namespace ifd {
 		std::function<void*(uint8_t*, int, int, char)> CreateTexture; // char -> fmt -> { 0 = BGRA, 1 = RGBA }
 		std::function<void(void*)> DeleteTexture;
 
+		//std::function<std::string()> GetMesh;
+
 		class FileTreeNode {
 		public:
 			FileTreeNode(const std::string& path) {

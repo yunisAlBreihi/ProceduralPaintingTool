@@ -9,8 +9,29 @@ GUIBrushProperties::GUIBrushProperties(ObjectManager& objectManager, BrushManage
 	m_objectManager(objectManager), m_brushManager(brushManager) {
 }
 
-void GUIBrushProperties::update() {
+void GUIBrushProperties::start() {
+	ifd::FileDialog::Instance().CreateTexture = [](uint8_t* data, int w, int h, char fmt) -> void* {
+		GLuint tex;
 
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, (fmt == 0) ? GL_BGRA : GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		return (void*)tex;
+	};
+	ifd::FileDialog::Instance().DeleteTexture = [](void* tex) {
+		GLuint texID = (GLuint)tex;
+		glDeleteTextures(1, &texID);
+	};
+}
+
+void GUIBrushProperties::update() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -21,6 +42,8 @@ void GUIBrushProperties::update() {
 
 	static int t_seed = 0;
 	ImGui::InputInt("Seed", &globals::g_seed, ImGuiInputTextFlags_EnterReturnsTrue);
+
+	ImGui::Separator();
 
 	auto& t_brushes = m_brushManager.getBrushes();
 
@@ -52,40 +75,10 @@ void GUIBrushProperties::update() {
 		ImGui::SameLine();
 	}
 
+	ImGui::Separator();
+
 	if (ImGui::Button("Create Brush")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 		m_brushManager.createBrush();
-	}
-
-	ifd::FileDialog::Instance().CreateTexture = [](uint8_t* data, int w, int h, char fmt) -> void* {
-		GLuint tex;
-
-		glGenTextures(1, &tex);
-		glBindTexture(GL_TEXTURE_2D, tex);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, (fmt == 0) ? GL_BGRA : GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		return (void*)tex;
-	};
-	ifd::FileDialog::Instance().DeleteTexture = [](void* tex) {
-		GLuint texID = (GLuint)tex;
-		glDeleteTextures(1, &texID);
-	};
-
-	if (ImGui::Button("Open a texture")) {
-		ifd::FileDialog::Instance().Open("TextureOpenDialog", "Open a File", "Mesh File (*.obj){.obj},.*");
-	}
-
-	if (ifd::FileDialog::Instance().IsDone("TextureOpenDialog")) {
-		if (ifd::FileDialog::Instance().HasResult()) {
-			const std::wstring& res = ifd::FileDialog::Instance().GetResult();
-			printf("OPEN[%s]\n", std::string(res.begin(), res.end()).c_str());
-		}
-		ifd::FileDialog::Instance().Close();
 	}
 
 	if (t_currentBrush != nullptr && t_currentBrush->m_id != 0 && t_currentBrush->m_colorIsSet == false) {
@@ -98,6 +91,8 @@ void GUIBrushProperties::update() {
 		if (ImGui::Button("Fill terrain with color")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 			m_objectManager.fillTerrainColorCurrentBrush();
 		}
+
+		ImGui::Separator();
 
 		if (ImGui::CollapsingHeader("Biome Properties")) {
 			if (t_currentBrush->m_current_object != -1) {
@@ -115,18 +110,39 @@ void GUIBrushProperties::update() {
 				m_currentObjectProperty = t_currentBrush->m_objectProperties[t_currentItem];
 			}
 
-			if (ImGui::InputText("Import Mesh", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
-				t_currentBrush->addObjectType(new BiomeObjectProperty());
-				t_currentBrush->getCurrentObjectType().m_name = m_buffer;
-				m_currentObjectProperty = &t_currentBrush->getCurrentObjectType();
+			if (ImGui::Button("Import Mesh")) {
+				ifd::FileDialog::Instance().Open("TextureOpenDialog", "Open a File", "Mesh File (*.obj){.obj},.*");
+			}
+
+			if (ifd::FileDialog::Instance().IsDone("TextureOpenDialog")) {
+				if (ifd::FileDialog::Instance().HasResult()) {
+					const std::wstring& res = ifd::FileDialog::Instance().GetResult();
+					std::string t_resultPath(res.begin(), res.end());
+
+					int t_afterLastSlash = t_resultPath.find_last_of("\\") + 1;
+					std::string t_restultObjectName = t_resultPath.substr(t_afterLastSlash, t_resultPath.size());
+
+					t_currentBrush->addObjectType(new BiomeObjectProperty());
+					t_currentBrush->getCurrentObjectType().m_name = t_restultObjectName;
+					m_currentObjectProperty = &t_currentBrush->getCurrentObjectType();
+				}
+				ifd::FileDialog::Instance().Close();
 			}
 		}
 	}
+
+	ImGui::Separator();
+	ImGui::Separator();
+	ImGui::Separator();
 
 	if (ImGui::Button("Create Biome")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 		m_objectManager.clearMeshes();
 		Biome(m_objectManager, m_brushManager);
 	}
+
+	ImGui::Separator();
+	ImGui::Separator();
+	ImGui::Separator();
 
 	if (ImGui::Button("Clear Meshes")) {
 		m_objectManager.clearMeshes();
