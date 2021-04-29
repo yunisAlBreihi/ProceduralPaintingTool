@@ -77,6 +77,20 @@ void GUIBrushProperties::update() {
 
 	ImGui::Separator();
 
+	if (ImGui::TreeNode("Popups")) {
+
+		if (ImGui::Button("Brush Naming")) {
+			ImGui::OpenPopup("my_toggle_popup");
+			if (ImGui::BeginPopup("my_toggle_popup")) {
+
+				if (ImGui::Button("Test")) {
+				}
+			}
+			ImGui::EndPopup();
+		}
+		ImGui::TreePop();
+	}
+
 	if (ImGui::Button("Create Brush")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
 		m_brushManager.createBrush();
 	}
