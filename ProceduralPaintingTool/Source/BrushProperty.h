@@ -10,7 +10,7 @@ public:
 	int m_current_object = -1;
 	int m_id = -1;
 	bool m_colorIsSet = false;
-	//std::string m_name = "";
+	std::string m_name = "";
 
 	std::vector<BiomeObjectProperty*> m_objectProperties;
 	std::vector<Vertex*> m_usedVertices;

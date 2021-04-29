@@ -4,7 +4,7 @@
 
 BrushManager::BrushManager() {
 	if (globals::g_hasBrushSave == false) {
-		createBrush();
+		createBrush("Eraser");
 		m_currentBrushProperty->m_vertexColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 		m_currentBrushProperty->m_colorIsSet = true;
 	}
@@ -26,9 +26,10 @@ void BrushManager::quit() {
 	IOHandler::saveJson_brush(globals::g_saveNameBrushes, *this);
 }
 
-BrushProperty& BrushManager::createBrush() {
+BrushProperty& BrushManager::createBrush(const char* name) {
 	BrushProperty* t_brush = new BrushProperty();
 	t_brush->m_id = ++m_brushIdCount;
+	t_brush->m_name = name;
 	m_brushProperties.push_back(t_brush);
 	m_currentBrushProperty = m_brushProperties[m_brushProperties.size() - 1];
 	return *m_currentBrushProperty;

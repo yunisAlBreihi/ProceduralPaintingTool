@@ -54,15 +54,7 @@ void GUIBrushProperties::update() {
 
 	static int t_currentItem = 0;
 	for (int i = 0; i < t_brushes.size(); ++i) {
-		std::string t_brushName;
-		if (i == 0) {
-			t_brushName = "Eraser";
-		}
-		else {
-			t_brushName = "Brush" + std::to_string(i);
-		}
-
-		if (ImGui::Button(t_brushName.c_str())) {
+		if (ImGui::Button(t_brushes[i]->m_name.c_str())) {
 			m_brushManager.setCurrentBrush(i);
 			t_currentItem = 0;
 			if (t_currentBrush->getObjectPropertiesLength() != 0) {
@@ -77,22 +69,16 @@ void GUIBrushProperties::update() {
 
 	ImGui::Separator();
 
-	if (ImGui::TreeNode("Popups")) {
-
-		if (ImGui::Button("Brush Naming")) {
-			ImGui::OpenPopup("my_toggle_popup");
-			if (ImGui::BeginPopup("my_toggle_popup")) {
-
-				if (ImGui::Button("Test")) {
-				}
-			}
-			ImGui::EndPopup();
-		}
-		ImGui::TreePop();
-	}
-
 	if (ImGui::Button("Create Brush")) {	 // Buttons return true when clicked (most widgets return true when edited/activated)
-		m_brushManager.createBrush();
+		ImGui::OpenPopup("brush_naming_popup");
+	}
+	if (ImGui::BeginPopup("brush_naming_popup")) {
+		if (ImGui::InputText("Brush Name", m_buffer, 512, ImGuiInputTextFlags_EnterReturnsTrue)) {
+			printf(m_buffer);
+			ImGui::CloseCurrentPopup();
+			m_brushManager.createBrush(m_buffer);
+		}
+		ImGui::EndPopup();
 	}
 
 	if (t_currentBrush != nullptr && t_currentBrush->m_id != 0 && t_currentBrush->m_colorIsSet == false) {

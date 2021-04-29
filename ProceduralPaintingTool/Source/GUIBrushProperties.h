@@ -20,7 +20,7 @@ private:
 	int m_currentBrushIndex = 0;
 
 	static const int m_bufferSize = 512;
-	char m_buffer[m_bufferSize] = "Assets/";
+	char m_buffer[m_bufferSize] = "";
 
 public:
 	GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager);

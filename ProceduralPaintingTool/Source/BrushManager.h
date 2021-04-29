@@ -16,7 +16,7 @@ public:
 	void start();
 	void quit();
 
-	BrushProperty& createBrush();
+	BrushProperty& createBrush(const char* name);
 	void addBrush(BrushProperty* brushProperty);
 	BrushProperty& setCurrentBrush(const int index);
 
