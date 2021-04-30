@@ -84,9 +84,9 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 
 							Mesh* t_mesh = new Mesh(("Assets/"+ t_objectType->m_name).c_str(), Transform());
 							t_mesh->setPosition(t_treePos);
-							t_mesh->setRotation(t_rotOffsetX, globals::RIGHT);
-							t_mesh->setRotation(t_rotOffsetY, globals::UP);
-							t_mesh->setRotation(t_rotOffsetZ, globals::FORWARD);
+							t_mesh->addRotation(t_rotOffsetX, globals::RIGHT);
+							t_mesh->addRotation(t_rotOffsetY, globals::UP);
+							t_mesh->addRotation(t_rotOffsetZ, globals::FORWARD);
 							t_mesh->setScale(glm::vec3(t_randomSize));
 							BiomeObject* t_object = new BiomeObject(t_mesh, t_objectType->m_radius, t_objectType->m_priority);
 							t_createdObjects.push_back(t_object);

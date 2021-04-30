@@ -23,6 +23,8 @@ public:
 	int m_vert_count = 0;
 
 	Transform m_transform;
+
+	float m_time = 0;
 private:
 	void mesh_load(const char* path);
 	void update_bufferData();
@@ -33,6 +35,7 @@ public:
 
 	void setPosition(const glm::vec3& position);
 	void setRotation(const float& angle, const glm::vec3& axis);
+	void addRotation(const float& angle, const glm::vec3& axis);
 	void setVertexColor(int vertexIndex, const glm::vec4& color);
 	void setVertexColor(int vertexIndex, const float* color);
 	void fillVertexColor(const glm::vec4& color);

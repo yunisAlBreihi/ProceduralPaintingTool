@@ -6,34 +6,40 @@ Mesh::Mesh(const char* path, Transform transform) : m_transform()
 {
 	mesh_load(path);
 	setPosition(transform.position);
-	setRotation(0.0f, globals::UP);
+	addRotation(0.0f, globals::UP);
 	setScale(transform.scale);
 }
 
-void Mesh::setPosition(const glm::vec3& position)
-{
+void Mesh::setPosition(const glm::vec3& position) {
 	m_transform.position = position;
 	m_position_matrix = translate(glm::identity<glm::mat4>(), m_transform.position);
 }
 
-void Mesh::setRotation(const float& angle, const glm::vec3& axis)
-{
+void Mesh::setRotation(const float& angle, const glm::vec3& axis) {
 	m_transform.rotation.x = axis.x * glm::sin(angle * 0.5f);
 	m_transform.rotation.y = axis.y * glm::sin(angle * 0.5f);
 	m_transform.rotation.z = axis.z * glm::sin(angle * 0.5f);
 	m_transform.rotation.w = glm::cos(angle * 0.5f);
 
-	m_rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis);
+	m_rotation_matrix = glm::rotate(glm::mat4(), glm::radians(angle), axis);
 }
 
-void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color)
-{
+void Mesh::addRotation(const float& angle, const glm::vec3& axis) {
+	m_transform.rotation.x = axis.x * glm::sin(angle * 0.5f);
+	m_transform.rotation.y = axis.y * glm::sin(angle * 0.5f);
+	m_transform.rotation.z = axis.z * glm::sin(angle * 0.5f);
+	m_transform.rotation.w = glm::cos(angle * 0.5f);
+
+	m_rotation_matrix = glm::rotate(m_rotation_matrix, glm::radians(angle), axis);
+}
+
+void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color) {
 	m_vertices[vertexIndex].color = color;
 	update_bufferData();
 }
 
 void Mesh::setVertexColor(int vertexIndex, const float* color) {
-	glm::vec4 t_color{ color[0], color[1], color[2], color[4] };
+	glm::vec4 t_color{ color[0], color[1], color[2], color[3] };
 	m_vertices[vertexIndex].color = t_color;
 	update_bufferData();
 }
@@ -59,8 +65,7 @@ void Mesh::setScale(const glm::vec3& scale)
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
-const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius)
-{
+const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius) {
 	for (size_t i = 0; i < m_vert_count; i++)
 	{
 		if (targetPosition.x > m_vertices[i].position.x - radius &&
