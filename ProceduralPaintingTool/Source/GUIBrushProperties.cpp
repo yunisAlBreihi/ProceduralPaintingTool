@@ -118,6 +118,9 @@ void GUIBrushProperties::update() {
 				ImGui::SliderFloat2("Size Range", glm::value_ptr(m_currentObjectProperty->m_sizeOffset), 0.1f, 10.0f);
 				ImGui::SliderFloat2("Position Range X", glm::value_ptr(m_currentObjectProperty->m_positionOffsetX), -10.0f, 10.0f);
 				ImGui::SliderFloat2("Position Range Y", glm::value_ptr(m_currentObjectProperty->m_positionOffsetY), -10.0f, 10.0f);
+				ImGui::SliderFloat2("Rotation Range X", glm::value_ptr(m_currentObjectProperty->m_rotationOffsetX), -360.0f, 360.0f);
+				ImGui::SliderFloat2("Rotation Range Y", glm::value_ptr(m_currentObjectProperty->m_rotationOffsetY), -360.0f, 360.0f);
+				ImGui::SliderFloat2("Rotation Range Z", glm::value_ptr(m_currentObjectProperty->m_rotationOffsetZ), -360.0f, 360.0f);
 				ImGui::SliderFloat("Tree Radius", &m_currentObjectProperty->m_radius, 0.1f, 10.0f);
 				ImGui::SliderInt("Frequency", &m_currentObjectProperty->m_frequency, 0, 20);
 				ImGui::SliderInt("Priority", &m_currentObjectProperty->m_priority, 0, 20);

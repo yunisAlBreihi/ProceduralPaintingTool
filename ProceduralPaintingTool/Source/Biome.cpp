@@ -36,15 +36,29 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 			int t_scaledPosOffsetYMin = static_cast<int>(t_objectType->m_positionOffsetY.x * 100);
 			int t_scaledPosOffsetYMax = static_cast<int>(t_objectType->m_positionOffsetY.y * 100);
 
+			int t_scaledRotOffsetXMin = static_cast<int>(t_objectType->m_rotationOffsetX.x * 100);
+			int t_scaledRotOffsetXMax = static_cast<int>(t_objectType->m_rotationOffsetX.y * 100);
+
+			int t_scaledRotOffsetYMin = static_cast<int>(t_objectType->m_rotationOffsetY.x * 100);
+			int t_scaledRotOffsetYMax = static_cast<int>(t_objectType->m_rotationOffsetY.y * 100);
+
+			int t_scaledRotOffsetZMin = static_cast<int>(t_objectType->m_rotationOffsetZ.x * 100);
+			int t_scaledRotOffsetZMax = static_cast<int>(t_objectType->m_rotationOffsetZ.y * 100);
+
 			srand(globals::g_seed);
 			for (int x = t_minCountX; x < t_maxCountX; ++x) {
 				for (int z = t_minCountZ; z < t_maxCountZ; ++z) {
 					for (int i = 0; i < t_objectType->m_frequency; ++i) {
-						const float t_randomSize = ((rand() % t_scaledSizeOffsetMax + t_scaledSizeOffsetMin) * 0.01f);
-						const float t_offsetX =	   ((rand() % t_scaledPosOffsetXMax + t_scaledPosOffsetXMin) * 0.01f);
-						const float t_offsetZ =	   ((rand() % t_scaledPosOffsetYMax + t_scaledPosOffsetYMin) * 0.01f);
+						const float t_posOffsetX = ((rand() % t_scaledPosOffsetXMax + t_scaledPosOffsetXMin) * 0.01f);
+						const float t_posOffsetZ = ((rand() % t_scaledPosOffsetYMax + t_scaledPosOffsetYMin) * 0.01f);
 
-						glm::vec3 t_treePos = glm::vec3(x + t_offsetX, 0.0f, z + t_offsetZ);
+						const float t_rotOffsetX = ((rand() % t_scaledRotOffsetXMax + t_scaledRotOffsetXMin) * 0.01f);
+						const float t_rotOffsetY = ((rand() % t_scaledRotOffsetYMax + t_scaledRotOffsetYMin) * 0.01f);
+						const float t_rotOffsetZ = ((rand() % t_scaledRotOffsetZMax + t_scaledRotOffsetZMin) * 0.01f);
+
+						const float t_randomSize = ((rand() % t_scaledSizeOffsetMax + t_scaledSizeOffsetMin) * 0.01f);
+
+						glm::vec3 t_treePos = glm::vec3(x + t_posOffsetX, 0.0f, z + t_posOffsetZ);
 
 						bool t_invalidTree = false;
 						for (auto& t_createdObject : t_createdObjects) {
@@ -70,6 +84,9 @@ Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objec
 
 							Mesh* t_mesh = new Mesh(("Assets/"+ t_objectType->m_name).c_str(), Transform());
 							t_mesh->setPosition(t_treePos);
+							t_mesh->setRotation(t_rotOffsetX, globals::RIGHT);
+							t_mesh->setRotation(t_rotOffsetY, globals::UP);
+							t_mesh->setRotation(t_rotOffsetZ, globals::FORWARD);
 							t_mesh->setScale(glm::vec3(t_randomSize));
 							BiomeObject* t_object = new BiomeObject(t_mesh, t_objectType->m_radius, t_objectType->m_priority);
 							t_createdObjects.push_back(t_object);

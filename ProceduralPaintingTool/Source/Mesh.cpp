@@ -23,7 +23,7 @@ void Mesh::setRotation(const float& angle, const glm::vec3& axis)
 	m_transform.rotation.z = axis.z * glm::sin(angle * 0.5f);
 	m_transform.rotation.w = glm::cos(angle * 0.5f);
 
-	m_rotation_matrix = glm::rotate(glm::mat4(1.0f), angle, axis);
+	m_rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis);
 }
 
 void Mesh::setVertexColor(int vertexIndex, const glm::vec4& color)

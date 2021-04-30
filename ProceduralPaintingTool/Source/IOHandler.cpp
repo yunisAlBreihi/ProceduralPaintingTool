@@ -25,6 +25,9 @@ namespace IOHandler {
 				t_json[t_objectPropertyName] = { {t_brushes[i]->m_objectProperties[objectIndex]->m_sizeOffset.x,t_brushes[i]->m_objectProperties[objectIndex]->m_sizeOffset.y },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetX.x, t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetX.y },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetY.x, t_brushes[i]->m_objectProperties[objectIndex]->m_positionOffsetY.y },
+												 {t_brushes[i]->m_objectProperties[objectIndex]->m_rotationOffsetX.x, t_brushes[i]->m_objectProperties[objectIndex]->m_rotationOffsetX.y },
+												 {t_brushes[i]->m_objectProperties[objectIndex]->m_rotationOffsetY.x, t_brushes[i]->m_objectProperties[objectIndex]->m_rotationOffsetY.y },
+												 {t_brushes[i]->m_objectProperties[objectIndex]->m_rotationOffsetZ.x, t_brushes[i]->m_objectProperties[objectIndex]->m_rotationOffsetZ.y },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_radius },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_frequency },
 												 {t_brushes[i]->m_objectProperties[objectIndex]->m_priority },
@@ -94,15 +97,24 @@ namespace IOHandler {
 						t_objectProperty->m_positionOffsetY = { t_property[0], t_property[1] };
 						break;
 					case 3:
-						t_objectProperty->m_radius = t_property[0];
+						t_objectProperty->m_rotationOffsetX = { t_property[0], t_property[1] };
 						break;
 					case 4:
-						t_objectProperty->m_frequency = t_property[0];
+						t_objectProperty->m_rotationOffsetY = { t_property[0], t_property[1] };
 						break;
 					case 5:
-						t_objectProperty->m_priority = t_property[0];
+						t_objectProperty->m_rotationOffsetZ = { t_property[0], t_property[1] };
 						break;
 					case 6:
+						t_objectProperty->m_radius = t_property[0];
+						break;
+					case 7:
+						t_objectProperty->m_frequency = t_property[0];
+						break;
+					case 8:
+						t_objectProperty->m_priority = t_property[0];
+						break;
+					case 9:
 						t_objectProperty->m_name = t_property[0];
 						t_brushProperty->addObjectType(t_objectProperty);
 						t_propertyIndex++;
