@@ -43,7 +43,8 @@ void GUIBrushProperties::update() {
 
 	//Int field for setting the randomizer seed.
 	static int t_seed = 0;
-	ImGui::InputInt("Seed", &globals::g_seed, ImGuiInputTextFlags_EnterReturnsTrue);
+	ImGui::InputInt("Seed", &globals::g_seed);
+	ImGui::SliderFloat("Brush Radius", &globals::g_brush_radius, 1.0f, 4.0f);
 
 	ImGui::Separator();
 

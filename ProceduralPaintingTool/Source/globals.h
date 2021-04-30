@@ -17,6 +17,7 @@ namespace globals
 	static const float MIN_CAM_PITCH = -1.57f;
 	static const char* VIEWPROJECTION = "u_ViewProjection";
 
+	extern float g_brush_radius;
 	extern int g_seed;
 	extern bool g_cam_control;
 	extern bool g_LMB_hold;

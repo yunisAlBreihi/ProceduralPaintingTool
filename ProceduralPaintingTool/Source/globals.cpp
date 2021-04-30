@@ -2,6 +2,8 @@
 
 namespace globals 
 {
+
+	float g_brush_radius = 2.0f;
 	int g_seed = 1;
 	bool g_cam_control = false;
 	bool g_LMB_hold = false;
