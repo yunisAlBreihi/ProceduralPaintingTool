@@ -45,7 +45,7 @@ namespace globals {
 		int t_scaledMin = static_cast<int>(min * 100);
 		int t_scaledMax = static_cast<int>(max * 100);
 
-		if (t_scaledMax + t_scaledMin == 0) {
+		if (glm::abs(t_scaledMax) + glm::abs(t_scaledMin) == 0) {
 			return 0.0f;
 		}
 		return (rand() % t_scaledMax + t_scaledMin) * 0.01f;
@@ -55,7 +55,7 @@ namespace globals {
 		int t_scaledMin = static_cast<int>(value.x * 100);
 		int t_scaledMax = static_cast<int>(value.y * 100);
 
-		if (t_scaledMax + t_scaledMin == 0) {
+		if (glm::abs(t_scaledMax) + glm::abs(t_scaledMin) == 0) {
 			return 0.0f;
 		}
 		return (rand() % t_scaledMax + t_scaledMin) * 0.01f;
