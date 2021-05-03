@@ -41,11 +41,11 @@ public:
 	void setScale(const glm::vec3& scale);
 
 	Transform& getTransform() { return m_transform; }
-	const glm::mat4& getMatrix() { return m_position_matrix * m_rotation_matrix * m_scale_matrix; }
+	glm::mat4 getMatrix() { return m_position_matrix * m_rotation_matrix * m_scale_matrix; }
 
-	const Vertex& getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
+	Vertex* getVertexAtPosition(glm::vec3& targetPosition, float thresholdRadius);
 	std::vector<Vertex*>& getVertexAtPositionRadius(glm::vec3& targetPosition, float thresholdRadius);
-	const Vertex& getVertexAtPositionFlat(glm::vec3& targetPosition, float thresholdRadius);
+	Vertex* getVertexAtPositionFlat(glm::vec3& targetPosition, float thresholdRadius);
 
 	Vertex* getVertexAtIndex(int index);
 

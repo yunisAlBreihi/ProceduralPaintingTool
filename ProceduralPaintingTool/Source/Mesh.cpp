@@ -63,7 +63,7 @@ void Mesh::setScale(const glm::vec3& scale) {
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
-const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius) {
+Vertex* Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius) {
 	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_vertices[i].position.x - radius &&
 			targetPosition.x < m_vertices[i].position.x + radius &&
@@ -71,10 +71,10 @@ const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius)
 			targetPosition.y < m_vertices[i].position.y + radius &&
 			targetPosition.z > m_vertices[i].position.z - radius &&
 			targetPosition.z < m_vertices[i].position.z + radius) {
-			return m_vertices[i];
+			return &m_vertices[i];
 		}
 	}
-	return Vertex{};
+	return nullptr;
 }
 
 std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float radius) {
@@ -92,16 +92,16 @@ std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition,
 	return m_areaVertices;
 }
 
-const Vertex& Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition, float radius) {
+Vertex* Mesh::getVertexAtPositionFlat(glm::vec3& targetPosition, float radius) {
 	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_vertices[i].position.x - radius &&
 			targetPosition.x < m_vertices[i].position.x + radius &&
 			targetPosition.z > m_vertices[i].position.z - radius &&
 			targetPosition.z < m_vertices[i].position.z + radius) {
-			return m_vertices[i];
+			return &m_vertices[i];
 		}
 	}
-	return Vertex{};
+	return nullptr;
 }
 
 Vertex* Mesh::getVertexAtIndex(int index) {
@@ -153,7 +153,8 @@ void Mesh::mesh_load(const char* path) {
 		return;
 	}
 
-	m_vertices = new Vertex[obj->num_triangles * 3];
+	int t_numVertices = obj->num_triangles * 3;
+	m_vertices = new Vertex[t_numVertices];
 	int num_verts = 0;
 
 	for (int tri_idx = 0; tri_idx < obj->num_triangles; ++tri_idx) {

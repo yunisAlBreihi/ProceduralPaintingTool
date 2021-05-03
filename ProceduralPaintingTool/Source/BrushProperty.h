@@ -29,7 +29,7 @@ public:
 
 	void addObjectType(BiomeObjectProperty* objectProperty) {
 		m_objectProperties.push_back(objectProperty);
-		m_current_object = m_objectProperties.size() - 1;
+		m_current_object = static_cast<int>(m_objectProperties.size() - 1);
 	}
 
 	void setCurrentObjectType(unsigned int index) {
@@ -52,8 +52,8 @@ public:
 		m_objectProperties.erase(t_iterator_to_remove);
 	}
 
-	const int getObjectPropertiesLength() {
-		return m_objectProperties.size();
+	int getObjectPropertiesLength() {
+		return static_cast<int>(m_objectProperties.size());
 	}
 
 	void addVertex(Vertex* vertex) {
@@ -68,8 +68,8 @@ public:
 	}
 
 	void removeVertexAtPosition(glm::vec3 position) {
-		int t_arraySize = m_usedVertices.size();
-		for (size_t i = 0; i < t_arraySize; i++) {
+		int t_arraySize = static_cast<int>(m_usedVertices.size());
+		for (int i = 0; i < t_arraySize; i++) {
 			if (m_usedVertices[i] != nullptr) {
 				if (m_usedVertices[i]->position == position) {
 					m_usedVertices[i] = nullptr;
@@ -79,8 +79,8 @@ public:
 	}
 
 	void removeAllVertices() {
-		int t_arraySize = m_usedVertices.size();
-		for (size_t i = 0; i < t_arraySize; i++) {
+		int t_arraySize = static_cast<int>(m_usedVertices.size());
+		for (int i = 0; i < t_arraySize; i++) {
 			if (m_usedVertices[i] != nullptr) {
 				m_usedVertices[i] = nullptr;
 			}

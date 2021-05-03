@@ -24,7 +24,7 @@ namespace globals
 	extern bool g_LMB_hold;
 	extern glm::vec2 g_mouse_position;
 	extern glm::vec2 g_mouse_delta;
-	extern glm::vec2 g_window_size;
+	extern glm::ivec2 g_window_size;
 
 	//Save file variables
 	extern bool g_hasBrushSave;

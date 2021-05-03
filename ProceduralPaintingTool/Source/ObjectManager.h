@@ -29,7 +29,7 @@ private:
 	Shader* m_debugShader = nullptr;
 
 public:
-	Mesh* m_terrain;
+	Mesh* m_terrain = nullptr;
 
 public:
 	ObjectManager(GLFWwindow* window, BrushManager& brushManager);

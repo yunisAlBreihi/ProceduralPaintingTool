@@ -12,8 +12,8 @@ struct RenderData {
 	Shader* m_shader = nullptr;
 
 	//Lights
-	glm::vec3 m_directional_light;
-	glm::vec3 m_eye_position;
+	glm::vec3 m_directional_light = glm::vec3(0.0f);
+	glm::vec3 m_eye_position = glm::vec3(0.0f);
 };
 
 void mesh_draw(const Mesh& mesh, const RenderData& data);

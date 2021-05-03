@@ -31,7 +31,7 @@ void ObjectManager::start() {
 
 void ObjectManager::update() {
 	m_timer->update();
-	m_camera->update(m_timer->deltaTime);
+	m_camera->update(m_timer->m_deltaTime);
 
 	//Draw meshes
 	RenderData t_mesh_RD;
@@ -60,12 +60,12 @@ void ObjectManager::update() {
 	for (auto& t_debugLine : m_debugLines) {
 		if (t_debugLine.active()) {
 			debugLine_draw(t_debugLine, t_mesh_RD);
-			t_debugLine.update(m_timer->deltaTime);
+			t_debugLine.update(m_timer->m_deltaTime);
 		}
 	}
 	m_mousePicker->update();
 	if (globals::g_LMB_hold == true) {
-		std::vector<Vertex*>& t_vertices = raycastFromCameraVertexRadius(*m_camera, *m_mousePicker, *m_terrain, 50, 100.0f, globals::g_brush_radius);
+		std::vector<Vertex*> t_vertices = *raycastFromCameraVertexRadius(m_camera, m_mousePicker, m_terrain, 50, 100.0f, globals::g_brush_radius);
 
 		for (auto& t_vertex : t_vertices) {
 			if (m_brushManager.getCurrentBrush() != nullptr) {

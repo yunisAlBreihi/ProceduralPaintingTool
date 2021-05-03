@@ -7,7 +7,7 @@ namespace globals {
 	bool g_LMB_hold = false;
 	glm::vec2 g_mouse_position;
 	glm::vec2 g_mouse_delta;
-	glm::vec2 g_window_size;
+	glm::ivec2 g_window_size;
 
 	//Save file variables
 	bool g_hasBrushSave = false;
@@ -26,7 +26,7 @@ namespace globals {
 	}
 
 	Vertex* getVertexAtPositionFlat(const std::vector<Vertex*>& vertices, const glm::vec3& position, float radius) {
-		int t_arraySize = vertices.size();
+		int t_arraySize = static_cast<int>(vertices.size());
 
 		for (size_t i = 0; i < t_arraySize; i++) {
 			if (vertices[i] != nullptr) {

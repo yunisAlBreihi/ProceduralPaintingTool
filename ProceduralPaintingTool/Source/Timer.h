@@ -4,8 +4,8 @@ private:
 	float m_lastTime = 0.0f;
 
 public:
-	float deltaTime = 0.0f;
-	float time = 0.0f;
+	float m_deltaTime = 0.0f;
+	float m_time = 0.0f;
 
 public:
 	Timer();

@@ -8,11 +8,11 @@ namespace IOHandler {
 		json t_json;
 
 		const std::vector<BrushProperty*>& t_brushes = brushManager.getBrushes();
-		int t_brushSize = t_brushes.size();
+		int t_brushSize = static_cast<int>(t_brushes.size());
 		for (size_t i = 0; i < t_brushSize; i++) {
 			std::string t_brushName = globals::g_brushPrefix + std::to_string(i);
 
-			int t_objectPropertiesSize = t_brushes[i]->m_objectProperties.size();
+			int t_objectPropertiesSize = static_cast<int>(t_brushes[i]->m_objectProperties.size());
 
 			t_json[t_brushName] = { {t_brushes[i]->m_vertexColor.r, t_brushes[i]->m_vertexColor.g, t_brushes[i]->m_vertexColor.b, t_brushes[i]->m_vertexColor.a },
 									{ t_brushes[i]->m_current_object},
