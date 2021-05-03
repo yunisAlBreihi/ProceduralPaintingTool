@@ -2,8 +2,7 @@
 #include "globals.h"
 #include "Mesh.h"
 
-void mesh_draw(const Mesh& mesh, const RenderData& data)
-{
+void mesh_draw(const Mesh& mesh, const RenderData& data) {
 	glBindVertexArray(mesh.m_vao);
 
 	//Set material
@@ -20,8 +19,7 @@ void mesh_draw(const Mesh& mesh, const RenderData& data)
 	glDrawArrays(GL_TRIANGLES, 0, mesh.m_draw_count);
 }
 
-void debugLine_draw(const DebugLine& debugLine, const RenderData& data) 
-{
+void debugLine_draw(const DebugLine& debugLine, const RenderData& data) {
 	glBindVertexArray(debugLine.m_vao);
 
 	//Set material

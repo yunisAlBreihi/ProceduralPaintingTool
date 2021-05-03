@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
-//#include "stb_image.h"
+#include <stdlib.h>
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
@@ -11,16 +11,13 @@
 #include "ObjectManager.h"
 #include "BrushManager.h"
 #include "IOHandler.h"
-#include <stdlib.h>
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 	globals::g_window_size = glm::vec2(width, height);
 }
 
-void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int modifiers)
-{
+void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int modifiers) {
 	if (action == GLFW_PRESS) {
 		if (key == GLFW_KEY_ESCAPE) {
 			glfwSetWindowShouldClose(window, true);
@@ -28,10 +25,8 @@ void handle_key_event(GLFWwindow* window, int key, int scancode, int action, int
 	}
 }
 
-void handle_mouse_event(GLFWwindow* window, int button, int action, int modifiers)
-{
-	if (button == GLFW_MOUSE_BUTTON_LEFT)
-	{
+void handle_mouse_event(GLFWwindow* window, int button, int action, int modifiers) {
+	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		if (action == GLFW_PRESS) {
 			globals::g_LMB_hold = true;
 		}
@@ -40,39 +35,30 @@ void handle_mouse_event(GLFWwindow* window, int button, int action, int modifier
 		}
 	}
 
-	if (button == GLFW_MOUSE_BUTTON_RIGHT)
-	{
-		if (action == GLFW_PRESS)
-		{
+	if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+		if (action == GLFW_PRESS) {
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			globals::g_cam_control = true;
 		}
-		else
-		{
+		else {
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			globals::g_cam_control = false;
 		}
 	}
 }
 
-void handle_mouse_pos(GLFWwindow* window, double mouse_x, double mouse_y)
-{
+void handle_mouse_pos(GLFWwindow* window, double mouse_x, double mouse_y) {
 	globals::g_mouse_position = glm::vec2(mouse_x, mouse_y);
 	float y = (2.0f * globals::g_mouse_position.y) / globals::g_window_size.y - 1;
-
-	//printf("MousePosY: %0.1f\n", globals::g_mouse_position.y);
-	//printf("normalized MouseY: %0.1f\n", y);
 }
 
-void processInput(GLFWwindow* window)
-{
+void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
 }
 
-int main()
-{
+int main() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -144,7 +130,7 @@ int main()
 		m_objectManager->update();
 
 		//render
-		//m_objectManager->render();
+
 
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();

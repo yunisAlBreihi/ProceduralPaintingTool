@@ -3,8 +3,7 @@
 #include <string>
 
 
-struct BiomeObjectProperty
-{
+struct BiomeObjectProperty {
 public:
 	glm::vec2 m_sizeOffset{ 0.9f, 1.1f };
 	glm::vec2 m_positionOffsetX{ -3.0f, 3.0f };

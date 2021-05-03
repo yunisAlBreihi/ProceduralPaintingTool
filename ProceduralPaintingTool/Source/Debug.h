@@ -6,8 +6,6 @@
 class DebugLine
 {
 private:
-
-
 	Vertex* m_verts = nullptr;
 	const int m_vert_count = 2;
 

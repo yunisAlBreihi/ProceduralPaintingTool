@@ -44,13 +44,11 @@ void ObjectManager::update() {
 		t_mesh_RD.m_model = t_object->m_mesh->getMatrix();
 		mesh_draw(*t_object->m_mesh, t_mesh_RD);
 	}
-	for (auto& t_debugMesh : m_debugMeshes)
-	{
+	for (auto& t_debugMesh : m_debugMeshes)	{
 		t_mesh_RD.m_model = t_debugMesh->getMatrix();
 		mesh_draw(*t_debugMesh, t_mesh_RD);
 	}
-	if (m_terrain != nullptr)
-	{
+	if (m_terrain != nullptr) {
 		t_mesh_RD.m_model = m_terrain->getMatrix();
 		mesh_draw(*m_terrain, t_mesh_RD);
 	}

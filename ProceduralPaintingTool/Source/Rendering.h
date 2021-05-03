@@ -5,8 +5,7 @@
 class Mesh;
 class Shader;
 
-struct RenderData
-{
+struct RenderData {
 	glm::mat4 m_view_projection = glm::identity<glm::mat4>();
 	glm::mat4 m_model = glm::identity<glm::mat4>();
 

@@ -4,10 +4,15 @@
 #include "globals.h"
 #include "Mesh.h"
 
+
+
 Camera::Camera(const glm::vec3& position, GLFWwindow* window) : m_position(position), m_window(window) {}
 
-void Camera::update(const float& deltaTime)
-{
+void Camera::update(const float& deltaTime) {
+	input(deltaTime);
+}
+
+void Camera::input(float deltaTime) {
 	if (globals::g_cam_control == false) {
 		return;
 	}
@@ -45,13 +50,11 @@ void Camera::update(const float& deltaTime)
 	m_position += t_move * m_moveSpeed * deltaTime;
 }
 
-glm::mat4 Camera::viewMatrix()
-{
+glm::mat4 Camera::viewMatrix() {
 	return glm::lookAt(m_position, m_position + forward(), globals::UP);
 }
 
-glm::mat4 Camera::projectionMatrix()
-{
+glm::mat4 Camera::projectionMatrix() {
 	glm::mat4 t_proj_matrix;
 
 	if (m_perspective == true) {
@@ -64,22 +67,18 @@ glm::mat4 Camera::projectionMatrix()
 	return t_proj_matrix;
 }
 
-glm::mat4 Camera::matrix()
-{
+glm::mat4 Camera::matrix() {
 	return projectionMatrix() * viewMatrix();
 }
 
-glm::quat Camera::quat()
-{
+glm::quat Camera::quat() {
 	return glm::angleAxis(m_yaw, globals::UP) * glm::angleAxis(m_pitch, globals::RIGHT);
 }
 
-glm::vec3 Camera::forward()
-{
+glm::vec3 Camera::forward() {
 	return quat() * globals::FORWARD;
 }
 
-glm::vec3 Camera::right()
-{
+glm::vec3 Camera::right() {
 	return quat() * globals::RIGHT;
 }

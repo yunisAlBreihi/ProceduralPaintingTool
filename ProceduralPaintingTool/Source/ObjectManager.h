@@ -10,8 +10,7 @@
 #include "Debug.h"
 #include "BrushManager.h"
 
-class ObjectManager
-{
+class ObjectManager {
 private:
 	std::vector<BiomeObject*> m_objects;
 	std::vector<Mesh*> m_debugMeshes;

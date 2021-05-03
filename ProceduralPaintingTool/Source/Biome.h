@@ -2,11 +2,12 @@
 #include "ObjectManager.h"
 #include "BrushManager.h"
 
-class Biome 
-{
+class Biome {
 private:
 	ObjectManager& m_objectManager;
 	BrushManager& m_brushManager;
+
+	void createBiome();
 
 public:
 	Biome(ObjectManager& objectManager, BrushManager& brushManager);

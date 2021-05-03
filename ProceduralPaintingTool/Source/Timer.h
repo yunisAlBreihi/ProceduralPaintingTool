@@ -1,6 +1,5 @@
 #pragma once
-class Timer
-{
+class Timer {
 private:
 	float m_lastTime = 0.0f;
 

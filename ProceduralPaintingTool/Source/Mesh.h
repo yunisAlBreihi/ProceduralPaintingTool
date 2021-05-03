@@ -6,9 +6,7 @@
 #include <vector>
 #include "Vertex.h"
 
-
-class Mesh
-{
+class Mesh {
 public:
 	GLuint m_vao = -1;
 	GLuint m_vbo = -1;

@@ -15,6 +15,7 @@ namespace globals
 	static const glm::vec4 EMPTY_COLOR_V = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	static const float MAX_CAM_PITCH = 1.57f;
 	static const float MIN_CAM_PITCH = -1.57f;
+	static const float FLOAT_ERROR_THRESHOLD = 0.001f;
 	static const char* VIEWPROJECTION = "u_ViewProjection";
 
 	extern float g_brush_radius;
@@ -40,4 +41,7 @@ namespace globals
 	void printVec3(const glm::vec3& vec3);
 
 	Vertex* getVertexAtPositionFlat(const std::vector<Vertex*>& vertexList,const glm::vec3& position, float radius);
+
+	float randRangef(float min, float max);
+	float randRangef(glm::vec2 value);
 };

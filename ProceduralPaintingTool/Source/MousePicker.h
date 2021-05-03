@@ -2,8 +2,7 @@
 #include "glm/glm.hpp"
 #include "Camera.h"
 
-class MousePicker 
-{
+class MousePicker {
 private:
 	glm::vec3 m_currentRay{};
 

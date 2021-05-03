@@ -1,8 +1,7 @@
 #pragma once
 #include "Mesh.h"
 
-struct BiomeObject
-{
+struct BiomeObject {
 public:
 	Mesh* m_mesh = nullptr;
 	float m_radius = 0;

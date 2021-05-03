@@ -1,8 +1,6 @@
 #include "globals.h"
 
-namespace globals 
-{
-
+namespace globals {
 	float g_brush_radius = 2.0f;
 	int g_seed = 1;
 	bool g_cam_control = false;
@@ -41,5 +39,25 @@ namespace globals
 			}
 		}
 		return nullptr;
+	}
+
+	float randRangef(float min, float max) {
+		int t_scaledMin = static_cast<int>(min * 100);
+		int t_scaledMax = static_cast<int>(max * 100);
+
+		if (t_scaledMax + t_scaledMin == 0) {
+			return 0.0f;
+		}
+		return (rand() % t_scaledMax + t_scaledMin) * 0.01f;
+	}
+
+	float randRangef(glm::vec2 value) {
+		int t_scaledMin = static_cast<int>(value.x * 100);
+		int t_scaledMax = static_cast<int>(value.y * 100);
+
+		if (t_scaledMax + t_scaledMin == 0) {
+			return 0.0f;
+		}
+		return (rand() % t_scaledMax + t_scaledMin) * 0.01f;
 	}
 }

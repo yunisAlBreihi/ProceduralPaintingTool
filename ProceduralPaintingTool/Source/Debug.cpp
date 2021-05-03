@@ -3,8 +3,7 @@
 
 
 DebugLine::DebugLine(const glm::vec3& position, const glm::vec3& direction, float length, float lifeTime) :
-	m_position(position), m_direction(direction), m_length(length), m_maxLifeTime(lifeTime) 
-{
+	m_position(position), m_direction(direction), m_length(length), m_maxLifeTime(lifeTime) {
 	m_verts = new Vertex[m_vert_count];
 
 	//Start vertex
@@ -31,8 +30,7 @@ void DebugLine::update(float deltaTime) {
 	}
 }
 
-bool DebugLine::active()
-{
+bool DebugLine::active() {
 	if (m_LifeTime < m_maxLifeTime) {
 		return true;
 	}

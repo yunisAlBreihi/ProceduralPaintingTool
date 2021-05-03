@@ -9,18 +9,23 @@
 class GUIBrushProperties
 {
 private:
-
 	ObjectManager& m_objectManager;
 	BrushManager& m_brushManager;
 	Transform m_transform;
 
-	BiomeObjectProperty* m_currentObjectProperty;
+	BiomeObjectProperty* m_currentObjectProperty = nullptr;
+	BrushProperty* m_currentBrush = nullptr;
 
 	int m_brushCount = 0;
 	int m_currentBrushIndex = 0;
 
 	static const int m_bufferSize = 512;
 	char m_buffer[m_bufferSize] = "";
+
+private:
+	void showBrushesButtons(const std::vector<BrushProperty*>& brushes, int& item);
+	void collapsingPropertyMenu(int& item);
+	void separatorCreator(int count);
 
 public:
 	GUIBrushProperties(ObjectManager& objectManager, BrushManager& brushManager);

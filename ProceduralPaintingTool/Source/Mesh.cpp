@@ -2,8 +2,7 @@
 #include "wavefront.h"
 #include "globals.h"
 
-Mesh::Mesh(const char* path, Transform transform) : m_transform()
-{
+Mesh::Mesh(const char* path, Transform transform) : m_transform() {
 	mesh_load(path);
 	setPosition(transform.position);
 	addRotation(0.0f, globals::UP);
@@ -59,15 +58,13 @@ void Mesh::fillVertexColor(const float* color) {
 	}
 }
 
-void Mesh::setScale(const glm::vec3& scale)
-{
+void Mesh::setScale(const glm::vec3& scale) {
 	m_transform.scale = scale;
 	m_scale_matrix = glm::scale(glm::mat4(1.0f), m_transform.scale);
 }
 
 const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius) {
-	for (size_t i = 0; i < m_vert_count; i++)
-	{
+	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_vertices[i].position.x - radius &&
 			targetPosition.x < m_vertices[i].position.x + radius &&
 			targetPosition.y > m_vertices[i].position.y - radius &&
@@ -82,8 +79,7 @@ const Vertex& Mesh::getVertexAtPosition(glm::vec3& targetPosition, float radius)
 
 std::vector<Vertex*>& Mesh::getVertexAtPositionRadius(glm::vec3& targetPosition, float radius) {
 	m_areaVertices.clear();
-	for (size_t i = 0; i < m_vert_count; i++)
-	{
+	for (size_t i = 0; i < m_vert_count; i++) {
 		if (targetPosition.x > m_vertices[i].position.x - radius &&
 			targetPosition.x < m_vertices[i].position.x + radius &&
 			targetPosition.y > m_vertices[i].position.y - radius &&
@@ -114,8 +110,7 @@ Vertex* Mesh::getVertexAtIndex(int index) {
 
 const Vertex& Mesh::getLowestVertexPositionFlat() {
 	Vertex* t_lowestVertex = nullptr;
-	for (size_t i = 0; i < m_vert_count; i++)
-	{
+	for (size_t i = 0; i < m_vert_count; i++) {
 		if (t_lowestVertex == nullptr) {
 			t_lowestVertex = &m_vertices[i];
 			continue;
@@ -134,8 +129,7 @@ const Vertex& Mesh::getLowestVertexPositionFlat() {
 
 const Vertex& Mesh::getHighestVertexPositionFlat() {
 	Vertex* t_highestVertex = nullptr;
-	for (size_t i = 0; i < m_vert_count; i++)
-	{
+	for (size_t i = 0; i < m_vert_count; i++) {
 		if (t_highestVertex == nullptr) {
 			t_highestVertex = &m_vertices[i];
 			continue;

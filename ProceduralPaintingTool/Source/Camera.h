@@ -29,6 +29,9 @@ private:
 
 	bool m_perspective = true;
 
+private:
+	void input(float deltaTime);
+
 public:
 	Camera(const glm::vec3& position, GLFWwindow* window);
 	void update(const float& deltaTime);

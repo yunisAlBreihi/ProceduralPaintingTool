@@ -6,14 +6,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Shader
-{
+class Shader {
 private:
 	GLuint m_program = -1;
 
 public:
-	Shader(const char* vertexPath, const char* fragmentPath)
-	{
+	Shader(const char* vertexPath, const char* fragmentPath) {
 		//retrieve the vertex/source code from filePath
 		std::string t_vertexCode;
 		std::string t_fragmentCode;
