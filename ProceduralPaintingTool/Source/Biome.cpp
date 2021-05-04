@@ -2,10 +2,10 @@
 #include "BiomeObject.h"
 
 Biome::Biome(ObjectManager& objectManager, BrushManager& brushManager) : m_objectManager(objectManager), m_brushManager(brushManager) {
-	createBiome();
+	spawnObjects();
 }
 
-void Biome::createBiome() {
+void Biome::spawnObjects() {
 	std::vector<BiomeObject*> t_createdObjects;
 	float t_terrainRadius = 1.0f;
 

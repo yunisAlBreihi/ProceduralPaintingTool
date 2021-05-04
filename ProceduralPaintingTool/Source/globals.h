@@ -12,7 +12,9 @@ namespace globals
 	static const glm::vec3 UP = glm::vec3(0.0f, 1.0f, 0.0f);
 	static const glm::vec3 ZERO = glm::vec3(0.0f);
 	static const glm::vec3 ONE = glm::vec3(1.0f);
+	static const glm::vec3 MINUS_ONE = glm::vec3(-1.0f);
 	static const glm::vec4 EMPTY_COLOR_V = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
 	static const float MAX_CAM_PITCH = 1.57f;
 	static const float MIN_CAM_PITCH = -1.57f;
 	static const float FLOAT_ERROR_THRESHOLD = 0.001f;

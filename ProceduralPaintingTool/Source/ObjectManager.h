@@ -10,6 +10,8 @@
 #include "Debug.h"
 #include "BrushManager.h"
 
+class Biome;
+
 class ObjectManager {
 private:
 	std::vector<BiomeObject*> m_objects;
@@ -22,6 +24,7 @@ private:
 	Camera* m_camera = nullptr;
 	Timer* m_timer = nullptr;
 	MousePicker* m_mousePicker = nullptr;
+	Biome* m_currentBiome = nullptr;
 
 	bool m_drawDebugLines = true;
 
@@ -41,6 +44,8 @@ public:
 	void quit();
 
 	void clearMeshes();
+
+	void createBiome();
 
 	void fillTerrainColor(const glm::vec4& color);
 	void fillTerrainColorCurrentBrush();

@@ -7,7 +7,7 @@ private:
 	ObjectManager& m_objectManager;
 	BrushManager& m_brushManager;
 
-	void createBiome();
+	void spawnObjects();
 
 public:
 	Biome(ObjectManager& objectManager, BrushManager& brushManager);

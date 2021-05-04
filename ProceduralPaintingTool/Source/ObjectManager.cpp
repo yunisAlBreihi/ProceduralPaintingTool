@@ -1,9 +1,10 @@
 #include "ObjectManager.h"
+#include <algorithm>
 #include "Biome.h"
 #include "GLFW/glfw3.h"
 #include "Raycast.h"
-#include <algorithm>
 #include "IOHandler.h"
+#include "Biome.h"
 
 ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m_window(window), m_brushManager(brushManager) {
 	m_defaultShader = new Shader("Shaders/default.vs", "Shaders/default.fs");
@@ -11,7 +12,7 @@ ObjectManager::ObjectManager(GLFWwindow* window, BrushManager& brushManager) : m
 
 	m_terrain = new Mesh("Assets/Terrain.obj", Transform());
 
-	m_camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), m_window);
+	m_camera = new Camera(glm::vec3(0.0f, 13.0f, 5.0f), m_window);
 	m_timer = new Timer();
 	m_mousePicker = new MousePicker(m_camera);
 }
@@ -26,7 +27,7 @@ void ObjectManager::addDebugMesh(Mesh* mesh) {
 
 void ObjectManager::start() {
 	IOHandler::loadJson_terrainVerticesColor(globals::g_saveNameTerrainVertices, *this, m_brushManager);
-	Biome(*this, m_brushManager);
+	createBiome();
 }
 
 void ObjectManager::update() {
@@ -38,7 +39,7 @@ void ObjectManager::update() {
 	t_mesh_RD.m_eye_position = m_camera->getPosition();
 	t_mesh_RD.m_view_projection = m_camera->matrix();
 	t_mesh_RD.m_shader = m_defaultShader;
-	t_mesh_RD.m_directional_light = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
+	t_mesh_RD.m_directional_light = glm::normalize(globals::MINUS_ONE);
 
 	for (auto& t_object : m_objects) {
 		t_mesh_RD.m_model = t_object->m_mesh->getMatrix();
@@ -86,6 +87,15 @@ void ObjectManager::quit() {
 void ObjectManager::clearMeshes() {
 	m_objects.clear();
 	m_debugMeshes.clear();
+}
+
+void ObjectManager::createBiome() {
+	if (m_currentBiome != nullptr) {
+		delete m_currentBiome;
+		m_currentBiome = nullptr;
+	}
+	clearMeshes();
+	m_currentBiome = new Biome(*this, m_brushManager);
 }
 
 void ObjectManager::fillTerrainColor(const glm::vec4& color) {

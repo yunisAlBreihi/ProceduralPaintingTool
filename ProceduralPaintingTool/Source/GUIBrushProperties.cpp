@@ -107,8 +107,7 @@ void GUIBrushProperties::update() {
 
 	//Button to create a biome.
 	if (ImGui::Button(m_createBiomeName)) {
-		m_objectManager.clearMeshes();
-		Biome(m_objectManager, m_brushManager);
+		m_objectManager.createBiome();
 	}
 
 	separatorCreator(3);
