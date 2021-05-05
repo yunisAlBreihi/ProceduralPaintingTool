@@ -53,7 +53,7 @@ private:
 
 	const char* m_sliderSizeRangeName = "Size Range";
 	const float m_sizeRangeMin = 0.1f;
-	const float m_sizeRangeMax = 0.1f;
+	const float m_sizeRangeMax = 2.0f;
 
 	const char* m_sliderPosRangeXName = "Position Range X";
 	const float m_posRangeXMin = -10.0f;
